@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="MultiDraw.KickUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:uc="clr-namespace:MultiDraw"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:TIG="clr-namespace:TIGUtility;assembly=TIGUtility"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="250"
+             Background="Transparent" Loaded="OnControlLoaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid MouseDown="Grid_MouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="112"></RowDefinition>
+            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+
+            <TextBlock  x:Name="lbl"
+                        Text="Kick Options"
+                    Foreground="#005D9A"
+                    FontSize="12"
+                    FontFamily="/TIGUtility;component/Resources/Font/#Poppins SemiBold"
+                    Margin="0,0,0,4"></TextBlock>
+
+            <Border x:Name="border" Padding="10" Margin="0,4,0,0"
+                Background="White"
+                BorderBrush="#ccc"
+                BorderThickness="1" CornerRadius="0">
+
+                <StackPanel  x:Name="container"
+                             Orientation="Vertical"
+                             HorizontalAlignment="Left"
+                             Background="White">
+
+                    <RadioButton x:Name="rbNinetyNear" Content="90° Near"
+                          
+                          
+                           Margin="0,0,0,4">
+                <RadioButton.ToolTip >
+                    <StackPanel Orientation="Horizontal">
+                                <Image Source="/MultiDraw;component/Resources/90 Near.png" Width="250" Height="250" />
+                    </StackPanel>
+                </RadioButton.ToolTip>
+            </RadioButton>
+
+                    <RadioButton x:Name="rbNinetyFar" Content="90° Far"
+                           
+                          
+                           Margin="0,0,0,4">
+                        <RadioButton.ToolTip >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/MultiDraw;component/Resources/90 far.png" Width="250" Height="250" />
+                            </StackPanel>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+
+                </StackPanel>
+
+
+            </Border>
+
+            <!--<RadioButton x:Name="lbl" Content="90° Near"
+                           Foreground="#005D9A"
+                           FontSize="12"
+                           FontFamily="/MultiDraw;component/Resources/Font/#Poppins SemiBold"
+                           Margin="0,0,0,4">
+                <RadioButton.ToolTip >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/MultiDraw;component/Resources/Roll.png" Width="250" Height="250" />
+                    </StackPanel>
+                </RadioButton.ToolTip>
+            </RadioButton>
+            
+            <TIG:RadioButtonUserControl x:Name="rbList"
+                                        Label="Kick Option"
+                                        ItemsSource="90° Near,90° Far"
+                                        Value="90° Near"
+                                        Checked="RbList_Checked"
+                                        UnChecked="RbList_UnChecked"></TIG:RadioButtonUserControl>-->
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TIG:DropDownUserControl  Width="320"
+                                       x:Name="ddlAngle"
+                                       Label="Angle"></TIG:DropDownUserControl>
+           
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <TIG:TextBoxUserControl x:Name="txtOffsetFeet"
+                                    Label="Offset"
+                                    UnitsLabel="Feet and inches"
+                                    IsUnit="True"></TIG:TextBoxUserControl>
+        </StackPanel>
+        <!--<StackPanel Grid.Row="3">
+            <TIG:ButtonUserControl x:Name="btnDraw"
+                                   Label="Draw"
+                                   Width="70"
+                                   Icon="Draw"
+                                   BtnClick="btnDraw_btnClick"></TIG:ButtonUserControl>
+        </StackPanel>-->
+    </Grid>
+</UserControl>

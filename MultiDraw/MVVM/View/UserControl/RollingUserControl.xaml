@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="MultiDraw.RollingUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:uc="clr-namespace:MultiDraw"
+             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:TIG="clr-namespace:TIGUtility;assembly=TIGUtility"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="250"
+             Background="Transparent">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid MouseDown="Grid_MouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="85"></RowDefinition>
+          
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TIG:DropDownUserControl   Width="320"
+                                       x:Name="ddlAngle"
+                                       Label="Angle"></TIG:DropDownUserControl>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="lbo" Text="Offset"
+                           Foreground="#005D9A"
+                           FontSize="12"
+                           FontFamily="/MultiDraw;component/Resources/Font/#Poppins SemiBold"
+                           Margin="0,0,0,4">
+                <TextBlock.ToolTip >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/MultiDraw;component/Resources/Offset_2.png" Width="250" Height="250" />
+                    </StackPanel>
+                </TextBlock.ToolTip>
+            </TextBlock>
+            
+            <TIG:TextBoxUserControl x:Name="txtOffsetFeet"
+                                    Margin="0,10,0,0"
+                                    UnitsLabel="Feet and inches"
+                                    IsUnit="True"></TIG:TextBoxUserControl>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="lbl" Text="Roll"
+                           Foreground="#005D9A"
+                           FontSize="12"
+                           FontFamily="/MultiDraw;component/Resources/Font/#Poppins SemiBold"
+                           Margin="0,0,0,4">
+                    <TextBlock.ToolTip >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/MultiDraw;component/Resources/Roll_2.png" Width="250" Height="250" />
+                        </StackPanel>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+
+                <TIG:TextBoxUserControl x:Name="txtRollFeet" Margin="0,10,0,0"
+                                    UnitsLabel="Feet and inches"
+                                    IsUnit="True"></TIG:TextBoxUserControl>
+            </StackPanel>
+        
+       </Grid>
+    </Grid>
+</UserControl>
