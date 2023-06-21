@@ -56,7 +56,6 @@ namespace MultiDraw
             //Selection sel = uidoc.Selection;
             //ICollection<ElementId> ecol = sel.GetElementIds();
 
-
             List<Element> pickedElements = new List<Element>();
             List<Element> secondaryElements = new List<Element>();
             List<Element> thirdElements = new List<Element>();
@@ -65,14 +64,10 @@ namespace MultiDraw
 
             try
             {
-
-
-
-
                 using (Transaction trans2 = new Transaction(doc))
                 {
                     trans2.Start("SharedParamForMultiDraw");
-                    filePath_SharedParams_path = System.IO.Path.Combine(family_folder, "MultiDrawSharedparamj.txt");
+                    filePath_SharedParams_path = System.IO.Path.Combine(family_folder, "MultiDrawSharedParameter.txt");
                     uiapp.Application.SharedParametersFilename = filePath_SharedParams_path;
 
                     DefinitionFile defFile = uiapp.Application.OpenSharedParameterFile();
@@ -98,11 +93,11 @@ namespace MultiDraw
                     Autodesk.Revit.DB.Binding binding2 = uiapp.Application.Create.NewInstanceBinding(catSet2);
                     Autodesk.Revit.DB.Binding binding_ALL2 = uiapp.Application.Create.NewInstanceBinding(catSet2);
 
-                    foreach (DefinitionGroup dG in defFile.Groups.Where(r => r.Name == "Con-Fittings"))
+                    foreach (DefinitionGroup dG in defFile.Groups.Where(r => r.Name == "TIG-MultiDraw Parameters"))
                     {
                         foreach (Definition def in dG.Definitions)
                         {
-                            if (def.Name != "SNV_Bend Type")
+                            if (def.Name != "TIG-Bend Angle")
                             {
                                 BindingMap map = (new UIApplication(uiapp.Application)).ActiveUIDocument.Document.ParameterBindings;
                                 map.Insert(def, binding, def.ParameterGroup);
@@ -117,12 +112,11 @@ namespace MultiDraw
 
                         }
                     }
-
-
-
                     trans2.Commit();
 
                 }
+
+               
                 // ParentUserControl.Instance.Primaryelst = Utility.GetPickedElements(uidoc, "Select conduits to perform action", typeof(Conduit), true);
                 SelectElementsFilter supportfilter = new SelectElementsFilter("Conduits");
                 IList<Reference> pickedobj = uidoc.Selection.PickObjects(ObjectType.Element, supportfilter, "Select the Conduits"); ;
@@ -183,9 +177,6 @@ namespace MultiDraw
                                     ParentUserControl.Instance.Primaryelst = Utility.GetPickedElements(uidoc, "Select conduits to perform action", typeof(Conduit), true);
                                     continue;
                                 }
-
-
-
                             }
                             else
                             {
@@ -312,12 +303,12 @@ namespace MultiDraw
 
                                                 //Verftical bends
                                                 FilteredElementCollector textnotecollection = new FilteredElementCollector(doc).OfClass(typeof(TextNoteType));
-                                                TextNoteType newtextnote = textnotecollection.Where(x => x.Name == "3/4 Arial").FirstOrDefault() as TextNoteType;
+                                                TextNoteType newtextnote = textnotecollection.Where(x => x.Name == "3/4 Arial-MultiDraw").FirstOrDefault() as TextNoteType;
                                                 if (newtextnote == null)
                                                 {
                                                     ElementId defaultTypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
                                                     TextNoteType textnote = textnotecollection.FirstOrDefault() as TextNoteType;
-                                                    newtextnote = (TextNoteType)textnote.Duplicate("3/4 Arial");
+                                                    newtextnote = (TextNoteType)textnote.Duplicate("3/4 Arial-MultiDraw");
                                                 }
 
                                                 Autodesk.Revit.DB.Parameter textnoteparam = newtextnote.LookupParameter("Text Size");
@@ -548,7 +539,7 @@ namespace MultiDraw
                                         FilteredElementCollector fittingscollections = new FilteredElementCollector(doc).OfClass(typeof(Conduit));
                                         Conduit reffittungs = fittingscollections.OfCategory(BuiltInCategory.OST_Conduit).FirstElement() as Conduit;
                                         Element refelement = reffittungs as Element;
-                                        Parameter param = refelement.GetOrderedParameters().Where(x => x.Definition.Name.Equals("SNV_Bend Type")).FirstOrDefault();
+                                        Parameter param = refelement.GetOrderedParameters().Where(x => x.Definition.Name.Equals("TIG-Bend Type")).FirstOrDefault();
                                         ElementId paramid = param.Id;
 
                                         //ElementId templateId = template.Id;
@@ -753,7 +744,7 @@ namespace MultiDraw
                                         transfilter.Start();
                                         FilteredElementCollector fittingscollections = new FilteredElementCollector(doc).OfClass(typeof(Conduit));
                                         Element refelement = fittingscollections.OfCategory(BuiltInCategory.OST_Conduit).FirstElement();
-                                        Parameter param = refelement.GetOrderedParameters().Where(x => x.Definition.Name.Equals("SNV_Bend Type")).FirstOrDefault();
+                                        Parameter param = refelement.GetOrderedParameters().Where(x => x.Definition.Name.Equals("TIG-Bend Type")).FirstOrDefault();
                                         ElementId paramid = param.Id;
 
                                         //ElementId templateId = template.Id;

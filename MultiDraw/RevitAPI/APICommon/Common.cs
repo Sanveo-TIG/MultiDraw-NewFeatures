@@ -90,10 +90,10 @@ namespace MultiDraw
                         thirdElements.Add(thirdElement);
                         Utility.RetainParameters(firstElement, secondElement, uiapp);
                         Utility.RetainParameters(firstElement, thirdElement, uiapp);
-                        Parameter bendtype = secondElement.LookupParameter("SNV_Bend Type");
-                        Parameter bendangle = secondElement.LookupParameter("SNV_Bend Angle");
-                        Parameter bendtype2 = thirdConduit.LookupParameter("SNV_Bend Type");
-                        Parameter bendangle2 = thirdConduit.LookupParameter("SNV_Bend Angle");
+                        Parameter bendtype = secondElement.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = secondElement.LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle2 = thirdConduit.LookupParameter("TIG-Bend Angle");
                         bendtype.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
                         bendangle.Set(angle);
                         bendtype2.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
@@ -140,10 +140,10 @@ namespace MultiDraw
                         ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
                         FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, SecondConnectors, doc, uiapp, pickedElements[i], true);
                         FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, firstConnectors, doc, uiapp, pickedElements[i], true);
-                        Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                        Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                        Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                        Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                        Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                         bendtype.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
                         bendangle.Set(angle);
                         bendtype2.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
@@ -258,10 +258,10 @@ namespace MultiDraw
                         thirdElements.Add(thirdElement);
                         Utility.RetainParameters(firstElement, secondElement, uiapp);
                         Utility.RetainParameters(firstElement, thirdElement, uiapp);
-                        Parameter bendtype = secondElement.LookupParameter("SNV_Bend Type");
-                        Parameter bendangle = secondElement.LookupParameter("SNV_Bend Angle");
-                        Parameter bendtype2 = thirdConduit.LookupParameter("SNV_Bend Type");
-                        Parameter bendangle2 = thirdConduit.LookupParameter("SNV_Bend Angle");
+                        Parameter bendtype = secondElement.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = secondElement.LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle2 = thirdConduit.LookupParameter("TIG-Bend Angle");
                         bendtype.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
                         bendangle.Set(angle);
                         bendtype2.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
@@ -326,10 +326,10 @@ namespace MultiDraw
                                 ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, SecondConnectors, doc, uiapp, pickedElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, firstConnectors, doc, uiapp, pickedElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
                                 bendangle.Set(angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.HoffsetValue.Text);
@@ -577,10 +577,10 @@ namespace MultiDraw
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
                             Utility.RetainParameters(PrimaryElements[j], e, uiApp);
 
-                            Autodesk.Revit.DB.Parameter bendtype = SecondaryElements[j].LookupParameter("SNV_Bend Type");
-                            Autodesk.Revit.DB.Parameter bendangle = SecondaryElements[j].LookupParameter("SNV_Bend Angle");
-                            Autodesk.Revit.DB.Parameter bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                            Autodesk.Revit.DB.Parameter bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                            Autodesk.Revit.DB.Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
+                            Autodesk.Revit.DB.Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
+                            Autodesk.Revit.DB.Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                            Autodesk.Revit.DB.Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                             bendtype.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
                             bendangle.Set(l_angle);
                             bendtype2.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
@@ -615,10 +615,10 @@ namespace MultiDraw
                             ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
                             FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, SecondConnectors, _doc, uiApp, PrimaryElements[j], true);
                             FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, firstConnectors, _doc, uiApp, PrimaryElements[j], true);
-                            Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                            Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                            Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                            Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                            Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                             bendtype.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
                             bendangle.Set(l_angle);
                             bendtype2.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
@@ -807,10 +807,10 @@ namespace MultiDraw
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
                             Utility.RetainParameters(PrimaryElements[j], e, uiApp);
 
-                            Parameter bendtype = SecondaryElements[j].LookupParameter("SNV_Bend Type");
-                            Parameter bendangle = SecondaryElements[j].LookupParameter("SNV_Bend Angle");
-                            Parameter bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                            Parameter bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                            Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
+                            Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                             bendtype.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
                             bendangle.Set(l_angle);
                             bendtype2.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
@@ -844,10 +844,10 @@ namespace MultiDraw
                             ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
                             FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, SecondConnectors, _doc, uiApp, PrimaryElements[j], true);
                             FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, firstConnectors, _doc, uiApp, PrimaryElements[j], true);
-                            Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                            Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                            Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                            Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                            Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                             bendtype.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
                             bendangle.Set(l_angle);
                             bendtype2.Set(ProfileColorSettingUserControl.Instance.VoffsetValue.Text);
@@ -1178,10 +1178,10 @@ namespace MultiDraw
                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
                 C_bendangle.Set(l_angle);
                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
@@ -1191,10 +1191,10 @@ namespace MultiDraw
                 ConnectorSet thirdConnectors = Utility.GetConnectors(e);
                 FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, PrimaryConnectors, doc, _uiapp, PrimaryElements[i], true);
                 FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, SecondaryConnectors, doc, _uiapp, PrimaryElements[i], true);
-                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                 bendtype.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
                 bendangle.Set(l_angle);
                 bendtype2.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
@@ -1216,10 +1216,10 @@ namespace MultiDraw
                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
                 C_bendangle.Set(l_angle);
                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
@@ -1228,10 +1228,10 @@ namespace MultiDraw
                 ConnectorSet thirdConnectors = Utility.GetConnectors(e);
                 FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, PrimaryConnectors, doc, _uiapp, PrimaryElements[i], true);
                 FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, SecondaryConnectors, doc, _uiapp, PrimaryElements[i], true);
-                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                 bendtype.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
                 bendangle.Set(l_angle);
                 bendtype2.Set(ProfileColorSettingUserControl.Instance.RoffsetValue.Text);
@@ -1361,12 +1361,13 @@ namespace MultiDraw
             try
             {
                 KWBOffset.GetSecondaryElements(doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, offSetVar, pickpoint);
-
+                double NinetyAngle = 90.00 * (Math.PI / 180);
                 bool isUp = PrimaryElements.FirstOrDefault().LookupParameter(offSetVar).AsDouble() <
                     SecondaryElements.FirstOrDefault().LookupParameter(offSetVar).AsDouble();
                 if (!isUp)
                 {
                     l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.Name) * (Math.PI / 180);
+                   
                     try
                     {
                         ConnectorSet PrimaryConnectors = null;
@@ -1402,25 +1403,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         else
@@ -1462,25 +1463,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Down", Util.ProductVersion, "Connect");
@@ -1522,25 +1523,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             else
@@ -1581,25 +1582,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Down", Util.ProductVersion, "Connect");
@@ -1650,25 +1651,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         else
@@ -1709,25 +1710,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Up", Util.ProductVersion, "Connect");
@@ -1769,25 +1770,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             else
@@ -1828,25 +1829,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Up", Util.ProductVersion, "Connect");
@@ -1873,7 +1874,7 @@ namespace MultiDraw
             try
             {
                 KWBOffset.GetSecondaryPointElements(doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, offSetVar, pickpoint);
-
+                double NinetyAngle = 90.00 * (Math.PI / 180);
                 bool isUp = PrimaryElements.FirstOrDefault().LookupParameter(offSetVar).AsDouble() <
                     SecondaryElements.FirstOrDefault().LookupParameter(offSetVar).AsDouble();
                 if (!isUp)
@@ -1914,25 +1915,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         else
@@ -1974,25 +1975,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Down", Util.ProductVersion, "Connect");
@@ -2034,25 +2035,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             else
@@ -2093,25 +2094,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Down", Util.ProductVersion, "Connect");
@@ -2162,25 +2163,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         else
@@ -2221,25 +2222,25 @@ namespace MultiDraw
                                 Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                 Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                 C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                C_bendangle2.Set(l_angle);
+                                C_bendangle2.Set(NinetyAngle);
 
                                 FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                 FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                 bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                 bendangle.Set(l_angle);
                                 bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                bendangle2.Set(l_angle);
+                                bendangle2.Set(NinetyAngle);
                             }
                         }
                         _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Up", Util.ProductVersion, "Connect");
@@ -2281,25 +2282,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             else
@@ -2340,25 +2341,25 @@ namespace MultiDraw
                                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     C_bendangle.Set(l_angle);
                                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    C_bendangle2.Set(l_angle);
+                                    C_bendangle2.Set(NinetyAngle);
 
                                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                                     bendtype.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
                                     bendangle.Set(l_angle);
                                     bendtype2.Set(ProfileColorSettingUserControl.Instance.KoffsetValue.Text);
-                                    bendangle2.Set(l_angle);
+                                    bendangle2.Set(NinetyAngle);
                                 }
                             }
                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick With Bend Up", Util.ProductVersion, "Connect");
@@ -2804,13 +2805,13 @@ namespace MultiDraw
                                                     Element secondElement = inclindconduits[i];
                                                   FamilyInstance halfbend =   Utility.CreateElbowFittings(firstElement, secondElement, doc, uiApp, true);
 
-                                                    Parameter C_bendtype = secondElement.LookupParameter("SNV_Bend Type");
-                                                    Parameter C_bendangle = secondElement.LookupParameter("SNV_Bend Angle");
+                                                    Parameter C_bendtype = secondElement.LookupParameter("TIG-Bend Type");
+                                                    Parameter C_bendangle = secondElement.LookupParameter("TIG-Bend Angle");
                                                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.StraightValue.Text);
                                                     C_bendangle.Set(halfbend.LookupParameter("Angle").AsDouble());
 
-                                                    Parameter C_bendtype_bd = halfbend.LookupParameter("SNV_Bend Type");
-                                                    Parameter C_bendangle_bd = halfbend.LookupParameter("SNV_Bend Angle");
+                                                    Parameter C_bendtype_bd = halfbend.LookupParameter("TIG-Bend Type");
+                                                    Parameter C_bendangle_bd = halfbend.LookupParameter("TIG-Bend Angle");
                                                     C_bendtype_bd.Set(ProfileColorSettingUserControl.Instance.StraightValue.Text);
                                                     C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
                                                 }
@@ -2911,13 +2912,13 @@ namespace MultiDraw
                                         Element secondElement = inclindconduits[i];
                                       FamilyInstance halfbend = Utility.CreateElbowFittings(firstElement, secondElement, doc, uiApp, true);
 
-                                        Parameter C_bendtype = secondElement.LookupParameter("SNV_Bend Type");
-                                        Parameter C_bendangle = secondElement.LookupParameter("SNV_Bend Angle");
+                                        Parameter C_bendtype = secondElement.LookupParameter("TIG-Bend Type");
+                                        Parameter C_bendangle = secondElement.LookupParameter("TIG-Bend Angle");
                                         C_bendtype.Set(ProfileColorSettingUserControl.Instance.StraightValue.Text);
                                         C_bendangle.Set(halfbend.LookupParameter("Angle").AsDouble());
 
-                                        Parameter C_bendtype_bd = halfbend.LookupParameter("SNV_Bend Type");
-                                        Parameter C_bendangle_bd = halfbend.LookupParameter("SNV_Bend Angle");
+                                        Parameter C_bendtype_bd = halfbend.LookupParameter("TIG-Bend Type");
+                                        Parameter C_bendangle_bd = halfbend.LookupParameter("TIG-Bend Angle");
                                         C_bendtype_bd.Set(ProfileColorSettingUserControl.Instance.StraightValue.Text);
                                         C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
                                     }
@@ -3219,13 +3220,13 @@ namespace MultiDraw
                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, PrimaryConnectors, doc, _uiapp, PrimaryElements[i], true);
 
-                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
+                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.NightystubValue.Text);
                     C_bendangle.Set(90);
 
-                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
+                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                     bendtype.Set(ProfileColorSettingUserControl.Instance.NightystubValue.Text);
                     bendangle.Set(90);
 
@@ -3310,10 +3311,10 @@ namespace MultiDraw
                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
                     Utility.RetainParameters(PrimaryElements[i], e, _uiapp);
 
-                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
-                    Parameter C_bendtype2 = newCon.LookupParameter("SNV_Bend Type");
-                    Parameter C_bendangle2 = newCon.LookupParameter("SNV_Bend Angle");
+                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
+                    Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                    Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.NightyKickValue.Text);
                     C_bendangle.Set(l_angle);
                     C_bendtype2.Set(ProfileColorSettingUserControl.Instance.NightyKickValue.Text);
@@ -3321,10 +3322,10 @@ namespace MultiDraw
 
                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
                     FamilyInstance fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
-                    Parameter bendtype2 = fittings2.LookupParameter("SNV_Bend Type");
-                    Parameter bendangle2 = fittings2.LookupParameter("SNV_Bend Angle");
+                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                    Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                    Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                     bendtype.Set(ProfileColorSettingUserControl.Instance.NightyKickValue.Text);
                     bendangle.Set(l_angle);
                     bendtype2.Set(ProfileColorSettingUserControl.Instance.NightyKickValue.Text);
@@ -3404,15 +3405,15 @@ namespace MultiDraw
                     Utility.GetClosestConnectors(PrimaryConnectors, SecondaryConnectors, out Connector ConnectorOne, out Connector ConnectorTwo);
                     Utility.RetainParameters(PrimaryElements[i], SecondaryElements[i], _uiapp);
 
-                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("SNV_Bend Type");
-                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("SNV_Bend Angle");
+                    Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
+                    Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                     C_bendtype.Set(ProfileColorSettingUserControl.Instance.NightystubValue.Text);
                     C_bendangle.Set(90);
 
                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, PrimaryConnectors, doc, _uiapp, PrimaryElements[i], true);
 
-                    Parameter bendtype = fittings1.LookupParameter("SNV_Bend Type");
-                    Parameter bendangle = fittings1.LookupParameter("SNV_Bend Angle");
+                    Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                    Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                     bendtype.Set(ProfileColorSettingUserControl.Instance.NightystubValue.Text);
                     bendangle.Set(90);
                 }
