@@ -520,6 +520,197 @@ namespace MultiDraw
 
             }
         }
+
+        public static void GetSecondaryElements(Document doc, ref List<Element> pickedElements, out List<Element> secondaryElements, string offSetVar, XYZ pickpoint)
+        {
+            secondaryElements = new List<Element>();
+            //ConduitElevation identification
+            XYZ e1pt1 = ((pickedElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+            XYZ e1pt2 = ((pickedElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+
+            double Z1 = Math.Round(e1pt1.Z, 2);
+            double Z2 = Math.Round(e1pt2.Z, 2);
+
+            if (Z1 == Z2)
+            {
+                Line lineOne = (pickedElements[0].Location as LocationCurve).Curve as Line;
+                XYZ pt1 = lineOne.GetEndPoint(0);
+                XYZ pt2 = lineOne.GetEndPoint(1);
+                XYZ midpoint = (pt1 + pt2) / 2;
+                XYZ PrimaryConduitDirection = lineOne.Direction;
+                XYZ CrossProduct = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
+                XYZ PickPointTwo = pickpoint + CrossProduct.Multiply(1);
+
+                XYZ Intersectionpoint = Utility.FindIntersectionPoint(pt1, pt2, pickpoint, PickPointTwo);
+                Line PerpendicularconduitLine = Line.CreateBound(new XYZ(Intersectionpoint.X, Intersectionpoint.Y, 0), new XYZ(pickpoint.X, pickpoint.Y, 0));
+                XYZ PerpendicularconduitLinedir = PerpendicularconduitLine.Direction;
+                PerpendicularconduitLinedir = new XYZ(PerpendicularconduitLinedir.X, PerpendicularconduitLinedir.Y, 0);
+
+                Line ConduitDirectionLine = Line.CreateBound(midpoint, Intersectionpoint);
+                XYZ DirectionPfconduit = ConduitDirectionLine.Direction;
+                DirectionPfconduit = new XYZ(DirectionPfconduit.X, DirectionPfconduit.Y, PrimaryConduitDirection.Z);
+
+                //Set Line direction
+                XYZ pickpointst1 = pickpoint + PrimaryConduitDirection.Multiply(1);
+                XYZ midpoint2 = midpoint + CrossProduct.Multiply(1);
+                XYZ intersectiompointTwo = Utility.FindIntersectionPoint(pickpoint, pickpointst1, midpoint, midpoint2);
+                Line Linefoeoffset = Line.CreateBound(midpoint, intersectiompointTwo);
+                XYZ Directionforoffset = Linefoeoffset.Direction;
+
+
+                Dictionary<double, List<Element>> groupedElements = new Dictionary<double, List<Element>>();
+                Utility.GroupByElevation(pickedElements, offSetVar, ref groupedElements);
+                pickedElements = new List<Element>();
+                groupedElements = groupedElements.OrderByDescending(r => r.Key).ToDictionary(x => x.Key, x => x.Value);
+
+                foreach (KeyValuePair<double, List<Element>> valuePair in groupedElements)
+                {
+                    XYZ Intersectionpoint_point = null;
+                    List<Element> primaryElementsforOrder = valuePair.Value.OrderByDescending(r => ((r.Location as LocationCurve).Curve as Line).Origin.Y).ToList();
+                    XYZ firstStartPoint = ((primaryElementsforOrder[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                    XYZ firstEndPoint = ((primaryElementsforOrder[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+
+                    //oredred the element based on the pickpoint direction
+                    List<double> distancecollection = new List<double>();
+                    foreach (Element ele in primaryElementsforOrder)
+                    {
+                        Conduit con = ele as Conduit;
+                        XYZ Conpt1 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                        XYZ Conpt2 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                        XYZ intersectiopointforOrderelement = Utility.FindIntersectionPoint(pickpoint, PickPointTwo, Conpt1, Conpt2);
+
+                        double distance = Math.Sqrt(Math.Pow((pickpoint.X - intersectiopointforOrderelement.X), 2) + Math.Pow((pickpoint.Y - intersectiopointforOrderelement.Y), 2));
+                        distancecollection.Add(distance);
+                    }
+                    distancecollection = distancecollection.OrderBy(x => x).ToList();
+                    List<Element> primaryElements = new List<Element>();
+                    foreach (double val in distancecollection)
+                    {
+                        foreach (Element ele in primaryElementsforOrder)
+                        {
+                            Conduit con = ele as Conduit;
+                            XYZ Conpt1 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                            XYZ Conpt2 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                            XYZ intersectiopointforOrderelement = Utility.FindIntersectionPoint(pickpoint, PickPointTwo, Conpt1, Conpt2);
+
+                            double distance = Math.Sqrt(Math.Pow((pickpoint.X - intersectiopointforOrderelement.X), 2) + Math.Pow((pickpoint.Y - intersectiopointforOrderelement.Y), 2));
+                            if (distance == val)
+                            {
+                                primaryElements.Add(ele);
+                            }
+                        }
+                    }
+                    primaryElements = primaryElements.Distinct().ToList();
+                    XYZ BasePoint = null;
+                    primaryElements = Utility.GetConduitsInOrderByPoint(primaryElements, pickpoint);
+                    for (int i = 0; i < primaryElements.Count; i++)
+                    {
+                        Line Mainl_Line = (primaryElements[0].Location as LocationCurve).Curve as Line;
+                        XYZ MainStartPoint = Mainl_Line.GetEndPoint(0);
+                        XYZ MainEndPoint = Mainl_Line.GetEndPoint(1);
+
+                        Line l_Line = (primaryElements[i].Location as LocationCurve).Curve as Line;
+                        XYZ StartPoint = l_Line.GetEndPoint(0);
+                        XYZ EndPoint = l_Line.GetEndPoint(1);
+
+                        double SubdistanceOne = Math.Sqrt(Math.Pow((StartPoint.X - Intersectionpoint.X), 2) + Math.Pow((StartPoint.Y - Intersectionpoint.Y), 2));
+                        double SubdistanceTwo = Math.Sqrt(Math.Pow((EndPoint.X - Intersectionpoint.X), 2) + Math.Pow((EndPoint.Y - Intersectionpoint.Y), 2));
+                        XYZ ConduitStartpt = null;
+                        XYZ ConduitEndpoint = null;
+
+                        if (SubdistanceOne < SubdistanceTwo)
+                        {
+                            ConduitStartpt = StartPoint;
+                            ConduitEndpoint = EndPoint;
+                        }
+                        else
+                        {
+                            ConduitStartpt = EndPoint;
+                            ConduitEndpoint = StartPoint;
+                        }
+
+                        Line LineForspacing = Line.CreateBound(ConduitEndpoint, ConduitStartpt);
+                        XYZ LineForspacingDir = LineForspacing.Direction;
+
+                        if (i == 0)
+                        {
+                            Intersectionpoint_point = Utility.FindIntersectionPoint(StartPoint, EndPoint, pickpoint, PickPointTwo);
+                            XYZ refStartPoint = ConduitStartpt + LineForspacingDir.Multiply(0.1);
+                            refStartPoint = ConduitStartpt;
+                            XYZ refEndPoint = refStartPoint + PerpendicularconduitLinedir.Multiply(10);
+                            BasePoint = refStartPoint;
+
+                            //finding the intersections 
+                            Line refline = Line.CreateBound(new XYZ(refStartPoint.X, refStartPoint.Y,0), new XYZ(refEndPoint.X, refEndPoint.Y,0));
+                            XYZ reflinedirection = refline.Direction;
+                            XYZ crossproduct = reflinedirection.CrossProduct(XYZ.BasisZ);
+                            XYZ secondpickpooint = pickpoint + crossproduct.Multiply(5);
+                            XYZ findintersection = Utility.FindIntersectionPoint(refStartPoint, refEndPoint,pickpoint, secondpickpooint);
+
+                            if (findintersection != null)
+                            {
+                                Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, refStartPoint, new XYZ(findintersection.X, findintersection.Y, refEndPoint.Z));
+                                double elevation = primaryElements[i].LookupParameter(offSetVar).AsDouble();
+                                Element ele = doc.GetElement(newCon.Id);
+                                SetElevation(ele, elevation, offSetVar);
+                                pickedElements.Add(primaryElements[i]);
+                                secondaryElements.Add(ele);
+                            }
+                            else
+                            {
+                                Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, refStartPoint, refEndPoint);
+                                double elevation = primaryElements[i].LookupParameter(offSetVar).AsDouble();
+                                Element ele = doc.GetElement(newCon.Id);
+                                SetElevation(ele, elevation, offSetVar);
+                                pickedElements.Add(primaryElements[i]);
+                                secondaryElements.Add(ele);
+                            }
+                           
+                        }
+                        else
+                        {
+                            XYZ IntersectionpointSub = Utility.FindIntersectionPoint(StartPoint, EndPoint, pickpoint, PickPointTwo);
+                            double Spacing = Math.Sqrt(Math.Pow((Intersectionpoint_point.X - IntersectionpointSub.X), 2) + Math.Pow((Intersectionpoint_point.Y - IntersectionpointSub.Y), 2));
+
+                            XYZ refStartPoint = BasePoint + LineForspacingDir.Multiply(Spacing);
+                            XYZ refEndPoint = refStartPoint + PerpendicularconduitLinedir.Multiply(10);
+
+                            //finding the intersections 
+                            Line refline = Line.CreateBound(new XYZ(refStartPoint.X, refStartPoint.Y, 0), new XYZ(refEndPoint.X, refEndPoint.Y, 0));
+                            XYZ reflinedirection = refline.Direction;
+                            XYZ crossproduct = reflinedirection.CrossProduct(XYZ.BasisZ);
+                            XYZ secondpickpooint = pickpoint + crossproduct.Multiply(5);
+                            XYZ findintersection = Utility.FindIntersectionPoint(refStartPoint, refEndPoint, pickpoint, secondpickpooint);
+
+                            if (findintersection != null)
+                            {
+                                Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, refStartPoint, new XYZ(findintersection.X, findintersection.Y, refEndPoint.Z));
+                                double elevation = primaryElements[i].LookupParameter(offSetVar).AsDouble();
+                                Element ele = doc.GetElement(newCon.Id);
+                                SetElevation(ele, elevation, offSetVar);
+                                pickedElements.Add(primaryElements[i]);
+                                secondaryElements.Add(ele);
+                            }
+                            else
+                            {
+                                Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, refStartPoint, refEndPoint);
+                                double elevation = primaryElements[i].LookupParameter(offSetVar).AsDouble();
+                                Element ele = doc.GetElement(newCon.Id);
+                                SetElevation(ele, elevation, offSetVar);
+                                pickedElements.Add(primaryElements[i]);
+                                secondaryElements.Add(ele);
+                            }
+
+                        }
+                    }
+                }
+
+                ParentUserControl.Instance.Secondaryelst.Clear();
+                ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+                ParentUserControl.Instance.Primaryelst.Clear();
+                ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
+            }
+        }
         private static void SetElevation(Element Ele, double elevation, string offSetVar)
         {
             Parameter newElevation = Ele.LookupParameter(offSetVar);

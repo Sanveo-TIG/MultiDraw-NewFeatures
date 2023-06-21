@@ -18,20 +18,17 @@ namespace MultiDraw
         public void Execute(UIApplication uiapp)
         {
             UIDocument uidoc = uiapp.ActiveUIDocument;
-            Application app = uiapp.Application;
             Document doc = uidoc.Document;
             try
             {
-                using (Transaction tx = new Transaction(doc))
-                {
-                    tx.Start("MultiDraw Settings");
-                    Settings settings = ParentUserControl.Instance.GetSettings();
-                    string json = JsonConvert.SerializeObject(settings);
-                    Utility.SetGlobalParametersManager(uiapp, "MultiDrawSettings", json);
-                    tx.Commit();
-                    ParentUserControl.Instance.MultiDrawSettings = settings;
-                }
-
+                using Transaction tx = new Transaction(doc);
+                tx.Start("MultiDraw Settings");
+                Settings settings = ParentUserControl.Instance.GetSettings();
+                string json = JsonConvert.SerializeObject(settings);
+                Properties.Settings.Default.MultiDrawSettings = json;
+                Properties.Settings.Default.Save();
+                tx.Commit();
+                ParentUserControl.Instance.MultiDrawSettings = settings;
             }
             catch (Exception ex)
             {

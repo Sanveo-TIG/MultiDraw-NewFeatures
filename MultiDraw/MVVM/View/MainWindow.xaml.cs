@@ -134,7 +134,7 @@ namespace MultiDraw
             Instance = this;
             HeaderPanel.Instance = this;
             HeaderPanel.HideMaxWindow = true;
-            _isCancel = false;          
+            _isCancel = false;
             FooterPanel.Version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
             System.Windows.Controls.UserControl userControl = new ParentUserControl(_externalEvents, application, this);
             Container.Children.Add(userControl);
@@ -143,6 +143,42 @@ namespace MultiDraw
         {
             _externalEvents.Add(ExternalEvent.Create(new MultiDrawHandler()));
             _externalEvents.Add(ExternalEvent.Create(new SettingsHandler()));
+        }
+
+        private void Key_PressEvent(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key != Key.Enter)
+            {
+                switch (e.Key)
+                {
+                    case Key.K:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 3;
+                        break;
+                    case Key.D:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
+                        break;
+                    case Key.H:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 1;
+                        break;
+                    case Key.S:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 7;
+                        break;
+                    case Key.V:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 0;
+                        break;
+                    case Key.R:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 2;
+                        break;
+                    case Key.U:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 5;
+                        break;
+                    case Key.N:
+                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 6;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
         xmlns:uc="clr-namespace:MultiDraw"
         Background="#E5EEF5"
         Title="MainWindow"
-        Loaded="Window_Loaded" 
+        Loaded="Window_Loaded" KeyUp="Key_PressEvent"
         FontFamily="/MultiDraw;component/Resources/Font/#Poppins Medium">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"   />       

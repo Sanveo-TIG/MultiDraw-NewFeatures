@@ -41,13 +41,18 @@
     <Grid >
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="300"></RowDefinition>
 
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
+            <TextBlock x:Name="Straight"
+                       Text="Straight/Bend"  Margin="0,5,0,0" FontSize="16"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
             <ListBox x:Name="angleList"  BorderBrush="#ccc" BorderThickness="1"
                  Background="White"
-                 Foreground="#333333" SelectionChanged="AngleList_SelectionChanged"
+                 Foreground="#333333" 
                  Style="{x:Null}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">

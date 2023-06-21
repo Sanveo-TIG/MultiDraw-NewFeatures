@@ -29,58 +29,79 @@ namespace MultiDraw
     {
         public static HOffsetUserControl Instance;
         public System.Windows.Window _window = new System.Windows.Window();
-        Document _doc = null;
-        UIDocument _uidoc = null;
-        ExternalEvent _externalEvents = null;
-        List<string> _angleList = new List<string>() { "5.00", "11.25", "15.00", "22.50", "30.00", "45.00", "60.00" };
+        readonly Document _doc = null;
+        readonly UIDocument _uidoc = null;
+        readonly ExternalEvent _externalEvents = null;
+        public UIApplication _uiApp = null;
+        readonly List<string> _angleList = new List<string>() { "5.00", "11.25", "15.00", "22.50", "30.00", "45.00", "60.00" };
         public HOffsetUserControl(ExternalEvent externalEvents, CustomUIApplication application, Window window)
         {
+            _uiApp = application.UIApplication;
             _uidoc = application.UIApplication.ActiveUIDocument;
             _doc = _uidoc.Document;
             _externalEvents= externalEvents;
             InitializeComponent();
             Instance = this;
-
             try
             {
                 _window = window;
-                txtOffsetFeet.Document = _doc;
-                txtOffsetFeet.UIApplication = application.UIApplication;
-                List<MultiSelect> angleList = new List<MultiSelect>();
-                foreach (string item in _angleList)
-                    angleList.Add(new MultiSelect() { Name = item });
-                ddlAngle.ItemsSource = angleList;
-                ddlAngle.SelectedItem = angleList[4];
-                txtOffsetFeet.Text = "1.5";
-                Grid_MouseDown(null, null);
-
-                string json = Utility.GetGlobalParametersManager(application.UIApplication, "HorizontalOffsetDraw");
-                if (!string.IsNullOrEmpty(json))
-                {
-                    HOffsetGP globalParam = JsonConvert.DeserializeObject<HOffsetGP>(json);
-                    ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];
-                    txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
-                }
-
-                _externalEvents.Raise();
-
-
+                ParentUserControl.Instance.AlignConduits.IsEnabled = false;
+                ParentUserControl.Instance.Anglefromprimary.IsEnabled = true;              
             }
             catch (Exception exception)
             {
-
                 System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
-        private void BtnDraw_btnClick(object sender)
+        private void SaveSettings()
         {
+            HOffsetGP globalParam = new HOffsetGP
+            {
+                OffsetValue = txtOffsetFeet.AsDouble == 0 ? "1.5\'" : txtOffsetFeet.AsString,
+                AngleValue = ddlAngle.SelectedItem == null ? "30.00" : ddlAngle.SelectedItem.Name
+            };
+            Properties.Settings.Default.HorizontalOffsetDraw = JsonConvert.SerializeObject(globalParam);
+            Properties.Settings.Default.Save();
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             txtOffsetFeet.Click_load(txtOffsetFeet);
+        }
+
+        private void DdlAngle_Changed(object sender)
+        {
+            SaveSettings();
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            SaveSettings();
+        }
+
+        private void Control_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtOffsetFeet.Document = _doc;
+            txtOffsetFeet.UIApplication = _uiApp;
+            List<MultiSelect> angleList = new List<MultiSelect>();
+            foreach (string item in _angleList)
+                angleList.Add(new MultiSelect() { Name = item });
+            ddlAngle.ItemsSource = angleList;
+            Grid_MouseDown(null, null);
+            string json = Properties.Settings.Default.HorizontalOffsetDraw;
+            if (!string.IsNullOrEmpty(json))
+            {
+                HOffsetGP globalParam = JsonConvert.DeserializeObject<HOffsetGP>(json);
+                txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
+                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];                
+            }
+            else
+            {
+                txtOffsetFeet.Text = "1.5\'";
+                ddlAngle.SelectedItem = angleList[4];                
+            }
+            _externalEvents.Raise();
         }
     }
 }

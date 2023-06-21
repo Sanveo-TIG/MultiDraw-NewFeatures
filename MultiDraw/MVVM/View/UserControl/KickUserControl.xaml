@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="250"
-             Background="Transparent" Loaded="OnControlLoaded">
+             Background="Transparent" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,12 +22,18 @@
     </UserControl.Resources>
     <Grid MouseDown="Grid_MouseDown">
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="112"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="55"></RowDefinition>
         </Grid.RowDefinitions>
+
         <StackPanel Grid.Row="0">
+            <TextBlock x:Name="kick"
+                       Text="Kick"  Margin="0,5,0,0" FontSize="16"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
 
             <TextBlock  x:Name="lbl"
                         Text="Kick Options"
@@ -45,10 +51,10 @@
                              Orientation="Vertical"
                              HorizontalAlignment="Left"
                              Background="White">
-
-                    <RadioButton x:Name="rbNinetyNear" Content="90° Near"
-                          
-                          
+                    <RadioButton x:Name="rbNinetyNear"
+                                 Content="90° Near"
+                                 IsChecked="True"
+                                 Click="SelectionMode_Changed"
                            Margin="0,0,0,4">
                 <RadioButton.ToolTip >
                     <StackPanel Orientation="Horizontal">
@@ -56,60 +62,30 @@
                     </StackPanel>
                 </RadioButton.ToolTip>
             </RadioButton>
-
                     <RadioButton x:Name="rbNinetyFar" Content="90° Far"
-                           
-                          
-                           Margin="0,0,0,4">
+                                 Margin="0,0,0,4"
+                                 Click="SelectionMode_Changed">
                         <RadioButton.ToolTip >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/MultiDraw;component/Resources/90 far.png" Width="250" Height="250" />
                             </StackPanel>
                         </RadioButton.ToolTip>
                     </RadioButton>
-
                 </StackPanel>
-
-
             </Border>
-
-            <!--<RadioButton x:Name="lbl" Content="90° Near"
-                           Foreground="#005D9A"
-                           FontSize="12"
-                           FontFamily="/MultiDraw;component/Resources/Font/#Poppins SemiBold"
-                           Margin="0,0,0,4">
-                <RadioButton.ToolTip >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/MultiDraw;component/Resources/Roll.png" Width="250" Height="250" />
-                    </StackPanel>
-                </RadioButton.ToolTip>
-            </RadioButton>
-            
-            <TIG:RadioButtonUserControl x:Name="rbList"
-                                        Label="Kick Option"
-                                        ItemsSource="90° Near,90° Far"
-                                        Value="90° Near"
-                                        Checked="RbList_Checked"
-                                        UnChecked="RbList_UnChecked"></TIG:RadioButtonUserControl>-->
-        </StackPanel>
-        <StackPanel Grid.Row="1">
-            <TIG:DropDownUserControl  Width="320"
-                                       x:Name="ddlAngle"
-                                       Label="Angle"></TIG:DropDownUserControl>
-           
         </StackPanel>
         <StackPanel Grid.Row="2">
-            <TIG:TextBoxUserControl x:Name="txtOffsetFeet"
+            <TIG:DropDownUserControl  Width="328" 
+                                       x:Name="ddlAngle"
+                                       Label="Angle" SelectionChanged="DdlAngle_Changed"></TIG:DropDownUserControl>
+           
+        </StackPanel>
+        <StackPanel Grid.Row="3">
+            <TIG:TextBoxUserControl x:Name="txtOffsetFeet" 
                                     Label="Offset"
                                     UnitsLabel="Feet and inches"
+                                    LostFocus="TextBox_LostFocus"
                                     IsUnit="True"></TIG:TextBoxUserControl>
         </StackPanel>
-        <!--<StackPanel Grid.Row="3">
-            <TIG:ButtonUserControl x:Name="btnDraw"
-                                   Label="Draw"
-                                   Width="70"
-                                   Icon="Draw"
-                                   BtnClick="btnDraw_btnClick"></TIG:ButtonUserControl>
-        </StackPanel>-->
     </Grid>
 </UserControl>

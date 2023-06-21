@@ -23,7 +23,6 @@ using TIGUtility;
 using View = Autodesk.Revit.DB.View;
 using System.ComponentModel;
 using System.Drawing.Printing;
-using Autodesk.Revit.DB.Architecture;
 
 namespace MultiDraw
 {
@@ -38,19 +37,10 @@ namespace MultiDraw
         public System.Windows.Window _window = new System.Windows.Window();
         readonly Document _doc = null;
         readonly UIDocument _uidoc = null;
-        public List<ExternalEvent> _externalEvents = new List<ExternalEvent>();
-        public CustomUIApplication _application = null;
+       public List<ExternalEvent> _externalEvents = new List<ExternalEvent>();
+       public CustomUIApplication _application = null;
         public Settings MultiDrawSettings = null;
         public SettingsUserControl settingsControl = null;
-
-        private HOffsetUserControl H_Offset = null;
-        private VOffsetUserControl V_Offset = null;
-        private RollingUserControl RollingOffset = null;
-        private KickUserControl kickWithBend = null;
-        private StraightOrBendUserControl striaghtcontrol = null;
-        private NinetyKickUserControl ninetykickcontrol = null;
-        private NinetyStubUserControl ninetystubcontrol = null;
-        private SyncDataUserControl syncDataControl = null;
 
         public ParentUserControl(List<ExternalEvent> externalEvents, CustomUIApplication application, Window window)
         {
@@ -63,13 +53,13 @@ namespace MultiDraw
             try
             {
                 _window = window;
-                string json = Utility.GetGlobalParametersManager(application.UIApplication, "StraightsDraw");
+                string json = Properties.Settings.Default.StraightsDraw;
                 if (!string.IsNullOrEmpty(json))
                 {
                     StraightsDrawParam globalParam = JsonConvert.DeserializeObject<StraightsDrawParam>(json);
                     Anglefromprimary.IsChecked = globalParam.IsPrimaryAngle;
                     AlignConduits.IsChecked = globalParam.IsAlignConduit;
-
+                   
                 }
                 _window.LocationChanged += Window_LocationChanged;
             }
@@ -112,75 +102,62 @@ namespace MultiDraw
         public void CmbProfileType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             masterContainer.Children.Clear();
+            UserControl userControl = new UserControl();
             switch (((System.Windows.Controls.Primitives.Selector)sender).SelectedIndex)
             {
                 case 0:
-                    if (V_Offset == null)
-                        V_Offset = new VOffsetUserControl(_externalEvents[0], _application, _window);
-                    masterContainer.Children.Add(VOffsetUserControl.Instance);
+                    userControl = new VOffsetUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 1:
-                    if (H_Offset == null)
-                        H_Offset = new HOffsetUserControl(_externalEvents[0], _application, _window);
-                    masterContainer.Children.Add(HOffsetUserControl.Instance);
+                    userControl = new HOffsetUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 2:
-                    if (RollingOffset == null)
-                        RollingOffset = new RollingUserControl(_externalEvents[0], _application, _window);
-                    masterContainer.Children.Add(RollingUserControl.Instance);
+                    userControl = new RollingUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 3:
-                    if (kickWithBend == null)
-                        kickWithBend = new KickUserControl(_externalEvents[0], _application, _window);
-                    masterContainer.Children.Add(KickUserControl.Instance);
+                    userControl = new KickUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 4:
-                    if (striaghtcontrol == null)
-                        striaghtcontrol = new StraightOrBendUserControl(_externalEvents[0], _window, _application);
-                    masterContainer.Children.Add(StraightOrBendUserControl.Instance);
+                    userControl = new StraightOrBendUserControl(_externalEvents[0], _window, _application);
                     break;
                 case 5:
-                    if (ninetykickcontrol == null)
-                        ninetykickcontrol = new NinetyKickUserControl(_externalEvents[0], _application, _window);
-                    masterContainer.Children.Add(NinetyKickUserControl.Instance);
+                    userControl = new NinetyKickUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 6:
-                    if (ninetystubcontrol == null)
-                        ninetystubcontrol = new NinetyStubUserControl(_externalEvents[0], _application, _window);
-                    masterContainer.Children.Add(NinetyStubUserControl.Instance);
+                    userControl = new NinetyStubUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 7:
-                    if (syncDataControl == null)
-                        syncDataControl = new SyncDataUserControl(_externalEvents[0], _application, _window);
-                    masterContainer.Children.Add(SyncDataUserControl.Instance);
+                    userControl = new SyncDataUserControl(_application, _window);
                     break;
                 case 8:
-                    if (settingsControl == null)
-                        settingsControl = new SettingsUserControl(_doc, _application.UIApplication, _window, _externalEvents[1]);
-                    masterContainer.Children.Add(SettingsUserControl.Instance);
+                    userControl = new SettingsUserControl(_doc, _application.UIApplication, _window);
+                    settingsControl = userControl as SettingsUserControl;
                     break;
                 default:
                     break;
             }
-
+            masterContainer.Children.Add(userControl);
+           
         }
 
         private void ReadSettings()
         {
-            string Json = Utility.GetGlobalParametersManager(_application.CommandData.Application, "MultiDrawSettings");
-            if (!string.IsNullOrEmpty(Json))
+            string Json = Properties.Settings.Default.MultiDrawSettings;
+            if(!string.IsNullOrEmpty(Json))
             {
                 try
                 {
                     Settings settings = JsonConvert.DeserializeObject<Settings>(Json);
-                    if (settings != null)
+                    if(settings != null)
                     {
                         MultiDrawSettings = settings;
                     }
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Properties.Settings.Default.MultiDrawSettings = string.Empty;
+                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -210,44 +187,6 @@ namespace MultiDraw
         {
             cmbProfileType.SelectedIndex = 4;
             ReadSettings();
-            LoadAllFamilies();
-        }
-
-        private void LoadAllFamilies()
-        {
-            IList<Element> Symbols = new FilteredElementCollector(_doc).OfCategory(BuiltInCategory.OST_ElectricalFixtures).OfClass(typeof(Family)).ToElements();
-            string family_folder = System.IO.Path.GetDirectoryName(typeof(Command).Assembly.Location);
-            using (Transaction tx = new Transaction(_doc))
-            {
-                tx.Start("Load Families");
-                DirectoryInfo di = new DirectoryInfo(family_folder);
-                FileInfo[] familyfiles = di.GetFiles("*.rfa");
-                foreach (FileInfo fi in familyfiles)
-                {
-                    FamilySymbol Symbol = null;
-                    Family family = null;
-                    string familyName = System.IO.Path.GetFileNameWithoutExtension(fi.FullName);
-                    if (!Symbols.Any(r => r.Name == familyName))
-                    {
-                        if (_doc.LoadFamily(fi.FullName, out family))
-                        {
-                            ISet<ElementId> familySymbolIds = family.GetFamilySymbolIds();
-                            foreach (ElementId id in familySymbolIds)
-                            {
-                                Symbol = _doc.GetElement(id) as FamilySymbol;
-                                if (!Symbol.IsActive)
-                                {
-                                    Symbol.Activate();
-                                    _doc.Regenerate();
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-                tx.Commit();
-            }
         }
     }
 }

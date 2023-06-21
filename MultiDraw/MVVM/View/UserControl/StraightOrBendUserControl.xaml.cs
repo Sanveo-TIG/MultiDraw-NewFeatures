@@ -41,22 +41,21 @@ namespace MultiDraw
             try
             {
                 _window = window;
-
-               
+                ParentUserControl.Instance.AlignConduits.IsEnabled = true;
+                ParentUserControl.Instance.Anglefromprimary.IsEnabled = true;
+                string json = Properties.Settings.Default.StraightsDraw;
+                if(!string.IsNullOrEmpty(json))
+                {
+                    StraightsDrawParam drawParam =  JsonConvert.DeserializeObject<StraightsDrawParam>(json);
+                    ParentUserControl.Instance.AlignConduits.IsChecked = drawParam.IsAlignConduit;
+                    ParentUserControl.Instance.Anglefromprimary.IsChecked = drawParam.IsPrimaryAngle;
+                }
             }
             catch (Exception exception)
             {
-
                 System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
-
-        private void AngleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //event raise
-        }
-
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
             angleList.ItemsSource = _angleList;

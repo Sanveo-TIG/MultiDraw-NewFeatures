@@ -16,9 +16,8 @@ namespace MultiDraw
         public static void GetSecondaryElements(Document doc, ref List<Element> pickedElements, double angle, double offSet, out List<Element> secondaryElements, string offSetVar,XYZ pickpoint)
         {
             secondaryElements = new List<Element>();
-
             XYZ orgin = null;
-            foreach (Conduit item in pickedElements)
+            foreach (Element item in pickedElements)
             {
                 ConnectorSet PrimaryConnectors = Utility.GetUnusedConnectors(item);
                 if (PrimaryConnectors.Size == 1)
@@ -162,7 +161,7 @@ namespace MultiDraw
                         double Spacing = Math.Sqrt(Math.Pow((Intersectionpoint_point.X - IntersectionpointSub.X), 2) + Math.Pow((Intersectionpoint_point.Y - IntersectionpointSub.Y), 2));
 
                         XYZ refStartPoint = ConduitStartpt + LineForspacingDir.Multiply(Spacing);
-                        refStartPoint = refStartPoint + PerpendicularconduitLinedir.Multiply(basedistance);
+                        refStartPoint += PerpendicularconduitLinedir.Multiply(basedistance);
                         XYZ refEndPoint = refStartPoint + PerpendicularconduitLinedir.Multiply(10 + Spacing);
 
                         Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, refStartPoint, refEndPoint);
@@ -184,9 +183,8 @@ namespace MultiDraw
         public static void GetSecondaryPointElements(Document doc, ref List<Element> pickedElements, double angle, double offSet, out List<Element> secondaryElements, string offSetVar, XYZ pickpoint)
         {
             secondaryElements = new List<Element>();
-
             XYZ orgin = null;
-            foreach (Conduit item in pickedElements)
+            foreach (Element item in pickedElements)
             {
                 ConnectorSet PrimaryConnectors = Utility.GetUnusedConnectors(item);
                 if (PrimaryConnectors.Size == 1)
@@ -199,7 +197,6 @@ namespace MultiDraw
                     break;
                 }
             }
-
             using (SubTransaction transaction = new SubTransaction(doc))
             {
                 XYZ removingPoint = null;
@@ -207,17 +204,13 @@ namespace MultiDraw
                 XYZ trimPoint = null;
                 try
                 {
-
                     trimPoint = pickpoint;
-
                 }
                 catch (Exception)
                 {
                     transaction.Dispose();
                 }
-
-
-                if (pickedElements.TrueForAll(x => isBothSideUnConnectors(x) == true))
+                if (pickedElements.TrueForAll(x => IsBothSideUnConnectors(x) == true))
                 {
                     try
                     {
@@ -238,7 +231,6 @@ namespace MultiDraw
                         }
                         if (!isAllNull)
                         {
-                            // removingPoint = Utility.PickPoint(uidoc, "Select the connor to trim");
                             foreach (Element element in pickedElements)
                             {
                                 Line zLine = Utility.GetLineFromConduit(element);
@@ -296,7 +288,7 @@ namespace MultiDraw
                         ParentUserControl.Instance._window.Close();
                     }
                 }
-                else if (pickedElements.TrueForAll(x => isOneSideConnectors(x) == true))
+                else if (pickedElements.TrueForAll(x => IsOneSideConnectors(x) == true))
                 {
 
                     foreach (Connector connector in (pickedElements[0] as Conduit).ConnectorManager.UnusedConnectors)
@@ -386,22 +378,8 @@ namespace MultiDraw
                     }
 
                 }
-
-                //Utility.SetGlobalParametersManager(uiApp, "ConduitAlign", globalParam);
                 transaction.Commit();
-                //Task task = Utility.UserActivityLog(uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "SampleHandler");
             }
-
-
-            //if (orgin != null)
-            //{
-            //    Line line = Utility.CrossProductLine(pickedElements[0], pickpoint, 1, true);
-            //    line = Utility.CrossProductLine(line, pickpoint, 1, true);
-            //    Line line1 = Utility.CrossProductLine(pickedElements[0], Utility.GetXYvalue(orgin), 1, true);
-            //    XYZ ip = FindIntersectionPoint(line, line1);
-            //    if (ip != null)
-            //        pickpoint = ip;
-            //}
 
             Line lineOne = (pickedElements[0].Location as LocationCurve).Curve as Line;
             XYZ pt1 = lineOne.GetEndPoint(0);
@@ -535,7 +513,7 @@ namespace MultiDraw
                         double Spacing = Math.Sqrt(Math.Pow((Intersectionpoint_point.X - IntersectionpointSub.X), 2) + Math.Pow((Intersectionpoint_point.Y - IntersectionpointSub.Y), 2));
 
                         XYZ refStartPoint = ConduitStartpt + LineForspacingDir.Multiply(Spacing);
-                        refStartPoint = refStartPoint + PerpendicularconduitLinedir.Multiply(basedistance);
+                        refStartPoint += PerpendicularconduitLinedir.Multiply(basedistance);
                         XYZ refEndPoint = refStartPoint + PerpendicularconduitLinedir.Multiply(10 + Spacing);
 
                         refEndPoint = FindIntersectionPoint(refStartPoint, refEndPoint, pickpoint, pickpoint_second_point);
@@ -562,9 +540,8 @@ namespace MultiDraw
             Parameter newElevation = Ele.LookupParameter(offSetVar);
             newElevation.Set(elevation + offSet);
         }
-        public static bool isBothSideUnConnectors(Element e)
+        public static bool IsBothSideUnConnectors(Element e)
         {
-
             if (e is Conduit conduit)
             {
                 return conduit.ConnectorManager.UnusedConnectors.Size == 2;
@@ -574,18 +551,13 @@ namespace MultiDraw
 
 
         }
-        public static bool isOneSideConnectors(Element e)
+        public static bool IsOneSideConnectors(Element e)
         {
-
             if (e is Conduit conduit)
             {
-
                 return conduit.ConnectorManager.UnusedConnectors.Size == 1;
-
             }
             return false;
-
-
         }
         public static XYZ FindIntersectionPoint(Line lineOne, Line lineTwo)
         {

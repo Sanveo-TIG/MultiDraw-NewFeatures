@@ -12,11 +12,11 @@ namespace MultiDraw
         public static string ProjectName = "MultiDraw";
         public const string AddinRibbonTabName = "Sanveo Tools-Beta";
         public const string InstallerFolderName = "SNVAddins-Beta";
-        public const string AddinRibbonPanel = "Conpak Tools";
-        public const string ProductVersion = "Public";
+        public const string AddinRibbonPanel = "MultiDraw";
+        public const string ProductVersion = "Beta";
 
-        public const string ApplicationWindowTitle = "ConPak Tools";
-        public const int ApplicationWindowHeight = 500;
+        public const string ApplicationWindowTitle = "MultiDraw";
+        public const int ApplicationWindowHeight = 510;
         public const int ApplicationWindowWidth = 360;
         public const bool IsApplicationWindowTopMost = true;
         public const bool IsApplicationWindowAlowToReSize = false;

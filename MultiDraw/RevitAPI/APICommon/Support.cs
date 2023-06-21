@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Markup;
 using TIGUtility;
 
@@ -17,13 +18,13 @@ namespace MultiDraw
     {
         public static void AddSupport(UIApplication uiApp, Document doc, List<ConduitsCollection> PrimConduits, List<ConduitsCollection> SecConduits = null, List<ConduitsCollection> ThirdConduits = null)
         {
-            string FamilyName = "SNV STRUT-";
+            string FamilyName = "TIG HANGER STRUT v1-";
             string family_folder = Path.GetDirectoryName(typeof(Command).Assembly.Location);
 
             int.TryParse(uiApp.Application.VersionNumber, out int RevitVersion);
             string offsetVariable = RevitVersion < 2020 ? "Offset" : ((RevitVersion < 2023) ?  "Middle Elevation" : "Upper End Centerline Elevation");
 
-            FamilyName = FamilyName.Replace("STRUT-", "STRUT-" + RevitVersion.ToString());
+            FamilyName = FamilyName.Replace("v1-", "v1-" + RevitVersion.ToString());
            
             string familyPath = Path.Combine(family_folder, FamilyName);
             FilteredElementCollector SupportCollector = new FilteredElementCollector(doc);
@@ -32,18 +33,20 @@ namespace MultiDraw
             Settings settings = ParentUserControl.Instance.GetSettings();
             if (settings != null && settings.IsSupportNeeded)
             {
-                if (!settings.StrutType.ToLower().Contains("strut"))
+                if (!settings.StrutType.ToLower().Contains("v1"))
                 {
-                    FamilyName = "Hanger";
+                    FamilyName = "TIG HANGER STRUT v2-";
+                    FamilyName = FamilyName.Replace("v2-", "v2-" + RevitVersion.ToString());
                     familyPath = Path.Combine(family_folder, FamilyName);
                 }
                 FamilySymbol Symbol = SupportCollector.FirstOrDefault(r => r.Name == FamilyName) as FamilySymbol;
-                FamilyName += ".rfa";
-                Family family = null;
+                Family family = null;                
                 try
                 {
                     if (Symbol == null)
                     {
+                        FamilyName += ".rfa";
+                        familyPath = Path.Combine(family_folder, FamilyName);
                         // It is not present, so check for
                         // the file to load it from:
                         if (!File.Exists(familyPath))
@@ -738,8 +741,8 @@ namespace MultiDraw
             return RackSizeNo;
         }
 
-        public static void SetSupport(UIApplication uiApp, Document doc, Conduit MinLengthConduit, XYZ StartPoint, XYZ EndPoint, double StructLength, FamilySymbol ColumnType, XYZ SupportPoint,
-          Settings settings, CoRakDetails RakDetails)
+        public static void SetSupport(UIApplication uiApp,Document doc, Conduit MinLengthConduit, XYZ StartPoint, XYZ EndPoint, double StructLength, FamilySymbol ColumnType, XYZ SupportPoint,
+         Settings settings,CoRakDetails RakDetails)
         {
             FamilyInstance Instance = doc.Create.NewFamilyInstance(SupportPoint, ColumnType, MinLengthConduit.ReferenceLevel, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
             Parameter SupportLength = Instance.LookupParameter("STRUT LENGTH");

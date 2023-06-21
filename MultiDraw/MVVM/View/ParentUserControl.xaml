@@ -8,7 +8,7 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:TIG="clr-namespace:TIGUtility;assembly=TIGUtility"
              mc:Ignorable="d"
-             d:DesignHeight="300"
+             d:DesignHeight="330"
              d:DesignWidth="280"
              Background="Transparent" Loaded="OnControlLoaded">
     <UserControl.Resources>
@@ -17,10 +17,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
+            
 
         </ResourceDictionary>
-
+   
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -96,81 +96,76 @@
                     </Style>
                 </ListBox.ItemContainerStyle>-->
                 <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel IsItemsHost="True" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-
-                <ListBoxItem>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        
+                        <ListBoxItem>
                     <Image Height="25" 
-                           ToolTip="Vertical Draw"
+                           ToolTip="Vertical Offset"
                                    HorizontalAlignment="Center"
                                    Cursor="Hand"
                                    Source="/MultiDraw;component/Images/icons/Vertical Draw 120x120.png"></Image>
-                </ListBoxItem>
-                <ListBoxItem>
+                        </ListBoxItem>
+                        <ListBoxItem>
                     <Image Height="25"
-                           ToolTip="Horizontal Draw"
+                           ToolTip="Horizontal Offset"
                            HorizontalAlignment="Center"
                                    Cursor="Hand"
                                    Source="/MultiDraw;component/Images/icons/Horizontal Draw 120x120.png"></Image>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Image Height="25" HorizontalAlignment="Center"
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Image Height="25" HorizontalAlignment="Center"
                            Cursor="Hand"
-                           ToolTip="Rolling Draw"
+                           ToolTip="Rolling Offset"
                            Source="/MultiDraw;component/Images/icons/Rolling Draw 120x120.png"></Image>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Image Height="25"
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Image Height="25"
                                    HorizontalAlignment="Center"
                            Cursor="Hand"
-                           ToolTip="Kick Draw"
+                           ToolTip="Kick"
                            Source="/MultiDraw;component/Images/icons/Kick Draw 120x120.png"></Image>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Image Height="25"
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Image Height="25"
                                    HorizontalAlignment="Center"
                            Cursor="Hand"
-                           ToolTip="Straight/Bend Draw"
+                           ToolTip="Straight/Bend"
                            Source="/MultiDraw;component/Images/icons/Straights 120x120.png"></Image>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Image Height="25"
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Image Height="25"
                            HorizontalAlignment="Center "
-                           ToolTip="90's Kick Draw"
+                           ToolTip="Kick 90"
                            Cursor="Hand"
                                    Source="/MultiDraw;component/Images/icons/90's Kick Draw 120x120.png"></Image>
-                </ListBoxItem>
-                <ListBoxItem>
+                        </ListBoxItem>
+                        <ListBoxItem>
                     <Image Height="25"
-                           ToolTip="90's Stub Draw"
+                           ToolTip="Stub 90"
                            Cursor="Hand"
                                    Source="/MultiDraw;component/Images/icons/90's Stub Draw 120x120.png"></Image>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Image Height="25"
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Image Height="25"
                                    ToolTip="Sync Data"
                                    Cursor="Hand"
                                    Source="/MultiDraw;component/Images/icons/Sync Data 120x120.png"></Image>
-                </ListBoxItem>
-
-                <ListBoxItem>
-                    <Image Height="25" 
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Image Height="25" 
                                    Source="/MultiDraw;component/Images/icons/Settings 120x120.png" Cursor="Hand" ToolTip="Settings"/>
 
                 </ListBoxItem>
-
-                <!--<ListBoxItem IsEnabled="False">
-                    <Image Height="25" ToolTip="Undo"  Source="/MultiDraw;component/Images/icons/Undo_V2 120x120.png"></Image>
-                </ListBoxItem>-->
             </ListBox>
-
-
-
-
-
-
+                    
+                    
+                  
+     
+                   
+              
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -178,8 +173,8 @@
 
         </StackPanel>
         <StackPanel Grid.Row="2" >
-            <CheckBox x:Name="AlignConduits" Content="Align Conduits stub" IsChecked="False" Margin="10,0,10,0"></CheckBox>
-            <CheckBox x:Name="Anglefromprimary" Content="Angle From Primary Conduits" IsChecked="False" Margin="10,10,10,0"></CheckBox>
+            <CheckBox x:Name="AlignConduits" Content="Align Conduits" IsChecked="False" Margin="10,0,10,0"></CheckBox>
+            <CheckBox x:Name="Anglefromprimary" Content="Add bend in-place" IsChecked="False" Margin="10,10,10,0"></CheckBox>
         </StackPanel>
         <TIG:ToolTipUserControl  x:Name="btnTooltip">
         </TIG:ToolTipUserControl>

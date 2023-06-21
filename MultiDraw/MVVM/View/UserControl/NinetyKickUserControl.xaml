@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="385"
              d:DesignWidth="250"
-             Background="Transparent">
+             Background="Transparent" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,24 +21,31 @@
     </UserControl.Resources>
     <Grid MouseDown="Grid_MouseDown">
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" >
-            <TIG:DropDownUserControl  Width="320" x:Name="ddlAngle" Label="Angle"></TIG:DropDownUserControl>
+        <StackPanel Grid.Row="0">
+            <TextBlock x:Name="NinetyKick"
+                       Text="Kick 90"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
-        <StackPanel Grid.Row="1">
-            <TIG:TextBoxUserControl x:Name="txtOffset" 
-                                    Label="Offset"  
-                                    UnitsLabel="Feet and inches" 
-                                    IsUnit="True"                                  
-                                    ></TIG:TextBoxUserControl>
+        <StackPanel Grid.Row="1" >
+            <TIG:DropDownUserControl Width="328" x:Name="ddlAngle" Label="Angle" SelectionChanged="DdlAngle_Changed"></TIG:DropDownUserControl>
         </StackPanel>
         <StackPanel Grid.Row="2">
+            <TIG:TextBoxUserControl x:Name="txtOffset" 
+                                    Label="Offset"  
+                                    UnitsLabel="Feet and inches"
+                                    IsUnit="True"
+                                    LostFocus="TextBox_LostFocus"                                
+                                    ></TIG:TextBoxUserControl>
+        </StackPanel>
+        <StackPanel Grid.Row="3">
             <TIG:TextBoxUserControl x:Name="txtRise"
                                     Label="Rise"
                                     UnitsLabel="Feet and inches"
+                                    LostFocus="TextBox_LostFocus"
                                     IsUnit="True"></TIG:TextBoxUserControl>
         </StackPanel>
     </Grid>

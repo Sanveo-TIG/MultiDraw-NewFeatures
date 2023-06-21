@@ -61,13 +61,11 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="ReachFramework" />
-    <Reference Include="RevitAPI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
     </Reference>
-    <Reference Include="RevitAPIUI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
+    <Reference Include="RevitAPIUI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.CodeDom, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -160,9 +158,6 @@
     <Compile Include="MVVM\View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\ProfileColorSettingUserControl.xaml.cs">
-      <DependentUpon>ProfileColorSettingUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MVVM\View\UserControl\SettingsUserControl.xaml.cs">
       <DependentUpon>SettingsUserControl.xaml</DependentUpon>
     </Compile>
@@ -191,6 +186,11 @@
       <DependentUpon>VOffsetUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RevitAPI\APIClasses\App.cs" />
     <Compile Include="RevitAPI\APIClasses\WindowProperty.cs" />
     <Compile Include="RevitAPI\APIClasses\Command.cs" />
@@ -204,7 +204,6 @@
     <Compile Include="RevitAPI\APICommon\RollingOffset.cs" />
     <Compile Include="RevitAPI\APICommon\VerticalOffset.cs" />
     <Compile Include="RevitAPI\APIHandler\MultiDrawHandler.cs" />
-    <Compile Include="RevitAPI\APIHandler\MultiDrawProfileSettingsParam.cs" />
     <Compile Include="RevitAPI\APIHandler\SettingsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -213,10 +212,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MVVM\View\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MVVM\View\UserControl\ProfileColorSettingUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -276,7 +271,6 @@
     <Resource Include="Images\icons\Sync Data 120x120.png" />
     <Resource Include="Images\icons\Straights 120x120.png" />
     <Resource Include="Images\icons\Settings 120x120.png" />
-    <Resource Include="Images\icons\Undo_V2 120x120.png" />
     <Content Include="Images\whiteback.PNG" />
     <Content Include="MultiDraw.addin">
       <SubType>Designer</SubType>
@@ -290,6 +284,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <Resource Include="Resources\Font\Poppins-Black.ttf" />
     <Resource Include="Resources\Font\Poppins-BlackItalic.ttf" />
     <Resource Include="Resources\Font\Poppins-Bold.ttf" />

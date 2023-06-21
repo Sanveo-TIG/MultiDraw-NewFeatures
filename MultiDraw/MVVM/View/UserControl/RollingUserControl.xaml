@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="250"
-             Background="Transparent">
+             Background="Transparent" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,17 +22,22 @@
     </UserControl.Resources>
     <Grid MouseDown="Grid_MouseDown">
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
           
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TIG:DropDownUserControl   Width="320"
-                                       x:Name="ddlAngle"
-                                       Label="Angle"></TIG:DropDownUserControl>
+            <TextBlock x:Name="rollingoffset"
+                       Text="Rolling Offset"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
-        <Grid Grid.Row="1">
+        <StackPanel Grid.Row="1">
+            <TIG:DropDownUserControl   Width="328"
+                                       x:Name="ddlAngle"
+                                       Label="Angle" SelectionChanged="DdlAngle_Changed"></TIG:DropDownUserControl>
+        </StackPanel>
+        <Grid Grid.Row="2">
             <StackPanel Orientation="Vertical">
                 <TextBlock x:Name="lbo" Text="Offset"
                            Foreground="#005D9A"
@@ -47,12 +52,13 @@
             </TextBlock>
             
             <TIG:TextBoxUserControl x:Name="txtOffsetFeet"
-                                    Margin="0,10,0,0"
+                                        Margin="0,10,0,0"
+                                        LostFocus="TextBox_LostFocus"
                                     UnitsLabel="Feet and inches"
                                     IsUnit="True"></TIG:TextBoxUserControl>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <StackPanel Orientation="Vertical">
                 <TextBlock x:Name="lbl" Text="Roll"
                            Foreground="#005D9A"
@@ -67,7 +73,8 @@
                 </TextBlock>
 
                 <TIG:TextBoxUserControl x:Name="txtRollFeet" Margin="0,10,0,0"
-                                    UnitsLabel="Feet and inches"
+                                        UnitsLabel="Feet and inches"
+                                        LostFocus="TextBox_LostFocus"
                                     IsUnit="True"></TIG:TextBoxUserControl>
             </StackPanel>
         
