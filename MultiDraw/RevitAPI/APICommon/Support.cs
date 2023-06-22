@@ -249,7 +249,7 @@ namespace MultiDraw
             }
             if (elements.Count > 0)
             {
-                TaskDialog.Show("Warning", "More than 4 racks available here . Kindly Check !");
+                TaskDialog.Show("Warning", "More than 4 racks detected. Please check and retry");
 
             }
             if (_CoRakDetails != null && _CoRakDetails.RackTwo != null)
@@ -357,7 +357,7 @@ namespace MultiDraw
                         if (Math.Round(spaceOfElevation, 3) < 0.333)
                         {
 
-                            TaskDialog.Show("Warning", "Strut '" + rackName + "' size is not available. Kindly check the space between two layers");
+                            TaskDialog.Show("Warning", "Strut '" + rackName + "' size is not available. Kindly check the spacing between two layers");
 
                             return;
 

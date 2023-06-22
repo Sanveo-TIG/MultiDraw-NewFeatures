@@ -125,7 +125,7 @@ namespace MultiDraw
                     if (Utility.FindDifferentAxis(line_.GetEndPoint(0), line_.GetEndPoint(1)) == "Z")
                     {
                         transaction.Dispose();
-                        Utility.AlertMessage("It wont't work in stubs", false, MainWindow.Instance.SnackbarSeven);
+                        Utility.AlertMessage("Feature not available for conduit stubs", false, MainWindow.Instance.SnackbarSeven);
 
                     }
                     else
@@ -162,7 +162,7 @@ namespace MultiDraw
                                                 }
                                                 else
                                                 {
-                                                    System.Windows.MessageBox.Show("Warning. \n" + "The point picked is off the bend, Please pick the point other side of the bend ", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                                    System.Windows.MessageBox.Show("Warning. \n" + "Cannot extend the conduits in opposite direction. Please pick another point", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
                                                     //return false;
                                                 }
                                                 break;
@@ -186,7 +186,7 @@ namespace MultiDraw
                                                 }
                                                 else
                                                 {
-                                                    System.Windows.MessageBox.Show("Warning. \n" + "The point picked is off the bend, Please pick the point other side of the bend ", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                                    System.Windows.MessageBox.Show("Warning. \n" + "Cannot extend the conduits in opposite direction. Please pick another point", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
                                                     //return false;
                                                 }
                                                 break;

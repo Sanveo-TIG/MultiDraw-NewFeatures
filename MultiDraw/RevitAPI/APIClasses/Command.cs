@@ -60,7 +60,7 @@ namespace MultiDraw
                     else
                     {
                         Window SettingsWindow = new Window();
-                        SettingsUserControl settings = new SettingsUserControl(commandData.Application.ActiveUIDocument.Document, commandData.Application, SettingsWindow);
+                        SettingsUserControl settings = new SettingsUserControl(commandData.Application.ActiveUIDocument.Document, commandData.Application, SettingsWindow, ExternalEvent.Create(new SettingsHandler()));
                         SettingsWindow.ResizeMode = ResizeMode.NoResize;
                         SettingsWindow.WindowStyle = WindowStyle.None;
                         SettingsWindow.Height = settings.Height;

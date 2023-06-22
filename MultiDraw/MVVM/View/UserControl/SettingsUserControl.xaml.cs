@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Instrumentation;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace MultiDraw
         public System.Windows.Window SettingsWindow = new System.Windows.Window();
         readonly Document _doc = null;
         public UIApplication _uiApp = null;
-        public SettingsUserControl(Document doc, UIApplication uiApp,Window window)
+        public SettingsUserControl(Document doc, UIApplication uiApp,Window window, ExternalEvent saveEvent)
         {
             InitializeComponent();
             Instance = this;
@@ -60,12 +61,31 @@ namespace MultiDraw
             ddlStrutType.ItemsSource = sType;
             ddlStrutType.SelectedItem = sType.Last();
             _window = window;
+            LoadTab();
+            UserControl userControl = new ProfileColorSettingUserControl(saveEvent, uiApp, window);
+            containerProfileColorSettings.Children.Add(userControl);
             ParentUserControl.Instance.AlignConduits.IsEnabled = false;
             ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
             ParentUserControl.Instance.AlignConduits.IsChecked = false;
             ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
         }
+        private void LoadTab()
+        {
+            List<CustomTab> customTabsList = new List<CustomTab>();
+            CustomTab b = new CustomTab();
+            b.Id = 1;
+            b.Name = "Support Settings";
 
+            customTabsList.Add(b);
+            b = new CustomTab();
+            b.Id = 2;
+            b.Name = "Profile Color Settings";
+            customTabsList.Add(b);
+
+            tagControl.ItemsSource = customTabsList;
+            tagControl.SelectedIndex = 0;
+
+        }
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             ReadRackSettings();
@@ -104,6 +124,20 @@ namespace MultiDraw
             txtRodExtension.IsEnabled = (bool)checkBox.IsChecked;
             txtSupportSpacing.IsEnabled = (bool)checkBox.IsChecked;
             SettingsUserControl.Instance.ddlStrutType.IsEnabled = (bool)checkBox.IsChecked;
+        }
+
+        private void TagControl_SelectionChanged(object sender)
+        {
+            if (tagControl.SelectedIndex == 0)
+            {
+                containerSupportSettings.Visibility = System.Windows.Visibility.Visible;
+                containerProfileColorSettings.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                containerSupportSettings.Visibility = System.Windows.Visibility.Collapsed;
+                containerProfileColorSettings.Visibility = System.Windows.Visibility.Visible;
+            }
         }
     }
 }

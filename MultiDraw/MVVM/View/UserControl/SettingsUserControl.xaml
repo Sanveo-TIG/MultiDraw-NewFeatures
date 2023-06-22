@@ -79,103 +79,112 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Grid.Row="1">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140"></ColumnDefinition>
-            <ColumnDefinition  Width="180"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="0"></RowDefinition>
-            <RowDefinition Height="55"></RowDefinition>
-            <RowDefinition Height="55"></RowDefinition>
-            <RowDefinition Height="55"></RowDefinition>
-            <RowDefinition Height="55"></RowDefinition>
-            <RowDefinition Height="55"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"  Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <TIG:TabPanelUserControl x:Name="tagControl"
+                                    SelectionChanged="TagControl_SelectionChanged"></TIG:TabPanelUserControl>
 
-        <StackPanel Grid.Row="0" >
-            <TextBlock x:Name="settings"
-                       Text="Support Settings"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
-        <StackPanel Grid.Row="2"
+        <Grid x:Name="containerSupportSettings" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition  Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0"></RowDefinition>
+                <RowDefinition Height="0"></RowDefinition>
+                <RowDefinition Height="55"></RowDefinition>
+                <RowDefinition Height="55"></RowDefinition>
+                <RowDefinition Height="55"></RowDefinition>
+                <RowDefinition Height="55"></RowDefinition>
+                <RowDefinition Height="55"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="2"
                     Grid.Column="0"
                     VerticalAlignment="Center">
-            <TextBlock Text="Add Support"
+                <TextBlock Text="Add Support"
                        Margin="0,0,0,18"></TextBlock>
-        </StackPanel>
-        <StackPanel Grid.Row="2"
+            </StackPanel>
+            <StackPanel Grid.Row="2"
                     Grid.Column="1"
                     VerticalAlignment="Center">
-            <CheckBox x:Name="IsSupportNeeded"
+                <CheckBox x:Name="IsSupportNeeded"
                       Margin="0,0,0,18"
                       Checked="OnChangeSupportNeeded"
                       Unchecked="OnChangeSupportNeeded"></CheckBox>
-        </StackPanel>
-        <StackPanel Grid.Row="3"
+            </StackPanel>
+            <StackPanel Grid.Row="3"
                     Grid.Column="0">
-            <TextBlock Text="Strut Type"
+                <TextBlock Text="Strut Type"
                        Margin="0,0,0,18"></TextBlock>
-        </StackPanel>
-        <StackPanel Grid.Row="3"
+            </StackPanel>
+            <StackPanel Grid.Row="3"
                     Grid.Column="1">
-            <TIG:DropDownUserControl x:Name="ddlStrutType"
-                                     Width="180"
+                <TIG:DropDownUserControl x:Name="ddlStrutType"
+                                     Width="200"
                                      Margin="0,-15,0,0"></TIG:DropDownUserControl>
-        </StackPanel>
-        <StackPanel Grid.Row="4"
+            </StackPanel>
+            <StackPanel Grid.Row="4"
                     Grid.Column="0"
                     VerticalAlignment="Center">
-            <TextBlock Text="Support to Support"
+                <TextBlock Text="Support to Support"
                        Margin="0,0,0,18">
-                <TextBlock.ToolTip>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/MultiDraw;component/Resources/S2S 200x200.png"
+                    <TextBlock.ToolTip>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/MultiDraw;component/Resources/S2S 200x200.png"
                                Width="100"
                                Height="100" />
 
-                    </StackPanel>
-                </TextBlock.ToolTip>
-            </TextBlock>
-        </StackPanel>
-        <StackPanel Grid.Row="4"
+                        </StackPanel>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="4"
                     Grid.Column="1"
                     HorizontalAlignment="Left">
-            <TIG:TextBoxUserControl Width="200"
+                <TIG:TextBoxUserControl Width="200"
                                     Height="40"
                                     IsUnit="True"
                                     UnitsLabel="Feet and Inches"
                                     x:Name="txtSupportSpacing"></TIG:TextBoxUserControl>
-        </StackPanel>
-        <StackPanel Grid.Row="5"
+            </StackPanel>
+            <StackPanel Grid.Row="5"
                     Grid.Column="0"
                     VerticalAlignment="Center">
-            <TextBlock Text="Rod Diameter"
+                <TextBlock Text="Rod Diameter"
                        Margin="0,0,0,18"></TextBlock>
-        </StackPanel>
-        <StackPanel Grid.Row="5"
+            </StackPanel>
+            <StackPanel Grid.Row="5"
                     Grid.Column="1">
-            <TIG:TextBoxUserControl  Width="200"
+                <TIG:TextBoxUserControl  Width="200"
                                      Text="3/8"
                                      x:Name="txtRodDia"
                                      UnitsLabel="Feet and Inches"
                                      IsUnit="True"
                                      Margin="0,0,0,0"></TIG:TextBoxUserControl>
-        </StackPanel>
-        <StackPanel Grid.Row="6"
+            </StackPanel>
+            <StackPanel Grid.Row="6"
                     Grid.Column="0"
                     VerticalAlignment="Center">
-            <TextBlock Text="Rod Extension"
+                <TextBlock Text="Rod Extension"
                        Margin="0,0,0,18"></TextBlock>
-        </StackPanel>
-        <StackPanel Grid.Row="6"
+            </StackPanel>
+            <StackPanel Grid.Row="6"
                     Grid.Column="1">
-            <TIG:TextBoxUserControl  Width="200"
+                <TIG:TextBoxUserControl  Width="200"
                                      Text="3/8"
                                      x:Name="txtRodExtension"
                                      UnitsLabel="Feet and Inches"
                                      IsUnit="True"
                                      Margin="0,0,0,0"></TIG:TextBoxUserControl>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="containerProfileColorSettings" Grid.Row="1">
+        </Grid>
     </Grid>
 </UserControl>

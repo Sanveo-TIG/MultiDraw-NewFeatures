@@ -130,7 +130,7 @@ namespace MultiDraw
                     userControl = new SyncDataUserControl(_application, _window);
                     break;
                 case 8:
-                    userControl = new SettingsUserControl(_doc, _application.UIApplication, _window);
+                    userControl = new SettingsUserControl(_doc, _application.UIApplication, _window, _externalEvents[1]);
                     settingsControl = userControl as SettingsUserControl;
                     break;
                 default:
