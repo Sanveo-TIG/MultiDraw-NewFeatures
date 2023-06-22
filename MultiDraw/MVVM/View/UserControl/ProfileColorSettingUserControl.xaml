@@ -4,19 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:uc="clr-namespace:MultiDraw"
-             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:TIG="clr-namespace:TIGUtility;assembly=TIGUtility"
              mc:Ignorable="d"
              d:DesignHeight="375"
-             d:DesignWidth="250"
+             d:DesignWidth="250" 
              Background="Transparent">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <Style x:Key="PrimaryButton"
                    TargetType="{x:Type Button}">
                 <Setter Property="Foreground"
@@ -104,13 +99,13 @@
         <StackPanel Grid.Row="0" 
                     Grid.Column="1" 
                     >
-            <TIG:TextBoxUserControl x:Name="VoffsetValue" HintText="VoffsetValue" Width="100" Height="30"></TIG:TextBoxUserControl>
+            <TIG:TextBoxUserControl x:Name="VoffsetValue" HintText="VoffsetValue" Width="100" Height="30" TextBox_Changed="vOffsetvaluechange" ></TIG:TextBoxUserControl>
         </StackPanel>
         <StackPanel Grid.Row="0"
                     Grid.Column="2"
                     Margin="0,-20,0,18"
                     VerticalAlignment="Center">
-            <TIG:ColorPickerUserControl x:Name="VoffsetColor" Width="130" Label="color"></TIG:ColorPickerUserControl>
+            <TIG:ColorPickerUserControl x:Name="VoffsetColor" Width="130" Label="color" DropDownClosed="vOffsetcolorchanged"></TIG:ColorPickerUserControl>
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -122,13 +117,13 @@
         <StackPanel Grid.Row="1" 
                     Grid.Column="1" 
                     >
-            <TIG:TextBoxUserControl x:Name="HoffsetValue" HintText="HoffsetValue" Width="100" Height="30"></TIG:TextBoxUserControl>
+            <TIG:TextBoxUserControl x:Name="HoffsetValue" HintText="HoffsetValue" Width="100" Height="30" TextBox_Changed="hOffsetValue"></TIG:TextBoxUserControl>
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="2"
                      Margin="0,-20,0,18"
                     VerticalAlignment="Center">
-            <TIG:ColorPickerUserControl x:Name="HoffsetColor" Width="130" Label="color"></TIG:ColorPickerUserControl>
+            <TIG:ColorPickerUserControl x:Name="HoffsetColor" Width="130" Label="color" DropDownClosed="hOffsetColor"></TIG:ColorPickerUserControl>
         </StackPanel>
 
         <StackPanel Grid.Row="2"
@@ -140,13 +135,13 @@
         <StackPanel Grid.Row="2" 
                     Grid.Column="1" 
                     >
-            <TIG:TextBoxUserControl x:Name="RoffsetValue" HintText="RoffsetValue" Width="100" Height="30"></TIG:TextBoxUserControl>
+            <TIG:TextBoxUserControl x:Name="RoffsetValue" HintText="RoffsetValue" Width="100" Height="30" TextBox_Changed="RoffsetValue_TextBox_Changed"></TIG:TextBoxUserControl>
         </StackPanel>
         <StackPanel Grid.Row="2"
                     Grid.Column="2"
                     Margin="0,-20,0,18"
                     VerticalAlignment="Center">
-            <TIG:ColorPickerUserControl x:Name="RoffsetColor" Width="130" Label="color"></TIG:ColorPickerUserControl>
+            <TIG:ColorPickerUserControl x:Name="RoffsetColor" Width="130" Label="color" DropDownClosed="RoffsetColor_DropDownClosed"></TIG:ColorPickerUserControl>
         </StackPanel>
 
         <StackPanel Grid.Row="3"
@@ -158,13 +153,13 @@
         <StackPanel Grid.Row="3" 
                     Grid.Column="1" 
                     >
-            <TIG:TextBoxUserControl x:Name="KoffsetValue" HintText="KoffsetValue" Width="100" Height="30"></TIG:TextBoxUserControl>
+            <TIG:TextBoxUserControl x:Name="KoffsetValue" HintText="KoffsetValue" Width="100" Height="30" TextBox_Changed="KoffsetValue_TextBox_Changed"></TIG:TextBoxUserControl>
         </StackPanel>
         <StackPanel Grid.Row="3"
                     Grid.Column="2"
                     Margin="0,-20,0,18"
                     VerticalAlignment="Center">
-            <TIG:ColorPickerUserControl x:Name="Kick90offsetColor" Width="130" Label="color"></TIG:ColorPickerUserControl>
+            <TIG:ColorPickerUserControl x:Name="Kick90offsetColor" Width="130" Label="color" DropDownClosed="Kick90offsetColor_DropDownClosed"></TIG:ColorPickerUserControl>
         </StackPanel>
 
         <StackPanel Grid.Row="4"
@@ -176,13 +171,13 @@
         <StackPanel Grid.Row="4" 
                     Grid.Column="1" 
                     >
-            <TIG:TextBoxUserControl x:Name="StraightValue" HintText="StraightValue" Width="100" Height="30"></TIG:TextBoxUserControl>
+            <TIG:TextBoxUserControl x:Name="StraightValue" HintText="StraightValue" Width="100" Height="30" TextBox_Changed="StraightValue_TextBox_Changed"></TIG:TextBoxUserControl>
         </StackPanel>
         <StackPanel Grid.Row="4"
                     Grid.Column="2"
                     Margin="0,-20,0,18"
                     VerticalAlignment="Center">
-            <TIG:ColorPickerUserControl x:Name="Strightor90Color" Width="130" Label="color"></TIG:ColorPickerUserControl>
+            <TIG:ColorPickerUserControl x:Name="Strightor90Color" Width="130" Label="color" DropDownClosed="Strightor90Color_DropDownClosed"></TIG:ColorPickerUserControl>
         </StackPanel>
 
         <StackPanel Grid.Row="5"
@@ -194,13 +189,13 @@
         <StackPanel Grid.Row="5" 
                     Grid.Column="1" 
                     >
-            <TIG:TextBoxUserControl x:Name="NightyKickValue" HintText="KickNinetyValue" Width="100" Height="30"></TIG:TextBoxUserControl>
+            <TIG:TextBoxUserControl x:Name="NightyKickValue" HintText="KickNinetyValue" Width="100" Height="30" TextBox_Changed="NightyKickValue_TextBox_Changed"></TIG:TextBoxUserControl>
         </StackPanel>
         <StackPanel Grid.Row="5"
                     Grid.Column="2"
                     Margin="0,-20,0,18"
                     VerticalAlignment="Center">
-            <TIG:ColorPickerUserControl x:Name="NinetykickdrawColor" Width="130" Label="color"></TIG:ColorPickerUserControl>
+            <TIG:ColorPickerUserControl x:Name="NinetykickdrawColor" Width="130" Label="color" DropDownClosed="NinetykickdrawColor_DropDownClosed"></TIG:ColorPickerUserControl>
         </StackPanel>
 
         <StackPanel Grid.Row="6"
@@ -212,13 +207,13 @@
         <StackPanel Grid.Row="6" 
                     Grid.Column="1" 
                     >
-            <TIG:TextBoxUserControl x:Name="NightystubValue" HintText="NightystubValue" Width="100" Height="30"></TIG:TextBoxUserControl>
+            <TIG:TextBoxUserControl x:Name="NightystubValue" HintText="NightystubValue" Width="100" Height="30" TextBox_Changed="NightystubValue_TextBox_Changed"></TIG:TextBoxUserControl>
         </StackPanel>
         <StackPanel Grid.Row="6"
                     Grid.Column="2"
                     Margin="0,-20,0,18"
                     VerticalAlignment="Center">
-            <TIG:ColorPickerUserControl x:Name="ninetystubColor" Width="130" Label="color"></TIG:ColorPickerUserControl>
+            <TIG:ColorPickerUserControl x:Name="ninetystubColor" Width="130" Label="color" DropDownClosed="ninetystubColor_DropDownClosed"></TIG:ColorPickerUserControl>
         </StackPanel>
 
 

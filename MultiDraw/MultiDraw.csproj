@@ -129,7 +129,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="TIGUtility, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
+      <HintPath>..\..\Sanveo-TIG\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -140,6 +140,7 @@
     <Compile Include="MVVM\Model\ConduitsCollection.cs" />
     <Compile Include="MVVM\Model\CoRakDetails.cs" />
     <Compile Include="MVVM\Model\FamilyOption.cs" />
+    <Compile Include="MVVM\Model\ProfileColorSettingsData.cs" />
     <Compile Include="MVVM\Model\RackDetails.cs" />
     <Compile Include="MVVM\Model\Settings.cs" />
     <Compile Include="MVVM\Model\SupportInputs.cs" />

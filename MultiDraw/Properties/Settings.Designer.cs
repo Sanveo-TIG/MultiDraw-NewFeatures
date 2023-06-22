@@ -23,127 +23,123 @@ namespace MultiDraw.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string MultiDrawSettings {
             get {
                 return ((string)(this["MultiDrawSettings"]));
             }
-            set
-            {
-                (this["MultiDrawSettings"]) = value;
+            set {
+                this["MultiDrawSettings"] = value;
             }
-        }        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string StraightsDraw {
             get {
                 return ((string)(this["StraightsDraw"]));
             }
-            set
-            {
-                (this["StraightsDraw"]) = value;
+            set {
+                this["StraightsDraw"] = value;
             }
         }
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string NinetyKickDraw
-        {
-            get
-            {
+        public string NinetyKickDraw {
+            get {
                 return ((string)(this["NinetyKickDraw"]));
             }
-            set
-            {
-                (this["NinetyKickDraw"]) = value;
+            set {
+                this["NinetyKickDraw"] = value;
             }
         }
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string HorizontalOffsetDraw
-        {
-            get
-            {
+        public string HorizontalOffsetDraw {
+            get {
                 return ((string)(this["HorizontalOffsetDraw"]));
             }
-            set
-            {
-                (this["HorizontalOffsetDraw"]) = value;
+            set {
+                this["HorizontalOffsetDraw"] = value;
             }
         }
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Kick90Draw
-        {
-            get
-            {
+        public string Kick90Draw {
+            get {
                 return ((string)(this["Kick90Draw"]));
             }
-            set
-            {
-                (this["Kick90Draw"]) = value;
+            set {
+                this["Kick90Draw"] = value;
             }
         }
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string NinetyStubDraw
-        {
-            get
-            {
+        public string NinetyStubDraw {
+            get {
                 return ((string)(this["NinetyStubDraw"]));
             }
-            set
-            {
-                (this["NinetyStubDraw"]) = value;
+            set {
+                this["NinetyStubDraw"] = value;
             }
         }
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string RollingOffsetDraw
-        {
-            get
-            {
+        public string RollingOffsetDraw {
+            get {
                 return ((string)(this["RollingOffsetDraw"]));
             }
-            set
-            {
-                (this["RollingOffsetDraw"]) = value;
+            set {
+                this["RollingOffsetDraw"] = value;
             }
         }
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string VerticalOffsetDraw
-        {
-            get
-            {
+        public string VerticalOffsetDraw {
+            get {
                 return ((string)(this["VerticalOffsetDraw"]));
             }
-            set
-            {
-                (this["VerticalOffsetDraw"]) = value;
+            set {
+                this["VerticalOffsetDraw"] = value;
             }
         }
-
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SyncDataParameters
-        {
-            get
-            {
+        public string SyncDataParameters {
+            get {
                 return ((string)(this["SyncDataParameters"]));
             }
-            set
-            {
-                (this["SyncDataParameters"]) = value;
+            set {
+                this["SyncDataParameters"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ProfileColorSettings {
+            get {
+                return ((string)(this["ProfileColorSettings"]));
+            }
+            set {
+                this["ProfileColorSettings"] = value;
             }
         }
     }

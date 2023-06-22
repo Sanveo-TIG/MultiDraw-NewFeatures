@@ -33,41 +33,52 @@ namespace MultiDraw
         public UIApplication _uiApp = null;
         public SettingsUserControl(Document doc, UIApplication uiApp,Window window, ExternalEvent saveEvent)
         {
-            InitializeComponent();
-            Instance = this;
-            _doc = doc;
-            _uiApp = uiApp;
-            txtSupportSpacing.Document = _doc;
-            txtSupportSpacing.UIApplication = uiApp;
-            txtSupportSpacing.Text = "8\'";
+            try
+            {
+                InitializeComponent();
+                Instance = this;
+                _doc = doc;
+                _uiApp = uiApp;
+                txtSupportSpacing.Document = _doc;
+                txtSupportSpacing.UIApplication = uiApp;
+                txtSupportSpacing.Text = "8\'";
 
-            txtRodDia.Document = _doc;
-            txtRodDia.UIApplication = uiApp;
-            txtRodDia.Text = "3/8\"";
+                txtRodDia.Document = _doc;
+                txtRodDia.UIApplication = uiApp;
+                txtRodDia.Text = "3/8\"";
 
-            txtRodExtension.Document = _doc;
-            txtRodExtension.UIApplication = uiApp;
-            txtRodExtension.Text = "3/8\"";
-            List<MultiSelect> sType = new List<MultiSelect>
+                txtRodExtension.Document = _doc;
+                txtRodExtension.UIApplication = uiApp;
+                txtRodExtension.Text = "3/8\"";
+                List<MultiSelect> sType = new List<MultiSelect>
                 {
                     new MultiSelect{Name = "TIG HANGER STRUT v1"},
                     new MultiSelect{Name = "TIG HANGER STRUT v2"}
             };
-            int.TryParse(uiApp.Application.VersionNumber, out int RevitVersion);
-            if (RevitVersion < 2022)
-            {
-                sType.Remove(sType.FirstOrDefault(x => x.Name == "TIG HANGER STRUT v2"));
+                int.TryParse(uiApp.Application.VersionNumber, out int RevitVersion);
+                if (RevitVersion < 2022)
+                {
+                    sType.Remove(sType.FirstOrDefault(x => x.Name == "TIG HANGER STRUT v2"));
+                }
+                ddlStrutType.ItemsSource = sType;
+                ddlStrutType.SelectedItem = sType.Last();
+                _window = window;
+                LoadTab();
+
+
+                UserControl userControl = new ProfileColorSettingUserControl(saveEvent, uiApp, window);
+                containerProfileColorSettings.Children.Add(userControl);
+                ParentUserControl.Instance.AlignConduits.IsEnabled = false;
+                ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
+                ParentUserControl.Instance.AlignConduits.IsChecked = false;
+                ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
             }
-            ddlStrutType.ItemsSource = sType;
-            ddlStrutType.SelectedItem = sType.Last();
-            _window = window;
-            LoadTab();
-            UserControl userControl = new ProfileColorSettingUserControl(saveEvent, uiApp, window);
-            containerProfileColorSettings.Children.Add(userControl);
-            ParentUserControl.Instance.AlignConduits.IsEnabled = false;
-            ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
-            ParentUserControl.Instance.AlignConduits.IsChecked = false;
-            ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
+            catch (Exception ex)
+            {
+                TaskDialog.Show("War", ex.StackTrace);
+            }
+            
+           
         }
         private void LoadTab()
         {
