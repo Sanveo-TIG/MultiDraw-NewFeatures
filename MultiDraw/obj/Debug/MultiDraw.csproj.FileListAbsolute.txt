@@ -235,10 +235,5 @@ C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\Mult
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\UserControl\ProfileColorSettingUserControl.g.cs
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\UserControl\ProfileColorSettingUserControl.baml
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.dll
-C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\AdskRcManaged.dll
-C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\RevitDBCoreAPI.dll
-C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\IntfATFAPI.dll
-C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TextEngineAPI.dll
-C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\CompositionServices.dll
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.pdb
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.dll.config

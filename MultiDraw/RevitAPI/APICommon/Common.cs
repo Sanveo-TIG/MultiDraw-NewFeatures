@@ -421,7 +421,7 @@ namespace MultiDraw
                                     doc.Delete(element.Id);
                             }
                             fittingsfailure = true;
-                            TaskDialog.Show("Warning", "Fittings failed. Kindly change the angle or Enable Angle From Primary Conduits");
+                            TaskDialog.Show("Warning", "Couldn't add a fitting. Please change the bend angle or enable Add bend in-place");
                             ParentUserControl.Instance.Secondaryelst.Clear();
                             //ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                             ParentUserControl.Instance.Primaryelst.Clear();
@@ -447,7 +447,7 @@ namespace MultiDraw
                                 doc.Delete(element.Id);
                         }
                         fittingsfailure = true;
-                        TaskDialog.Show("Warning", "Fittings failed. Kindly change the angle or Enable Angle From Primary Conduits");
+                        TaskDialog.Show("Warning", "Couldn't add a fitting. Please change the bend angle or enable Add bend in-place");
                         ParentUserControl.Instance.Secondaryelst.Clear();
                         //ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                         ParentUserControl.Instance.Primaryelst.Clear();
@@ -3253,7 +3253,7 @@ namespace MultiDraw
                                             {
                                                 doc.Delete(element.Id);
                                             }
-                                            TaskDialog.Show("Warning", "Fittings failed. Kindly change the angle or Enable Angle From Primary Conduits");
+                                            TaskDialog.Show("Warning", "Couldn't add a fitting. Please change the bend angle or enable Add bend in-place");
                                         }
 
                                     }
@@ -3263,7 +3263,7 @@ namespace MultiDraw
                                         {
                                             doc.Delete(element.Id);
                                         }
-                                        TaskDialog.Show("Warning", "Fittings failed. Kindly change the angle or Enable Angle From Primary Conduits");
+                                        TaskDialog.Show("Warning", "Couldn't add a fitting. Please change the bend angle or enable Add bend in-place");
                                     }
 
                                     string angleuseractivity = Convert.ToString(StraightOrBendUserControl.Instance.angleList.SelectedItem);
@@ -3272,7 +3272,7 @@ namespace MultiDraw
                                 }
                                 catch
                                 {
-                                    TaskDialog.Show("Warning", "Fittings failed. Kindly change the angle or Enable Angle From Primary Conduits");
+                                    TaskDialog.Show("Warning", "Couldn't add a fitting. Please change the bend angle or enable Add bend in-place");
                                 }
 
                             }
