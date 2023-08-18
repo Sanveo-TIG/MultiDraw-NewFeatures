@@ -825,11 +825,17 @@ namespace MultiDraw
                                         ElementFilter elemFilter_ninetystub = CreateElementFilterFromFilterRules(filterRules_ninetystub);
                                         parameterFilterElement_Ninetystub.SetElementFilter(elemFilter_ninetystub);
                                     }
+                                    else
+                                    {
+                                        parameterFilterElement = fittingscollections_filters.Where(x => x.Name.Equals("TIG-H Offset Bends")).FirstOrDefault() as ParameterFilterElement;
+                                        parameterFilterElement_voffset = fittingscollections_filters.Where(x => x.Name.Equals("TIG-V Offset Bends")).FirstOrDefault() as ParameterFilterElement;
+                                        parameterFilterElement_Roffset = fittingscollections_filters.Where(x => x.Name.Equals("TIG-R Offset Bends")).FirstOrDefault() as ParameterFilterElement;
+                                        parameterFilterElement_kick90 = fittingscollections_filters.Where(x => x.Name.Equals("TIG-Kick with 90 Bends")).FirstOrDefault() as ParameterFilterElement;
+                                        parameterFilterElement_Straight = fittingscollections_filters.Where(x => x.Name.Equals("TIG-Straight Profiles")).FirstOrDefault() as ParameterFilterElement;
+                                        parameterFilterElement_NinetyKick = fittingscollections_filters.Where(x => x.Name.Equals("TIG-NinetyKickBends")).FirstOrDefault() as ParameterFilterElement;
+                                        parameterFilterElement_Ninetystub = fittingscollections_filters.Where(x => x.Name.Equals("TIG-NinetystubBends")).FirstOrDefault() as ParameterFilterElement;
 
-
-
-
-
+                                    }
 
                                     var patternCollector = new FilteredElementCollector(doc);
                                     patternCollector.OfClass(typeof(FillPatternElement));
