@@ -224,7 +224,7 @@ namespace MultiDraw
                     }
                    // BOTTOMAddTags(doc, bOTTOMForAddtags);
                     //TOPAddTags(doc, TOPForAddtags);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
+                   // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
                     tx.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -461,7 +461,7 @@ namespace MultiDraw
                                 sunstransforrunsync.Commit();
                             }
 
-                            Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
+                           // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
                         }
                         else
                         {
@@ -600,7 +600,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     PointRollUp(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
                 else
@@ -631,7 +631,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     PointRollUp(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
 
@@ -779,7 +779,7 @@ namespace MultiDraw
                     }
                    // BOTTOMAddTags(_doc, bOTTOMForAddtags);
                    // BOTTOMAddTags(_doc, TOPForAddtags);
-                    Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     subTransaction.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -910,7 +910,7 @@ namespace MultiDraw
                    // BOTTOMAddTags(_doc, bOTTOMForAddtags);
                    // TOPAddTags(_doc, TOPForAddtags);
 
-                    Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     trans1.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -1086,7 +1086,7 @@ namespace MultiDraw
                     }
                    // BOTTOMAddTags(_doc, bOTTOMForAddtags);
                    // TOPAddTags(_doc, TOPForAddtags);
-                    Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     subTransaction.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -1216,7 +1216,7 @@ namespace MultiDraw
                     }
                     //BOTTOMAddTags(_doc, bOTTOMForAddtags);
                    // TOPAddTags(_doc, TOPForAddtags);
-                    Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     trans1.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -1257,69 +1257,69 @@ namespace MultiDraw
 
             return true;
         }
-        public static bool ConduitSync(Document doc, UIApplication uiapp, List<Element> elements)
-        {
-            DateTime startDate = DateTime.UtcNow;
-            try
-            {
+        //public static bool ConduitSync(Document doc, UIApplication uiapp, List<Element> elements)
+        //{
+        //    DateTime startDate = DateTime.UtcNow;
+        //    try
+        //    {
 
-                if (elements == null)
-                {
-                    SyncDataUserControl.Instance.btnsync.IsEnabled = true;
-                    return false;
-                }
+        //        if (elements == null)
+        //        {
+        //            SyncDataUserControl.Instance.btnsync.IsEnabled = true;
+        //            return false;
+        //        }
 
 
-                List<MultiSelect> SelectedParameters = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems;
-                MultiSelect multiselect = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems[0];
-                if (SelectedParameters != null)
-                    _selectedSyncDataList = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems.ToList().Where(x => x.Name != "All" && x.IsChecked).ToList();
-                if (SyncDataUserControl.Instance.ucMultiSelect.ItemsSource is List<MultiSelect> selectitem)
-                {
-                    List<SYNCDataGlobalParam> syncdata = new List<SYNCDataGlobalParam>();
-                    syncdata = selectitem.Where(r => r.IsChecked).Select(x => new SYNCDataGlobalParam { Name = x.Name }).ToList();
-                    string json = JsonConvert.SerializeObject(syncdata);
-                    GlobalParameter gp = null;
-                    string ParamName = "SyncDataParameters_" + uiapp.Application.LoginUserId;
-                    ElementId gpNWC = GlobalParametersManager.FindByName(doc, ParamName);
-                    if (gpNWC != ElementId.InvalidElementId)
-                    {
-                        gp = doc.GetElement(gpNWC) as GlobalParameter;
-                    }
-                    else
-                    {
-                        gp = GlobalParameter.Create(doc, ParamName, ParameterType.Text);
-                    }
-                    if (gp != null)
-                    {
-                        ParameterValue value = gp.GetValue();
-                        if (value.GetType() == typeof(StringParameterValue))
-                        {
-                            StringParameterValue stpv = value as StringParameterValue;
-                            stpv.Value = json;
-                            gp.SetValue(stpv);
-                        }
-                    }
-                }
-                List<ElementId> elementIds = new List<ElementId>();
-                foreach (Element item in elements)
-                {
-                    List<Element> lstElements = new List<Element>();
-                    Utility.ConduitSelection(doc, item as Conduit, null, ref lstElements, true);
-                    ApplyParameters(doc, item as Conduit, lstElements);
-                }
-                Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Sync Data", Util.ProductVersion, "Sync Data");
-            }
-            catch (Exception exception)
-            {
-                System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Sync Data", Util.ProductVersion, "Sync Data");
+        //        List<MultiSelect> SelectedParameters = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems;
+        //        MultiSelect multiselect = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems[0];
+        //        if (SelectedParameters != null)
+        //            _selectedSyncDataList = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems.ToList().Where(x => x.Name != "All" && x.IsChecked).ToList();
+        //        if (SyncDataUserControl.Instance.ucMultiSelect.ItemsSource is List<MultiSelect> selectitem)
+        //        {
+        //            List<SYNCDataGlobalParam> syncdata = new List<SYNCDataGlobalParam>();
+        //            syncdata = selectitem.Where(r => r.IsChecked).Select(x => new SYNCDataGlobalParam { Name = x.Name }).ToList();
+        //            string json = JsonConvert.SerializeObject(syncdata);
+        //            GlobalParameter gp = null;
+        //            string ParamName = "SyncDataParameters_" + uiapp.Application.LoginUserId;
+        //            ElementId gpNWC = GlobalParametersManager.FindByName(doc, ParamName);
+        //            if (gpNWC != ElementId.InvalidElementId)
+        //            {
+        //                gp = doc.GetElement(gpNWC) as GlobalParameter;
+        //            }
+        //            else
+        //            {
+        //                gp = GlobalParameter.Create(doc, ParamName, ParameterType.Text);
+        //            }
+        //            if (gp != null)
+        //            {
+        //                ParameterValue value = gp.GetValue();
+        //                if (value.GetType() == typeof(StringParameterValue))
+        //                {
+        //                    StringParameterValue stpv = value as StringParameterValue;
+        //                    stpv.Value = json;
+        //                    gp.SetValue(stpv);
+        //                }
+        //            }
+        //        }
+        //        List<ElementId> elementIds = new List<ElementId>();
+        //        foreach (Element item in elements)
+        //        {
+        //            List<Element> lstElements = new List<Element>();
+        //            Utility.ConduitSelection(doc, item as Conduit, null, ref lstElements, true);
+        //            ApplyParameters(doc, item as Conduit, lstElements);
+        //        }
+        //        Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Sync Data", Util.ProductVersion, "Sync Data");
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //        Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Sync Data", Util.ProductVersion, "Sync Data");
 
-            }
-            SyncDataUserControl.Instance.btnsync.IsEnabled = true;
-            return true;
+        //    }
+        //    SyncDataUserControl.Instance.btnsync.IsEnabled = true;
+        //    return true;
 
-        }
+        //}
 
         private static void ApplyParameters(Document doc, Conduit eleConduit, List<Element> elements)
         {
@@ -1403,7 +1403,7 @@ namespace MultiDraw
                     Properties.Settings.Default.RollingOffsetDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
                     RollUp(doc, ref PrimaryElements, l_angle, l_rollOffset, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
                 else
@@ -1434,7 +1434,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     RollUp(doc, ref PrimaryElements, l_angle, l_rollOffset, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
 
@@ -1617,7 +1617,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     ApplyBend(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref secondaryElements);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
+                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
                     subtrans.Commit();
                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
@@ -1738,7 +1738,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     PointApplyBend(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref secondaryElements);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
+                    ///Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
                     subtrans.Commit();
                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
@@ -3183,7 +3183,7 @@ namespace MultiDraw
                                 }
 
                             }
-                            Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
+                            //Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                             transaction.Commit();
                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
                         }
@@ -3495,7 +3495,7 @@ namespace MultiDraw
                                     }
                                     sunstransforrunsync.Commit();
                                 }
-                                Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(inclindconduits) });
+                                //Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(inclindconduits) });
                                 ParentUserControl.Instance.Secondaryelst.Clear();
                                 ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                                 ParentUserControl.Instance.Primaryelst.Clear();
@@ -3819,7 +3819,7 @@ namespace MultiDraw
                         sunstransforrunsync.Commit();
                     }
 
-                    Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                 }
                 else
                 {
@@ -3870,7 +3870,7 @@ namespace MultiDraw
                         sunstransforrunsync.Commit();
                     }
 
-                    Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    //Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                 }
 
 
@@ -3921,7 +3921,7 @@ namespace MultiDraw
                     l_angle = Convert.ToDouble(angleSelected.Name);
                     DeleteSupports(doc, PrimaryElements);
                     ApplyKick(doc, ref PrimaryElements, l_angle, l_offSet, l_Rise, offsetVariable, uiapp, pickpoint);
-                    Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
+                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                     transKick.Commit();
                 }
 
@@ -4072,7 +4072,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(_doc, PrimaryElements);
                     StubApplyBend(_doc, ref PrimaryElements, l_offSet, offsetVariable, Pickpoint, _uiapp);
-                    Support.AddSupport(_uiapp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
+                    //Support.AddSupport(_uiapp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                     tx.Commit();
                 }
                 using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))

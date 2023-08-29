@@ -86,8 +86,8 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"  Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <TIG:TabPanelUserControl x:Name="tagControl"
-                                    SelectionChanged="TagControl_SelectionChanged"></TIG:TabPanelUserControl>
+            <TIG:TabPanelControl x:Name="tagControl"
+                                    SelectionChanged="TagControl_SelectionChanged"></TIG:TabPanelControl>
 
         </StackPanel>
         <Grid x:Name="containerSupportSettings" Grid.Row="1">
@@ -125,9 +125,9 @@
             </StackPanel>
             <StackPanel Grid.Row="3"
                     Grid.Column="1">
-                <TIG:DropDownUserControl x:Name="ddlStrutType"
-                                     Width="200"
-                                     Margin="0,-15,0,0"></TIG:DropDownUserControl>
+                <TIG:SingleSelectDropDownControl x:Name="ddlStrutType"
+                                   
+                                     Margin="0,-15,0,0"></TIG:SingleSelectDropDownControl>
             </StackPanel>
             <StackPanel Grid.Row="4"
                     Grid.Column="0"
@@ -147,11 +147,11 @@
             <StackPanel Grid.Row="4"
                     Grid.Column="1"
                     HorizontalAlignment="Left">
-                <TIG:TextBoxUserControl Width="200"
+                <TIG:TextBoxControl Width="200"
                                     Height="40"
                                     IsUnit="True"
                                     UnitsLabel="Feet and Inches"
-                                    x:Name="txtSupportSpacing"></TIG:TextBoxUserControl>
+                                    x:Name="txtSupportSpacing"></TIG:TextBoxControl>
             </StackPanel>
             <StackPanel Grid.Row="5"
                     Grid.Column="0"
@@ -161,12 +161,12 @@
             </StackPanel>
             <StackPanel Grid.Row="5"
                     Grid.Column="1">
-                <TIG:TextBoxUserControl  Width="200"
+                <TIG:TextBoxControl  Width="200"
                                      Text="3/8"
                                      x:Name="txtRodDia"
                                      UnitsLabel="Feet and Inches"
                                      IsUnit="True"
-                                     Margin="0,0,0,0"></TIG:TextBoxUserControl>
+                                     Margin="0,0,0,0"></TIG:TextBoxControl>
             </StackPanel>
             <StackPanel Grid.Row="6"
                     Grid.Column="0"
@@ -176,12 +176,12 @@
             </StackPanel>
             <StackPanel Grid.Row="6"
                     Grid.Column="1">
-                <TIG:TextBoxUserControl  Width="200"
+                <TIG:TextBoxControl  Width="200"
                                      Text="3/8"
                                      x:Name="txtRodExtension"
                                      UnitsLabel="Feet and Inches"
                                      IsUnit="True"
-                                     Margin="0,0,0,0"></TIG:TextBoxUserControl>
+                                     Margin="0,0,0,0"></TIG:TextBoxControl>
             </StackPanel>
         </Grid>
         <Grid x:Name="containerProfileColorSettings" Grid.Row="1">

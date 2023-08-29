@@ -75,17 +75,17 @@
             </Border>
         </StackPanel>
         <StackPanel Grid.Row="2">
-            <TIG:DropDownUserControl  Width="328" 
+            <TIG:SingleSelectDropDownControl  
                                        x:Name="ddlAngle"
-                                       Label="Angle" SelectionChanged="DdlAngle_Changed"></TIG:DropDownUserControl>
+                                       DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
            
         </StackPanel>
         <StackPanel Grid.Row="3">
-            <TIG:TextBoxUserControl x:Name="txtOffsetFeet" 
+            <TIG:TextBoxControl x:Name="txtOffsetFeet" 
                                     Label="Offset"
                                     UnitsLabel="Feet and inches"
                                     LostFocus="TextBox_LostFocus"
-                                    IsUnit="True"></TIG:TextBoxUserControl>
+                                    IsUnit="True"></TIG:TextBoxControl>
         </StackPanel>
     </Grid>
 </UserControl>

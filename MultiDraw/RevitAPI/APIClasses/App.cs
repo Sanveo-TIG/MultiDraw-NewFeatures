@@ -9,7 +9,9 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using adWin = Autodesk.Windows;
 using TIGUtility;
+using System.Diagnostics;
 #endregion
 
 
@@ -25,9 +27,67 @@ namespace MultiDraw
             OnButtonCreate(application);
             application.ViewActivated += Application_ViewActivated;
             application.ApplicationClosing += Application_Closing;
+
+            // Create a custom ribbon tab
+            string tabName = "Sanveo Tools-Beta";
+            application.CreateRibbonTab(tabName);
+
+            // Create a ribbon panel
+            RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, "MultiDraw");
+
+
+
+            // Get the Dimension panel in the Annotation tab
+           // Autodesk.Revit.UI.Tab annotationTab = Autodesk.Revit.UI.Tab.AddIns;
+            Autodesk.Revit.UI.RibbonPanel dimensionPanel = null;
+            foreach (Autodesk.Revit.UI.RibbonPanel panel in application.GetRibbonPanels(tabName))
+            {
+                if (panel.Name == "MultiDraw")
+                {
+                    dimensionPanel = panel;
+                    break;
+                }
+            }
+
+
+
+            // Create a push button
+            PushButtonData buttonData = new PushButtonData("My Button", "My Button", Assembly.GetExecutingAssembly().Location, "MultiDraw.Command");
+
+
+
+            // Add the button to the panel
+            PushButton pushButton = dimensionPanel.AddItem(buttonData) as PushButton;
+
             return Result.Succeeded;
         }
+        void ComponentManager_UIElementActivated(
+  object sender,
+  adWin.UIElementActivatedEventArgs e)
+        {
+            if (e != null
+              && e.Item != null
+              && e.Item.Id != null
+              && e.Item.Id == "ID_TBC_BUTTON")
+            {
+                // Perform the button action
 
+                // Local file
+
+                string path = System.Reflection.Assembly
+                  .GetExecutingAssembly().Location;
+
+                path = Path.Combine(
+                  Path.GetDirectoryName(path),
+                  "test.html");
+
+                // Internet URL
+
+                path = "http://thebuildingcoder.typepad.com";
+
+                Process.Start(path);
+            }
+        }
         private void Application_Closing(object sender, Autodesk.Revit.UI.Events.ApplicationClosingEventArgs e)
         {
             DeleteUserDatafromLocal();

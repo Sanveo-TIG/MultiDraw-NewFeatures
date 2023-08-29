@@ -19,7 +19,6 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Windows;
 using MaterialDesignThemes.Wpf;
-using Microsoft.Office.Interop.Excel;
 using TIGUtility;
 using Window = System.Windows.Window;
 #endregion

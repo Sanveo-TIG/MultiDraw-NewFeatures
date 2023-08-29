@@ -33,9 +33,9 @@
                        Text="Rolling Offset"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <TIG:DropDownUserControl   Width="328"
+            <TIG:SingleSelectDropDownControl  
                                        x:Name="ddlAngle"
-                                       Label="Angle" SelectionChanged="DdlAngle_Changed"></TIG:DropDownUserControl>
+                                       DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
         </StackPanel>
         <Grid Grid.Row="2">
             <StackPanel Orientation="Vertical">
@@ -51,11 +51,11 @@
                 </TextBlock.ToolTip>
             </TextBlock>
             
-            <TIG:TextBoxUserControl x:Name="txtOffsetFeet"
+            <TIG:TextBoxControl x:Name="txtOffsetFeet"
                                         Margin="0,10,0,0"
                                         LostFocus="TextBox_LostFocus"
                                     UnitsLabel="Feet and inches"
-                                    IsUnit="True"></TIG:TextBoxUserControl>
+                                    IsUnit="True"></TIG:TextBoxControl>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="3">
@@ -72,10 +72,10 @@
                     </TextBlock.ToolTip>
                 </TextBlock>
 
-                <TIG:TextBoxUserControl x:Name="txtRollFeet" Margin="0,10,0,0"
+                <TIG:TextBoxControl x:Name="txtRollFeet" Margin="0,10,0,0"
                                         UnitsLabel="Feet and inches"
                                         LostFocus="TextBox_LostFocus"
-                                    IsUnit="True"></TIG:TextBoxUserControl>
+                                    IsUnit="True"></TIG:TextBoxControl>
             </StackPanel>
         
        </Grid>

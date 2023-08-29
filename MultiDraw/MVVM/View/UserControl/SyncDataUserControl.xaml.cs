@@ -59,56 +59,56 @@ namespace MultiDraw
             };
             try
             {
-                _window = window;
-                ParentUserControl.Instance.AlignConduits.IsEnabled = false;
-                ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
-                ParentUserControl.Instance.AlignConduits.IsChecked = false;
-                ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
-                List<SYNCDataGlobalParam> globalParam = null;
-                string json = Properties.Settings.Default.SyncDataParameters;
-                if (!string.IsNullOrEmpty(json))
-                {
-                    globalParam = JsonConvert.DeserializeObject<List<SYNCDataGlobalParam>>(json);
-                }
-                FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
-                Element e = conduitscollector.OfClass(typeof(Conduit)).FirstOrDefault();
-                foreach (Parameter parameter in e.GetOrderedParameters().ToList().Where(r => !r.IsReadOnly))
-                {
-                    if (!_removingList.Any(x => x == parameter.Definition.Name))
-                    {
-                        MultiSelect multi = new MultiSelect
-                        {
-                            Name = parameter.Definition.Name,
-                            IsChecked = false,
-                            Id = parameter.Id,
-                            Item = parameter
-                        };
-                        if (globalParam != null && globalParam.Any(r => r.Name == multi.Name))
-                        {
-                            multi.IsChecked = true;
-                        }
-                        multiSelectList.Add(multi);
-                    }
-                }
-                multiSelectList = multiSelectList.OrderBy(x => x.Name).ToList();
-                ucMultiSelect.ItemsSource = multiSelectList;
+                //_window = window;
+                //ParentUserControl.Instance.AlignConduits.IsEnabled = false;
+                //ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
+                //ParentUserControl.Instance.AlignConduits.IsChecked = false;
+                //ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
+                //List<SYNCDataGlobalParam> globalParam = null;
+                //string json = Properties.Settings.Default.SyncDataParameters;
+                //if (!string.IsNullOrEmpty(json))
+                //{
+                //    globalParam = JsonConvert.DeserializeObject<List<SYNCDataGlobalParam>>(json);
+                //}
+                //FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
+                //Element e = conduitscollector.OfClass(typeof(Conduit)).FirstOrDefault();
+                //foreach (Parameter parameter in e.GetOrderedParameters().ToList().Where(r => !r.IsReadOnly))
+                //{
+                //    if (!_removingList.Any(x => x == parameter.Definition.Name))
+                //    {
+                //        MultiSelect multi = new MultiSelect
+                //        {
+                //            Name = parameter.Definition.Name,
+                //            IsChecked = false,
+                //            Id = parameter.Id,
+                //            Item = parameter
+                //        };
+                //        if (globalParam != null && globalParam.Any(r => r.Name == multi.Name))
+                //        {
+                //            multi.IsChecked = true;
+                //        }
+                //        multiSelectList.Add(multi);
+                //    }
+                //}
+                //multiSelectList = multiSelectList.OrderBy(x => x.Name).ToList();
+                //ucMultiSelect.ItemsSource = multiSelectList;
             }
             catch (Exception exception)
             {
                 System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void SaveSettings()
-        {
-            List<SYNCDataGlobalParam> globalParam = new List<SYNCDataGlobalParam>();
-            globalParam = ucMultiSelect.ItemsSource.Where(r=> r.IsChecked).Select(r=> new SYNCDataGlobalParam { Name = r.Name}).ToList();
-            Properties.Settings.Default.SyncDataParameters = JsonConvert.SerializeObject(globalParam);
-            Properties.Settings.Default.Save();
-        }
-        private void UcMultiSelect_DropDownClosed(object sender)
-        {
-            SaveSettings();           
-        }
+        //private void SaveSettings()
+        //{
+        //    List<SYNCDataGlobalParam> globalParam = new List<SYNCDataGlobalParam>();
+        //    globalParam = ucMultiSelect.ItemsSource.Where(r=> r.IsChecked).Select(r=> new SYNCDataGlobalParam { Name = r.Name}).ToList();
+        //    Properties.Settings.Default.SyncDataParameters = JsonConvert.SerializeObject(globalParam);
+        //    Properties.Settings.Default.Save();
+        //}
+        //private void UcMultiSelect_DropDownClosed(object sender)
+        //{
+        //    SaveSettings();           
+        //}
 
         private void BtnCheck_Click(object sender)
         {

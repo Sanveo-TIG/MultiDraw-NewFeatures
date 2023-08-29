@@ -42,6 +42,8 @@ namespace MultiDraw
         public Settings MultiDrawSettings = null;
         public SettingsUserControl settingsControl = null;
        public ProfileColorSettingsData _ProfileColorSettingsData = new ProfileColorSettingsData();
+        public Transaction _transaction = null;
+        public bool _isStopedTransaction = false;
         public ParentUserControl(List<ExternalEvent> externalEvents, CustomUIApplication application, Window window)
         {
             _uidoc = application.UIApplication.ActiveUIDocument;
@@ -154,7 +156,7 @@ namespace MultiDraw
                     userControl = new NinetyStubUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 7:
-                    userControl = new SyncDataUserControl(_application, _window);
+                  //  userControl = new SyncDataUserControl(_application, _window);
                     break;
                 case 8:
                     userControl = new SettingsUserControl(_doc, _application.UIApplication, _window, _externalEvents[1]);
@@ -214,6 +216,25 @@ namespace MultiDraw
         {
             cmbProfileType.SelectedIndex = 4;
             ReadSettings();
+        }
+
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnPlay.IsChecked == true)
+            {
+                _isStopedTransaction = false;
+                _externalEvents[0].Raise();
+            }
+            else
+            {
+                // _transaction.Commit();
+                _isStopedTransaction = true;
+            }
         }
     }
 }

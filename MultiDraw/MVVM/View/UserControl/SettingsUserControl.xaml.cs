@@ -39,15 +39,12 @@ namespace MultiDraw
                 Instance = this;
                 _doc = doc;
                 _uiApp = uiApp;
-                txtSupportSpacing.Document = _doc;
                 txtSupportSpacing.UIApplication = uiApp;
                 txtSupportSpacing.Text = "8\'";
 
-                txtRodDia.Document = _doc;
                 txtRodDia.UIApplication = uiApp;
                 txtRodDia.Text = "3/8\"";
 
-                txtRodExtension.Document = _doc;
                 txtRodExtension.UIApplication = uiApp;
                 txtRodExtension.Text = "3/8\"";
                 List<MultiSelect> sType = new List<MultiSelect>
@@ -64,6 +61,10 @@ namespace MultiDraw
                 ddlStrutType.SelectedItem = sType.Last();
                 _window = window;
                 LoadTab();
+                ddlStrutType.Attributes = new MultiSelectAttributes()
+                {
+                    Width = 200
+                };
 
 
                 UserControl userControl = new ProfileColorSettingUserControl(saveEvent, uiApp, window);

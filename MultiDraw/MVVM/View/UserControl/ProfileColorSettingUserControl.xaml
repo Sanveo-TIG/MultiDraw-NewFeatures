@@ -96,7 +96,7 @@
             <TextBlock Text="V Offset"
                        Margin="0,0,0,18"></TextBlock>
         </StackPanel>
-        <StackPanel Grid.Row="0" 
+        <!--<StackPanel Grid.Row="0" 
                     Grid.Column="1" 
                     >
             <TIG:TextBoxUserControl x:Name="VoffsetValue" HintText="VoffsetValue" Width="100" Height="30" TextBox_Changed="vOffsetvaluechange" ></TIG:TextBoxUserControl>
@@ -214,7 +214,7 @@
                     Margin="0,-20,0,18"
                     VerticalAlignment="Center">
             <TIG:ColorPickerUserControl x:Name="ninetystubColor" Width="130" Label="color" DropDownClosed="ninetystubColor_DropDownClosed"></TIG:ColorPickerUserControl>
-        </StackPanel>
+        </StackPanel>-->
 
 
 

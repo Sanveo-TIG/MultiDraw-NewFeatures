@@ -67,7 +67,7 @@ namespace MultiDraw
         }
         private void InitializeMaterialDesign()
         {
-            var card = new Card();
+            //var card = new Card();
             var hue = new Hue("Dummy", Colors.Black, Colors.White);
 
         }

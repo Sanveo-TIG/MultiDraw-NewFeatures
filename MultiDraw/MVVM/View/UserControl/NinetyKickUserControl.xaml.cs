@@ -42,6 +42,11 @@ namespace MultiDraw
             _externalEvents = externalEvents;
             InitializeComponent();
             Instance = this;
+            ddlAngle.Attributes = new MultiSelectAttributes()
+            {
+                Label = "Angle",
+                Width = 328
+            };
             try
             {
                 _window = window;
@@ -86,13 +91,11 @@ namespace MultiDraw
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            txtOffset.Document = _doc;
             txtOffset.UIApplication = _uiApp;
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
                 angleList.Add(new MultiSelect() { Name = item });
             ddlAngle.ItemsSource = angleList;
-            txtRise.Document = _doc;
             txtRise.UIApplication = _uiApp;
             Grid_MouseDown(null, null);
             string json = Properties.Settings.Default.NinetyKickDraw;
@@ -109,7 +112,7 @@ namespace MultiDraw
                 txtRise.Text = "10.0\'";
                 ddlAngle.SelectedItem = angleList[4];               
             }
-            _externalEvents.Raise();
+           // _externalEvents.Raise();
         }
     }
 }

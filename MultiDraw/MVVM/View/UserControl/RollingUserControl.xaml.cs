@@ -42,6 +42,11 @@ namespace MultiDraw
             _externalEvents= externalEvents;    
             InitializeComponent();
             Instance = this;
+            ddlAngle.Attributes = new MultiSelectAttributes()
+            {
+                Label= "Angle",
+                Width=328
+            };
             try
             {
                 _window = window;
@@ -85,9 +90,7 @@ namespace MultiDraw
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            txtOffsetFeet.Document = _doc;
             txtOffsetFeet.UIApplication = _uiApp;
-            txtRollFeet.Document = _doc;
             txtRollFeet.UIApplication = _uiApp;
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
@@ -108,7 +111,7 @@ namespace MultiDraw
                 txtRollFeet.Text = "2\'";
                 ddlAngle.SelectedItem = angleList[4];                
             }
-            _externalEvents.Raise();
+           // _externalEvents.Raise();
         }
     }
 }

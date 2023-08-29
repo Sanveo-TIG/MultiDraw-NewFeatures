@@ -31,7 +31,7 @@ namespace MultiDraw
         public System.Windows.Window _window = new System.Windows.Window();
         readonly Document _doc = null;
         readonly UIDocument _uidoc = null;
-        readonly List<string> _angleList = new List<string>() { "5.00", "11.25", "15.00", "22.50", "30.00", "45.00", "60.00"};
+        readonly List<string> _angleList = new List<string>() { "5.00", "11.25", "15.00", "22.50", "30.00", "45.00", "60.00" };
         readonly ExternalEvent _externalEvents = null;
         public UIApplication _uiApp = null;
         public VOffsetUserControl(ExternalEvent externalEvents, CustomUIApplication application, Window window)
@@ -49,7 +49,10 @@ namespace MultiDraw
                 ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
                 ParentUserControl.Instance.AlignConduits.IsChecked = false;
                 ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
-               
+                ddlAngle.Attributes = new MultiSelectAttributes()
+                {
+                    Label = "Angle"
+                };
 
             }
             catch (Exception exception)
@@ -86,7 +89,6 @@ namespace MultiDraw
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            txtOffsetFeet.Document = _doc;
             txtOffsetFeet.UIApplication = _uiApp;
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
@@ -98,14 +100,14 @@ namespace MultiDraw
             {
                 VerticalOffsetGP globalParam = JsonConvert.DeserializeObject<VerticalOffsetGP>(json);
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
-                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];               
+                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
-                ddlAngle.SelectedItem = angleList[4];                
+                ddlAngle.SelectedItem = angleList[4];
             }
-            _externalEvents.Raise();
+            // _externalEvents.Raise();
         }
     }
 }

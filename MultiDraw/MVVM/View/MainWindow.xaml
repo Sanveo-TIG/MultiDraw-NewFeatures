@@ -53,9 +53,9 @@
         <!--HEADER-->
         <DockPanel x:Name="TitleBar"
                    DockPanel.Dock="Top">
-            <customUC:HeaderPanelUserControl Tittle="Multi Draw" x:Name="HeaderPanel"
+            <customUC:HeaderPanelControl Tittle="Multi Draw" x:Name="HeaderPanel"
                                        Logo="/MultiDraw;component/Resources/32x32.png"
-                                             DocumentPath="MultiDraw.html"></customUC:HeaderPanelUserControl>
+                                             DocumentPath="MultiDraw.html"></customUC:HeaderPanelControl>
         </DockPanel>
 
         <materialDesign:DialogHost x:Name="rootDialogHost"
@@ -90,9 +90,9 @@
                     
                 </Grid>
                 <!--FOOTER-->
-                    <customUC:FooterPanelUserControl Grid.Row="1"
+                    <customUC:FooterPanelControl Grid.Row="1"
                                                      x:Name="FooterPanel">
-                    </customUC:FooterPanelUserControl>
+                    </customUC:FooterPanelControl>
                 </Grid>
                 </Border>
         </materialDesign:DialogHost>

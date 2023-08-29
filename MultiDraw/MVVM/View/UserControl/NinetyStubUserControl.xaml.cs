@@ -77,7 +77,6 @@ namespace MultiDraw
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            txtOffsetFeet.Document = _doc;
             txtOffsetFeet.UIApplication = _uiApp;
             Grid_MouseDown(null, null);
             string json = Properties.Settings.Default.NinetyStubDraw;
@@ -90,7 +89,7 @@ namespace MultiDraw
             {
                 txtOffsetFeet.Text = "5\'";
             }
-            _externalEvents.Raise();
+           // _externalEvents.Raise();
         }
     }
 }

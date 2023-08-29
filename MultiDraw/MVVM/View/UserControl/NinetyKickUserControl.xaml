@@ -31,22 +31,22 @@
                        Text="Kick 90"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" >
-            <TIG:DropDownUserControl Width="328" x:Name="ddlAngle" Label="Angle" SelectionChanged="DdlAngle_Changed"></TIG:DropDownUserControl>
+            <TIG:SingleSelectDropDownControl x:Name="ddlAngle"  DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
         </StackPanel>
         <StackPanel Grid.Row="2">
-            <TIG:TextBoxUserControl x:Name="txtOffset" 
+            <TIG:TextBoxControl x:Name="txtOffset" 
                                     Label="Offset"  
                                     UnitsLabel="Feet and inches"
                                     IsUnit="True"
                                     LostFocus="TextBox_LostFocus"                                
-                                    ></TIG:TextBoxUserControl>
+                                    ></TIG:TextBoxControl>
         </StackPanel>
         <StackPanel Grid.Row="3">
-            <TIG:TextBoxUserControl x:Name="txtRise"
+            <TIG:TextBoxControl x:Name="txtRise"
                                     Label="Rise"
                                     UnitsLabel="Feet and inches"
                                     LostFocus="TextBox_LostFocus"
-                                    IsUnit="True"></TIG:TextBoxUserControl>
+                                    IsUnit="True"></TIG:TextBoxControl>
         </StackPanel>
     </Grid>
 </UserControl>
