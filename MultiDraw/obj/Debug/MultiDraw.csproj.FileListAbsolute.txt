@@ -116,7 +116,6 @@ C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw latest\ConPak-Pro\MultiDraw\MultiDra
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw latest\ConPak-Pro\MultiDraw\MultiDraw\obj\Debug\MultiDraw.csproj.CopyComplete
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw latest\ConPak-Pro\MultiDraw\MultiDraw\obj\Debug\MultiDraw.dll
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw latest\ConPak-Pro\MultiDraw\MultiDraw\obj\Debug\MultiDraw.pdb
-C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.csproj.AssemblyReference.cache
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\MultiDraw.dll.config
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\MultiDraw.dll
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\MultiDraw.pdb
@@ -211,6 +210,7 @@ C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\pt-B
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\ru-RU\AdWindows.resources.dll
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\zh-CN\AdWindows.resources.dll
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\bin\Debug\zh-TW\AdWindows.resources.dll
+C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.csproj.AssemblyReference.cache
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\UserControl\SettingsUserControl.baml
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\ParentUserControl.g.cs
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\MainWindow.g.cs
@@ -242,3 +242,5 @@ C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\Mult
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.csproj.CopyComplete
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.dll
 C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.pdb
+C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\SettingsWindow.g.cs
+C:\Users\Nantha\Desktop\SanveoTIG\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\SettingsWindow.baml

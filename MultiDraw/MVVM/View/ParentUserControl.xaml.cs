@@ -55,41 +55,7 @@ namespace MultiDraw
             try
             {
                 _window = window;
-                string json = Properties.Settings.Default.StraightsDraw;
-             
-                if (!string.IsNullOrEmpty(json))
-                {
-                    StraightsDrawParam globalParam = JsonConvert.DeserializeObject<StraightsDrawParam>(json);
-                    Anglefromprimary.IsChecked = globalParam.IsPrimaryAngle;
-                    AlignConduits.IsChecked = globalParam.IsAlignConduit;
-
-                }
-                string json2 = Properties.Settings.Default.ProfileColorSettings;
-
-                if (string.IsNullOrEmpty(json2))
-                {
-                    ParentUserControl.Instance._ProfileColorSettingsData.vOffsetValue = "V Offset";
-                    ParentUserControl.Instance._ProfileColorSettingsData.hOffsetValue = "H offset";
-                    ParentUserControl.Instance._ProfileColorSettingsData.rOffsetValue = "R offset";
-                    ParentUserControl.Instance._ProfileColorSettingsData.kOffsetValue = "K offset";
-                    ParentUserControl.Instance._ProfileColorSettingsData.straightValue = "Straight/Bend";
-                    ParentUserControl.Instance._ProfileColorSettingsData.nkOffsetValue = "NinetyKick";
-                    ParentUserControl.Instance._ProfileColorSettingsData.nsOffsetValue = "NinetyStub";
-
-                    ParentUserControl.Instance._ProfileColorSettingsData.vOffsetColor = new Autodesk.Revit.DB.Color(255, 255, 0);
-                    ParentUserControl.Instance._ProfileColorSettingsData.hOffsetColor = new Autodesk.Revit.DB.Color(128, 128, 128);
-                    ParentUserControl.Instance._ProfileColorSettingsData.rOffsetColor = new Autodesk.Revit.DB.Color(255, 153, 255);
-                    ParentUserControl.Instance._ProfileColorSettingsData.kOffsetColor = new Autodesk.Revit.DB.Color(204, 229, 255);
-                    ParentUserControl.Instance._ProfileColorSettingsData.straightColor = new Autodesk.Revit.DB.Color(255, 153, 204);
-                    ParentUserControl.Instance._ProfileColorSettingsData.nkOffsetColor = new Autodesk.Revit.DB.Color(204, 204, 255);
-                    ParentUserControl.Instance._ProfileColorSettingsData.nsOffsetColor = new Autodesk.Revit.DB.Color(153, 76, 0);
-                }
-                else
-                {
-                    ParentUserControl.Instance._ProfileColorSettingsData = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json2);
-
-
-                }
+              
                 _window.LocationChanged += Window_LocationChanged;
             }
             catch (Exception exception)

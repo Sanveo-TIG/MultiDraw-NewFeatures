@@ -69,10 +69,10 @@ namespace MultiDraw
 
                 UserControl userControl = new ProfileColorSettingUserControl(saveEvent, uiApp, window);
                 containerProfileColorSettings.Children.Add(userControl);
-                ParentUserControl.Instance.AlignConduits.IsEnabled = false;
-                ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
-                ParentUserControl.Instance.AlignConduits.IsChecked = false;
-                ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
+               // ParentUserControl.Instance.AlignConduits.IsEnabled = false;
+                //ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
+                //ParentUserControl.Instance.AlignConduits.IsChecked = false;
+                //ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
             }
             catch (Exception ex)
             {

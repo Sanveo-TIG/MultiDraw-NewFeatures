@@ -34,6 +34,7 @@ namespace MultiDraw
         UIDocument _uidoc = null;
 
         ExternalEvent _externalEvent = null;
+        ProfileColorSettingsData ProfileColorSettingsData = null;
         public ProfileColorSettingUserControl(ExternalEvent externalEvent, UIApplication uiApp, Window window)
         {
             _uidoc = uiApp.ActiveUIDocument;
@@ -45,30 +46,59 @@ namespace MultiDraw
             try
             {
                 _window = window;
-               
 
-       
-                //ProfileColorSettingsData obj = ParentUserControl.Instance._ProfileColorSettingsData;
-                //VoffsetValue.Text = obj.vOffsetValue;
-                //VoffsetColor.Value = obj.vOffsetColor;
+                string json = Properties.Settings.Default.StraightsDraw;
 
-                //HoffsetValue.Text = obj.hOffsetValue;
-                //HoffsetColor.Value = obj.hOffsetColor;
+                if (!string.IsNullOrEmpty(json))
+                {
+                    StraightsDrawParam globalParam = JsonConvert.DeserializeObject<StraightsDrawParam>(json);
+                   
+                }
+                string json2 = Properties.Settings.Default.ProfileColorSettings;
 
-                //RoffsetValue.Text = obj.rOffsetValue;
-                //RoffsetColor.Value = obj.rOffsetColor;
+                if (string.IsNullOrEmpty(json2))
+                {
+                    ProfileColorSettingsData.vOffsetValue = "V Offset";
+                    ProfileColorSettingsData.hOffsetValue = "H offset";
+                    ProfileColorSettingsData.rOffsetValue = "R offset";
+                    ProfileColorSettingsData.kOffsetValue = "K offset";
+                    ProfileColorSettingsData.straightValue = "Straight/Bend";
+                    ProfileColorSettingsData.nkOffsetValue = "NinetyKick";
+                    ProfileColorSettingsData.nsOffsetValue = "NinetyStub";
 
-                //KoffsetValue.Text = obj.kOffsetValue;
-                //Kick90offsetColor.Value = obj.kOffsetColor;
+                    ProfileColorSettingsData.vOffsetColor = new Autodesk.Revit.DB.Color(255, 255, 0);
+                    ProfileColorSettingsData.hOffsetColor = new Autodesk.Revit.DB.Color(128, 128, 128);
+                    ProfileColorSettingsData.rOffsetColor = new Autodesk.Revit.DB.Color(255, 153, 255);
+                    ProfileColorSettingsData.kOffsetColor = new Autodesk.Revit.DB.Color(204, 229, 255);
+                    ProfileColorSettingsData.straightColor = new Autodesk.Revit.DB.Color(255, 153, 204);
+                    ProfileColorSettingsData.nkOffsetColor = new Autodesk.Revit.DB.Color(204, 204, 255);
+                    ProfileColorSettingsData.nsOffsetColor = new Autodesk.Revit.DB.Color(153, 76, 0);
+                }
+                else
+                {
+                   ProfileColorSettingsData = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json2);
+                }
 
-                //StraightValue.Text = obj.straightValue;
-                //Strightor90Color.Value = obj.straightColor;
+                VoffsetValue.Text = ProfileColorSettingsData.vOffsetValue;
+                VoffsetColor.Value = ProfileColorSettingsData.vOffsetColor;
 
-                //NightyKickValue.Text = obj.nkOffsetValue;
-                //NinetykickdrawColor.Value = obj.nkOffsetColor;
+                HoffsetValue.Text = ProfileColorSettingsData.hOffsetValue;
+                HoffsetColor.Value = ProfileColorSettingsData.hOffsetColor;
 
-                //NightystubValue.Text = obj.nsOffsetValue;
-                //ninetystubColor.Value = obj.nsOffsetColor;
+                RoffsetValue.Text = ProfileColorSettingsData.rOffsetValue;
+                RoffsetColor.Value = ProfileColorSettingsData.rOffsetColor;
+
+                KoffsetValue.Text = ProfileColorSettingsData.kOffsetValue;
+                Kick90offsetColor.Value = ProfileColorSettingsData.kOffsetColor;
+
+                StraightValue.Text = ProfileColorSettingsData.straightValue;
+                Strightor90Color.Value = ProfileColorSettingsData.straightColor;
+
+                NightyKickValue.Text = ProfileColorSettingsData.nkOffsetValue;
+                NinetykickdrawColor.Value = ProfileColorSettingsData.nkOffsetColor;
+
+                NightystubValue.Text = ProfileColorSettingsData.nsOffsetValue;
+                ninetystubColor.Value = ProfileColorSettingsData.nsOffsetColor;
 
 
 
@@ -81,106 +111,107 @@ namespace MultiDraw
 
         }
 
-      
 
-        //private void vOffsetvaluechange(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.vOffsetValue = VoffsetValue.Text;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
 
-        //private void vOffsetcolorchanged(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.vOffsetColor = VoffsetColor.Value;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void vOffsetvaluechange(object sender)
+        {
+            ProfileColorSettingsData.vOffsetValue = VoffsetValue.Text;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void hOffsetColor(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.hOffsetColor = HoffsetColor.Value;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void vOffsetcolorchanged(object sender)
+        {
+            ProfileColorSettingsData.vOffsetColor = VoffsetColor.Value;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void hOffsetValue(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.hOffsetValue = HoffsetValue.Text;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void hOffsetColor(object sender)
+        {
+            ProfileColorSettingsData.hOffsetColor = HoffsetColor.Value;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void RoffsetValue_TextBox_Changed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.rOffsetValue = RoffsetValue.Text;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void hOffsetValue(object sender)
+        {
+            ProfileColorSettingsData.hOffsetValue = HoffsetValue.Text;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void RoffsetColor_DropDownClosed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.rOffsetColor = RoffsetColor.Value;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void RoffsetValue_TextBox_Changed(object sender)
+        {
+            ProfileColorSettingsData.rOffsetValue = RoffsetValue.Text;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void KoffsetValue_TextBox_Changed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.kOffsetValue = KoffsetValue.Text;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void RoffsetColor_DropDownClosed(object sender)
+        {
+            ProfileColorSettingsData.rOffsetColor = RoffsetColor.Value;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void Kick90offsetColor_DropDownClosed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.kOffsetColor = Kick90offsetColor.Value;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void KoffsetValue_TextBox_Changed(object sender)
+        {
+            ProfileColorSettingsData.kOffsetValue = KoffsetValue.Text;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void StraightValue_TextBox_Changed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.straightValue = StraightValue.Text;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void Kick90offsetColor_DropDownClosed(object sender)
+        {
+            ProfileColorSettingsData.kOffsetColor = Kick90offsetColor.Value;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void Strightor90Color_DropDownClosed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.straightColor = Strightor90Color.Value;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void StraightValue_TextBox_Changed(object sender)
+        {
+            ProfileColorSettingsData.straightValue = StraightValue.Text;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void NightyKickValue_TextBox_Changed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.nkOffsetValue = NightyKickValue.Text;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void Strightor90Color_DropDownClosed(object sender)
+        {
+            ProfileColorSettingsData.straightColor = Strightor90Color.Value;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void NinetykickdrawColor_DropDownClosed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.nkOffsetColor = NinetykickdrawColor.Value;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void NightyKickValue_TextBox_Changed(object sender)
+        {
+            ProfileColorSettingsData.nkOffsetValue = NightyKickValue.Text;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void NightystubValue_TextBox_Changed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.nsOffsetValue = NightystubValue.Text;
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void NinetykickdrawColor_DropDownClosed(object sender)
+        {
+            ProfileColorSettingsData.nkOffsetColor = NinetykickdrawColor.Value;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
 
-        //private void ninetystubColor_DropDownClosed(object sender)
-        //{
-        //    ParentUserControl.Instance._ProfileColorSettingsData.nsOffsetColor = ninetystubColor.Value;
-        //    var s = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ParentUserControl.Instance._ProfileColorSettingsData);
-        //    Properties.Settings.Default.Save();
-        //}
+        private void NightystubValue_TextBox_Changed(object sender)
+        {
+            ProfileColorSettingsData.nsOffsetValue = NightystubValue.Text;
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
+
+        private void ninetystubColor_DropDownClosed(object sender)
+
+        {
+            ProfileColorSettingsData.nsOffsetColor = ninetystubColor.Value;
+            var s = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.ProfileColorSettings = JsonConvert.SerializeObject(ProfileColorSettingsData);
+            Properties.Settings.Default.Save();
+        }
     }
 }
 

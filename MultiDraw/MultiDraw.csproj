@@ -149,6 +149,9 @@
     <Compile Include="MVVM\Model\RollOffsetGP.cs" />
     <Compile Include="MVVM\Model\VerticalOffsetGP.cs" />
     <Compile Include="MVVM\ViewModel\ViewModel.cs" />
+    <Compile Include="MVVM\View\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\ParentUserControl.xaml.cs">
       <DependentUpon>ParentUserControl.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RevitAPI\APIClasses\App.cs" />
+    <Compile Include="RevitAPI\APIClasses\CommandSettings.cs" />
     <Compile Include="RevitAPI\APIClasses\WindowProperty.cs" />
     <Compile Include="RevitAPI\APIClasses\Command.cs" />
     <Compile Include="RevitAPI\APICommon\Support.cs" />
@@ -208,6 +212,10 @@
     <Compile Include="RevitAPI\APIHandler\SettingsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="MVVM\View\SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MVVM\View\ParentUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

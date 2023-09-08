@@ -12,6 +12,7 @@ using Autodesk.Revit.UI;
 using adWin = Autodesk.Windows;
 using TIGUtility;
 using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 #endregion
 
 
@@ -20,6 +21,7 @@ namespace MultiDraw
     class App : IExternalApplication
     {
         public static PushButton MultiDrawButton { get; set; }
+        public static PushButton SettingButton { get; set; }
 
 
         public Result OnStartup(UIControlledApplication application)
@@ -30,34 +32,9 @@ namespace MultiDraw
 
             // Create a custom ribbon tab
             string tabName = "Sanveo Tools-Beta";
-            application.CreateRibbonTab(tabName);
-
-            // Create a ribbon panel
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, "MultiDraw");
+            //application.CreateRibbonTab(tabName);
 
 
-
-            // Get the Dimension panel in the Annotation tab
-           // Autodesk.Revit.UI.Tab annotationTab = Autodesk.Revit.UI.Tab.AddIns;
-            Autodesk.Revit.UI.RibbonPanel dimensionPanel = null;
-            foreach (Autodesk.Revit.UI.RibbonPanel panel in application.GetRibbonPanels(tabName))
-            {
-                if (panel.Name == "MultiDraw")
-                {
-                    dimensionPanel = panel;
-                    break;
-                }
-            }
-
-
-
-            // Create a push button
-            PushButtonData buttonData = new PushButtonData("My Button", "My Button", Assembly.GetExecutingAssembly().Location, "MultiDraw.Command");
-
-
-
-            // Add the button to the panel
-            PushButton pushButton = dimensionPanel.AddItem(buttonData) as PushButton;
 
             return Result.Succeeded;
         }
@@ -185,6 +162,38 @@ namespace MultiDraw
                 path + "\\MultiDraw.html"); // hard coding for simplicity. 
 
             MultiDrawButton.SetContextualHelp(contextHelp);
+
+
+
+            //Autodesk.Revit.UI.RibbonPanel panel = application.CreateRibbonPanel("MultiDraw");
+            //panel.Title = tab.Title;
+
+            ribbonPanel.AddSlideOut();
+            PushButtonData b1 = new PushButtonData(
+             "MyButton", "My Button",
+               dllLocation,
+             "MultiDraw.CommandSettings");
+            PushButton pushButton = ribbonPanel.AddItem(b1) as PushButton;
+            pushButton.LargeImage = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/32x32.png"));
+            MultiDrawButton = pushButton;
+            //adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
+            //foreach (adWin.RibbonTab tab in ribbon.Tabs)
+            //{
+            //    if (tab.Id == "Sanveo Tools-Beta")
+            //    {
+            //        /*string tabs = Util.AddinRibbonTabName; // Archcorp
+            //        string ribbonPanelText = Util.AddinRibbonPanel;*/
+            //        Autodesk.Revit.UI.RibbonPanel panel = application.CreateRibbonPanel("MultiDraw");
+            //        panel.Title = tab.Title;
+            //        panel.AddSlideOut();
+            //        PushButtonData buttonData = new PushButtonData(
+            //         "MyButton", "My Button",
+            //         "MultiDraw.dll",
+            //         "MultiDraw.Command");
+            //        PushButton pushButton = panel.AddItem(buttonData) as PushButton;
+            //        pushButton.LargeImage = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/32x32.png"));
+            //    }
+            //}
         }
     }
 }

@@ -33,7 +33,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" >
-            <TIG:SingleSelectDropDownControl Width="328"
+            <TIG:SingleSelectDropDownControl 
                                      x:Name="ddlAngle"
                                      DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
         </StackPanel>

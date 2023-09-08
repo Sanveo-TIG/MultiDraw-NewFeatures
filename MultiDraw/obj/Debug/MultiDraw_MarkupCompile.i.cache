@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-12743267290
+131951992820
 3-1929039430
-491950249158
+511549812054
 137339782004
-MVVM\View\ParentUserControl.xaml;MVVM\View\MainWindow.xaml;MVVM\View\UserControl\ProfileColorSettingUserControl.xaml;MVVM\View\UserControl\SettingsUserControl.xaml;MVVM\View\UserControl\SyncDataUserControl.xaml;MVVM\View\UserControl\HOffsetUserControl.xaml;MVVM\View\UserControl\KickUserControl.xaml;MVVM\View\UserControl\NinetyKickUserControl.xaml;MVVM\View\UserControl\NinetyStubUserControl.xaml;MVVM\View\UserControl\RollingUserControl.xaml;MVVM\View\UserControl\StraightOrBendUserControl.xaml;MVVM\View\UserControl\VOffsetUserControl.xaml;
+MVVM\View\SettingsWindow.xaml;MVVM\View\ParentUserControl.xaml;MVVM\View\MainWindow.xaml;MVVM\View\UserControl\ProfileColorSettingUserControl.xaml;MVVM\View\UserControl\SettingsUserControl.xaml;MVVM\View\UserControl\SyncDataUserControl.xaml;MVVM\View\UserControl\HOffsetUserControl.xaml;MVVM\View\UserControl\KickUserControl.xaml;MVVM\View\UserControl\NinetyKickUserControl.xaml;MVVM\View\UserControl\NinetyStubUserControl.xaml;MVVM\View\UserControl\RollingUserControl.xaml;MVVM\View\UserControl\StraightOrBendUserControl.xaml;MVVM\View\UserControl\VOffsetUserControl.xaml;
 
 True
 

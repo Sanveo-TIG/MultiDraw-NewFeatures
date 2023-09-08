@@ -365,6 +365,10 @@ namespace MultiDraw
                         //}
                         else
                         {
+                            if (!ParentUserControl.Instance._isStopedTransaction)
+                            {
+
+                            }
                             XYZ Pickpoint = Utility.PickPoint(uidoc);
                             //if (ParentUserControl.Instance._isStopedTransaction)
                             //{
@@ -1268,9 +1272,18 @@ namespace MultiDraw
                             }
                             transreset.Commit();
                         }
-
-                        Mainfunction(uiapp);
-                        break;
+                        if (!ParentUserControl.Instance._isStopedTransaction)
+                        {
+                            Mainfunction(uiapp);
+                            break;
+                        }
+                        else
+                        {
+                            ParentUserControl.Instance._window.Close();
+                            break;
+                           
+                        }
+                      
                     }
 
 

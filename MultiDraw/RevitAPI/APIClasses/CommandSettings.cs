@@ -30,7 +30,7 @@ namespace MultiDraw
     /// <summary>
     /// External command mainline
     /// </summary>
-    public class Command : IExternalCommand
+    public class CommandSettings : IExternalCommand
     {
         /// <summary>
         /// External command mainline
@@ -42,7 +42,6 @@ namespace MultiDraw
         {
             try
             {
-                
                 if (Utility.HasValidLicense(commandData.Application.Application.Username, Util.ProductVersion))
                 {
                     CustomUIApplication customUIApplication = new CustomUIApplication
@@ -51,7 +50,7 @@ namespace MultiDraw
                     };
                     if (Keyboard.Modifiers.ToString() != ModifierKeys.Shift.ToString())
                     {
-                        System.Windows.Window window = new MainWindow(customUIApplication);
+                        System.Windows.Window window = new SettingsWindow(customUIApplication);
                         window.Show();
                         window.Closed += OnClosing;
                         if (App.MultiDrawButton != null)
