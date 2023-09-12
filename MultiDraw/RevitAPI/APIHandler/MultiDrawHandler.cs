@@ -421,27 +421,27 @@ namespace MultiDraw
                                     using (SubTransaction substrans2 = new SubTransaction(doc))
                                     {
                                         substrans2.Start();
-                                        //MultiDrawProfileSettingsParam globalParam = new MultiDrawProfileSettingsParam();
-                                        //if (ProfileColorSettingUserControl.Instance != null)
-                                        //{
-                                        //    globalParam.VoffsetValue = ProfileColorSettingUserControl.Instance.VoffsetValue.Text;
-                                        //    globalParam.HoffsetValue = ProfileColorSettingUserControl.Instance.HoffsetValue.Text;
-                                        //    globalParam.RoffsetValue = ProfileColorSettingUserControl.Instance.RoffsetValue.Text;
-                                        //    globalParam.KoffsetValue = ProfileColorSettingUserControl.Instance.KoffsetValue.Text;
-                                        //    globalParam.Straight = ProfileColorSettingUserControl.Instance.StraightValue.Text;
-                                        //    globalParam.NinetyKick = ProfileColorSettingUserControl.Instance.NightyKickValue.Text;
-                                        //    globalParam.Ninetystub = ProfileColorSettingUserControl.Instance.NightystubValue.Text;
+                                        MultiDrawProfileSettingsParam globalParam = new MultiDrawProfileSettingsParam();
+                                        if (ProfileColorSettingUserControl.Instance != null)
+                                        {
+                                            globalParam.VoffsetValue = ProfileColorSettingUserControl.Instance.VoffsetValue.Text;
+                                            globalParam.HoffsetValue = ProfileColorSettingUserControl.Instance.HoffsetValue.Text;
+                                            globalParam.RoffsetValue = ProfileColorSettingUserControl.Instance.RoffsetValue.Text;
+                                            globalParam.KoffsetValue = ProfileColorSettingUserControl.Instance.KoffsetValue.Text;
+                                            globalParam.Straight = ProfileColorSettingUserControl.Instance.StraightValue.Text;
+                                            globalParam.NinetyKick = ProfileColorSettingUserControl.Instance.NightyKickValue.Text;
+                                            globalParam.Ninetystub = ProfileColorSettingUserControl.Instance.NightystubValue.Text;
 
-                                        //    globalParam.VoffsetValuecolor = ProfileColorSettingUserControl.Instance.VoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Blue.ToString();
-                                        //    globalParam.HoffsetValuecolor = ProfileColorSettingUserControl.Instance.HoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Blue.ToString();
-                                        //    globalParam.RoffsetValuecolor = ProfileColorSettingUserControl.Instance.RoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Blue.ToString();
-                                        //    globalParam.KoffsetValuecolor = ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Blue.ToString();
-                                        //    globalParam.Straightcolor = ProfileColorSettingUserControl.Instance.Strightor90Color.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Blue.ToString();
-                                        //    globalParam.NinetyKickcolor = ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Blue.ToString();
-                                        //    globalParam.Ninetystubcolor = ProfileColorSettingUserControl.Instance.ninetystubColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Blue.ToString();
+                                            globalParam.VoffsetValuecolor = ProfileColorSettingUserControl.Instance.VoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Blue.ToString();
+                                            globalParam.HoffsetValuecolor = ProfileColorSettingUserControl.Instance.HoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Blue.ToString();
+                                            globalParam.RoffsetValuecolor = ProfileColorSettingUserControl.Instance.RoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Blue.ToString();
+                                            globalParam.KoffsetValuecolor = ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Blue.ToString();
+                                            globalParam.Straightcolor = ProfileColorSettingUserControl.Instance.Strightor90Color.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Blue.ToString();
+                                            globalParam.NinetyKickcolor = ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Blue.ToString();
+                                            globalParam.Ninetystubcolor = ProfileColorSettingUserControl.Instance.ninetystubColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Blue.ToString();
 
-                                        //    Utility.SetGlobalParametersManager(doc, "MultiDrawProfileSettings", JsonConvert.SerializeObject(globalParam));
-                                        //}
+                                            Utility.SetGlobalParametersManager(doc, "MultiDrawProfileSettings", JsonConvert.SerializeObject(globalParam));
+                                        }
                                         substrans2.Commit();
 
                                     }

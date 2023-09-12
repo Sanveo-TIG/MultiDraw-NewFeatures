@@ -57,11 +57,13 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="ReachFramework" />
-    <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+    <Reference Include="RevitAPI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\Autodesk\Revit 2023\RevitAPI.dll</HintPath>
     </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
+    <Reference Include="RevitAPIUI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\Autodesk\Revit 2023\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.CodeDom, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -125,7 +127,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="TIGUtility, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Sanveo-TIG\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
+      <HintPath>..\..\NEW UI\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -149,43 +151,43 @@
     <Compile Include="MVVM\Model\RollOffsetGP.cs" />
     <Compile Include="MVVM\Model\VerticalOffsetGP.cs" />
     <Compile Include="MVVM\ViewModel\ViewModel.cs" />
-    <Compile Include="MVVM\View\SettingsWindow.xaml.cs">
+    <Compile Include="MVVM\View\Setting\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\ParentUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\ParentUserControl.xaml.cs">
       <DependentUpon>ParentUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\MainWindow.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\ProfileColorSettingUserControl.xaml.cs">
+    <Compile Include="MVVM\View\Setting\UserControl\ProfileColorSettingUserControl.xaml.cs">
       <DependentUpon>ProfileColorSettingUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\SettingsUserControl.xaml.cs">
+    <Compile Include="MVVM\View\Setting\SettingsUserControl.xaml.cs">
       <DependentUpon>SettingsUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\SyncDataUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\SyncDataUserControl.xaml.cs">
       <DependentUpon>SyncDataUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\HOffsetUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\HOffsetUserControl.xaml.cs">
       <DependentUpon>HOffsetUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\KickUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\KickUserControl.xaml.cs">
       <DependentUpon>KickUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\NinetyKickUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\NinetyKickUserControl.xaml.cs">
       <DependentUpon>NinetyKickUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\NinetyStubUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\NinetyStubUserControl.xaml.cs">
       <DependentUpon>NinetyStubUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\RollingUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\RollingUserControl.xaml.cs">
       <DependentUpon>RollingUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\StraightOrBendUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\StraightOrBendUserControl.xaml.cs">
       <DependentUpon>StraightOrBendUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserControl\VOffsetUserControl.xaml.cs">
+    <Compile Include="MVVM\View\MultiDraw\UserControl\VOffsetUserControl.xaml.cs">
       <DependentUpon>VOffsetUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,9 +197,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RevitAPI\APIClasses\App.cs" />
-    <Compile Include="RevitAPI\APIClasses\CommandSettings.cs" />
+    <Compile Include="MVVM\View\Setting\CommandSettings.cs" />
     <Compile Include="RevitAPI\APIClasses\WindowProperty.cs" />
-    <Compile Include="RevitAPI\APIClasses\Command.cs" />
+    <Compile Include="MVVM\View\MultiDraw\Command.cs" />
     <Compile Include="RevitAPI\APICommon\Support.cs" />
     <Compile Include="RevitAPI\APICommon\Common.cs" />
     <Compile Include="RevitAPI\APICommon\HorizontalOffset.cs" />
@@ -212,55 +214,55 @@
     <Compile Include="RevitAPI\APIHandler\SettingsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MVVM\View\SettingsWindow.xaml">
+    <Page Include="MVVM\View\Setting\SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\ParentUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\ParentUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\MainWindow.xaml">
+    <Page Include="MVVM\View\MultiDraw\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\ProfileColorSettingUserControl.xaml">
+    <Page Include="MVVM\View\Setting\UserControl\ProfileColorSettingUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\SettingsUserControl.xaml">
+    <Page Include="MVVM\View\Setting\SettingsUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\UserControl\SyncDataUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\SyncDataUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\HOffsetUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\HOffsetUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\KickUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\KickUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\NinetyKickUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\NinetyKickUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\NinetyStubUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\NinetyStubUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\RollingUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\RollingUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\StraightOrBendUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\StraightOrBendUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\UserControl\VOffsetUserControl.xaml">
+    <Page Include="MVVM\View\MultiDraw\UserControl\VOffsetUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
