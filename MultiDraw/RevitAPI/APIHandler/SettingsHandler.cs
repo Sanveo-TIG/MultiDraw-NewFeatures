@@ -23,17 +23,37 @@ namespace MultiDraw
             {
                 using Transaction tx = new Transaction(doc);
                 tx.Start("MultiDraw Settings");
-                Settings settings = ParentUserControl.Instance.GetSettings();
+                Settings settings = GetSettings();
                 string json = JsonConvert.SerializeObject(settings);
+                Utility.SetGlobalParametersManager(uiapp, "MultiDrawSettings", json);
                 Properties.Settings.Default.MultiDrawSettings = json;
                 Properties.Settings.Default.Save();
                 tx.Commit();
-                ParentUserControl.Instance.MultiDrawSettings = settings;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+        public Settings GetSettings()
+        {
+            if (SettingsUserControl.Instance != null)
+            {
+                Settings settings = new Settings
+                {
+                    IsSupportNeeded = (bool)SettingsUserControl.Instance.IsSupportNeeded.IsChecked,
+                    StrutType = SettingsUserControl.Instance.ddlStrutType.SelectedItem != null ? SettingsUserControl.Instance.ddlStrutType.SelectedItem.Name : string.Empty,
+                    RodDiaAsDouble = SettingsUserControl.Instance.txtRodDia.AsDouble,
+                    RodDiaAsString = SettingsUserControl.Instance.txtRodDia.Text,
+                    RodExtensionAsDouble = SettingsUserControl.Instance.txtRodExtension.AsDouble,
+                    RodExtensionAsString = SettingsUserControl.Instance.txtRodExtension.Text,
+                    SupportSpacingAsString = SettingsUserControl.Instance.txtSupportSpacing.Text,
+                    SupportSpacingAsDouble = SettingsUserControl.Instance.txtSupportSpacing.AsDouble
+                };
+              
+                return settings;
+            }
+            return null;
         }
 
         public string GetName()

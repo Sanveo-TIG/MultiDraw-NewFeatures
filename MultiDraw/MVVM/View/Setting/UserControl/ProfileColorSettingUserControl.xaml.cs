@@ -34,7 +34,7 @@ namespace MultiDraw
         UIDocument _uidoc = null;
 
         ExternalEvent _externalEvent;
-        ProfileColorSettingsData ProfileColorSettingsData = null;
+        ProfileColorSettingsData ProfileColorSettingsData = new ProfileColorSettingsData();
         public ProfileColorSettingUserControl(ExternalEvent externalEvent, UIApplication uiApp, Window window)
         {
             _uidoc = uiApp.ActiveUIDocument;
@@ -47,7 +47,8 @@ namespace MultiDraw
             {
                 _window = window;
 
-                string json = Properties.Settings.Default.StraightsDraw;
+                string json = Properties.Settings.Default.StraightsDraw.ToString();
+                // Utility.SetGlobalParametersManager(uiApp, "MultiDrawSettings", json);
 
                 if (!string.IsNullOrEmpty(json))
                 {

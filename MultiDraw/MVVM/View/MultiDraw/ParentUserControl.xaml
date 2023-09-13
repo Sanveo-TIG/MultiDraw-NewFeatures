@@ -167,7 +167,7 @@
    />
         </StackPanel>
 
-        <StackPanel Grid.Row="0"
+        <StackPanel Grid.Row="1"
                     x:Name="masterContainer">
 
         </StackPanel>
