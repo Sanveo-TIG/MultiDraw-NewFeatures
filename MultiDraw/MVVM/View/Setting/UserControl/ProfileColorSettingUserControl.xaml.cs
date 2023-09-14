@@ -48,7 +48,6 @@ namespace MultiDraw
                 _window = window;
 
                 string json = Properties.Settings.Default.StraightsDraw.ToString();
-                // Utility.SetGlobalParametersManager(uiApp, "MultiDrawSettings", json);
 
                 if (!string.IsNullOrEmpty(json))
                 {

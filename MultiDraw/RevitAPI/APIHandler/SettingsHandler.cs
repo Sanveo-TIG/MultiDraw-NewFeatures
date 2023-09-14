@@ -29,6 +29,7 @@ namespace MultiDraw
                 Properties.Settings.Default.MultiDrawSettings = json;
                 Properties.Settings.Default.Save();
                 tx.Commit();
+                Utility.AlertMessage("Saved Successfully",true,SettingsWindow.Instance.SnackbarSeven);
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\Darwin\Development\Revit Addins\Sanveo\MultiDraw-NewFeatures\MultiDraw\obj\Debug\
+C:\Ridhan Backup\Sorce code\SANVEO TOOLS\MultiDraw-NewFeatures\MultiDraw\obj\Debug\
 MultiDraw
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 13-1023428506
 3-1929039430
 51-1994017135
-1371331499903
+137-1030450102
 MVVM\View\Setting\SettingsWindow.xaml;MVVM\View\MultiDraw\ParentUserControl.xaml;MVVM\View\MultiDraw\MainWindow.xaml;MVVM\View\Setting\UserControl\ProfileColorSettingUserControl.xaml;MVVM\View\Setting\SettingsUserControl.xaml;MVVM\View\MultiDraw\UserControl\SyncDataUserControl.xaml;MVVM\View\MultiDraw\UserControl\HOffsetUserControl.xaml;MVVM\View\MultiDraw\UserControl\KickUserControl.xaml;MVVM\View\MultiDraw\UserControl\NinetyKickUserControl.xaml;MVVM\View\MultiDraw\UserControl\NinetyStubUserControl.xaml;MVVM\View\MultiDraw\UserControl\RollingUserControl.xaml;MVVM\View\MultiDraw\UserControl\StraightOrBendUserControl.xaml;MVVM\View\MultiDraw\UserControl\VOffsetUserControl.xaml;
 
 False

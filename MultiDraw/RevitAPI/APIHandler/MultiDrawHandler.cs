@@ -448,273 +448,273 @@ namespace MultiDraw
 
 
 
-                                    //ViewDrafting viewdrafting = null;
-                                    //FilteredElementCollector Viewscollections = new FilteredElementCollector(doc).OfClass(typeof(ViewDrafting));
-                                    //viewdrafting = Viewscollections.Where(x => x.Name.Equals("Multi Draw Bends Legends")).FirstOrDefault() as ViewDrafting;
-                                    //if (viewdrafting == null)
-                                    //{
+                                    ViewDrafting viewdrafting = null;
+                                    FilteredElementCollector Viewscollections = new FilteredElementCollector(doc).OfClass(typeof(ViewDrafting));
+                                    viewdrafting = Viewscollections.Where(x => x.Name.Equals("Multi Draw Bends Legends")).FirstOrDefault() as ViewDrafting;
+                                    if (viewdrafting == null)
+                                    {
 
-                                    //    using (SubTransaction tranlen = new SubTransaction(doc))
-                                    //    {
-                                    //        tranlen.Start();
-                                    //        FilteredElementCollector pointcollection = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).WhereElementIsElementType();
-                                    //        ViewFamilyType collectedpoint = pointcollection.Where(x => (x as ViewFamilyType).ViewFamily == ViewFamily.Drafting).FirstOrDefault() as ViewFamilyType;
-                                    //        ElementId viewfamid = collectedpoint.Id;
-                                    //        ViewDrafting viewdraft = ViewDrafting.Create(doc, viewfamid);
-                                    //        viewdraft.Name = "Multi Draw Bends Legends";
-                                    //        //ColorFillLegend.Create(doc, viewdraft.Id,)
+                                        using (SubTransaction tranlen = new SubTransaction(doc))
+                                        {
+                                            tranlen.Start();
+                                            FilteredElementCollector pointcollection = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).WhereElementIsElementType();
+                                            ViewFamilyType collectedpoint = pointcollection.Where(x => (x as ViewFamilyType).ViewFamily == ViewFamily.Drafting).FirstOrDefault() as ViewFamilyType;
+                                            ElementId viewfamid = collectedpoint.Id;
+                                            ViewDrafting viewdraft = ViewDrafting.Create(doc, viewfamid);
+                                            viewdraft.Name = "Multi Draw Bends Legends";
+                                            //ColorFillLegend.Create(doc, viewdraft.Id);
 
-                                    //        FilteredElementCollector fillRegionTypes = new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType));
-                                    //        FilledRegionType myPatterns = fillRegionTypes.Where(x => x.Name.Equals("Solid Black")).FirstOrDefault() as FilledRegionType;
+                                            FilteredElementCollector fillRegionTypes = new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType));
+                                            FilledRegionType myPatterns = fillRegionTypes.Where(x => x.Name.Equals("Solid Black")).FirstOrDefault() as FilledRegionType;
 
-                                    //        if (myPatterns == null)
-                                    //        {
-                                    //            myPatterns = fillRegionTypes.FirstOrDefault() as FilledRegionType;
-                                    //        }
+                                            if (myPatterns == null)
+                                            {
+                                                myPatterns = fillRegionTypes.FirstOrDefault() as FilledRegionType;
+                                            }
 
-                                    //        //FilledRegionType myPatterns = (FilledRegionType)new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType))./*Where(x => x.LookupParameter("Type").AsValueString().Equals("Solid Black"))*/FirstElement();
+                                            //FilledRegionType myPatterns = (FilledRegionType)new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType))./*Where(x => x.LookupParameter("Type").AsValueString().Equals("Solid Black"))*/FirstElement();
 
-                                    //        FilledRegionType verticaloffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Verftical Offset Bend");
-                                    //       // verticaloffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.VoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.VoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                    //        //verticaloffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.VoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.VoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            FilledRegionType verticaloffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Verftical Offset Bend");
+                                             verticaloffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.VoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.VoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            verticaloffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.VoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.VoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
 
-                                    //        List<FilledRegionType> filledtypes = new List<FilledRegionType>();
-                                    //        foreach (FilledRegionType frt in fillRegionTypes)
-                                    //        {
-                                    //            filledtypes.Add(frt);
-                                    //        }
+                                            List<FilledRegionType> filledtypes = new List<FilledRegionType>();
+                                            foreach (FilledRegionType frt in fillRegionTypes)
+                                            {
+                                                filledtypes.Add(frt);
+                                            }
 
-                                    //        //Verftical bends
-                                    //        FilteredElementCollector textnotecollection = new FilteredElementCollector(doc).OfClass(typeof(TextNoteType));
-                                    //        TextNoteType newtextnote = textnotecollection.Where(x => x.Name == "3/4 Arial-MultiDraw").FirstOrDefault() as TextNoteType;
-                                    //        if (newtextnote == null)
-                                    //        {
-                                    //            ElementId defaultTypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
-                                    //            TextNoteType textnote = textnotecollection.FirstOrDefault() as TextNoteType;
-                                    //            newtextnote = (TextNoteType)textnote.Duplicate("3/4 Arial-MultiDraw");
-                                    //        }
+                                            //Verftical bends
+                                            FilteredElementCollector textnotecollection = new FilteredElementCollector(doc).OfClass(typeof(TextNoteType));
+                                            TextNoteType newtextnote = textnotecollection.Where(x => x.Name == "3/4 Arial-MultiDraw").FirstOrDefault() as TextNoteType;
+                                            if (newtextnote == null)
+                                            {
+                                                ElementId defaultTypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
+                                                TextNoteType textnote = textnotecollection.FirstOrDefault() as TextNoteType;
+                                                newtextnote = (TextNoteType)textnote.Duplicate("3/4 Arial-MultiDraw");
+                                            }
 
-                                    //        Autodesk.Revit.DB.Parameter textnoteparam = newtextnote.LookupParameter("Text Size");
-                                    //        textnoteparam.Set(0.0625);
+                                            Autodesk.Revit.DB.Parameter textnoteparam = newtextnote.LookupParameter("Text Size");
+                                            textnoteparam.Set(0.0625);
 
-                                    //        XYZ txtposition1 = new XYZ(7, -0.75, 0);
-                                    //        TextNote note1 = TextNote.Create(doc, viewdraft.Id, txtposition1, "Vertical Offset Bend", newtextnote.Id);
-                                    //        note1.HorizontalAlignment = HorizontalTextAlignment.Left;
-                                    //        note1.Width = 1.5;
+                                            XYZ txtposition1 = new XYZ(7, -0.75, 0);
+                                            TextNote note1 = TextNote.Create(doc, viewdraft.Id, txtposition1, "Vertical Offset Bend", newtextnote.Id);
+                                            note1.HorizontalAlignment = HorizontalTextAlignment.Left;
+                                            note1.Width = 1.5;
 
-                                    //        List<CurveLoop> profileloops = new List<CurveLoop>();
-                                    //        XYZ[] points = new XYZ[5];
-                                    //        points[0] = new XYZ(0.0, 0.0, 0.0);
-                                    //        points[1] = new XYZ(5, 0.0, 0.0);
-                                    //        points[2] = new XYZ(5, -1.5, 0.0);
-                                    //        points[3] = new XYZ(0.0, -1.5, 0.0);
-                                    //        points[4] = new XYZ(0.0, 0.0, 0.0);
-                                    //        CurveLoop profileloop = new CurveLoop();
-                                    //        for (int i = 0; i < 4; i++)
-                                    //        {
-                                    //            Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(points[i],
-                                    //              points[i + 1]);
+                                            List<CurveLoop> profileloops = new List<CurveLoop>();
+                                            XYZ[] points = new XYZ[5];
+                                            points[0] = new XYZ(0.0, 0.0, 0.0);
+                                            points[1] = new XYZ(5, 0.0, 0.0);
+                                            points[2] = new XYZ(5, -1.5, 0.0);
+                                            points[3] = new XYZ(0.0, -1.5, 0.0);
+                                            points[4] = new XYZ(0.0, 0.0, 0.0);
+                                            CurveLoop profileloop = new CurveLoop();
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(points[i],
+                                                  points[i + 1]);
 
-                                    //            profileloop.Append(line);
-                                    //        }
-                                    //        profileloops.Add(profileloop);
+                                                profileloop.Append(line);
+                                            }
+                                            profileloops.Add(profileloop);
 
-                                    //        ElementId activeViewId = doc.ActiveView.Id;
+                                            ElementId activeViewId = doc.ActiveView.Id;
 
-                                    //        FilledRegion filledRegions = FilledRegion.Create(
-                                    //          doc, verticaloffsetpattern.Id, viewdraft.Id, profileloops);
+                                            FilledRegion filledRegions = FilledRegion.Create(
+                                              doc, verticaloffsetpattern.Id, viewdraft.Id, profileloops);
 
-                                    //        //FilledRegionType Horizontaloffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Horizontal Offset Bend");
-                                    //        //Horizontaloffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.HoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.HoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                    //        //Horizontaloffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.HoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.HoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            FilledRegionType Horizontaloffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Horizontal Offset Bend");
+                                            Horizontaloffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.HoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.HoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Horizontaloffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.HoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.HoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
 
-                                    //        //horizontal bends
-                                    //        XYZ txtposition2 = new XYZ(7, -3.75, 0);
-                                    //        TextNote note2 = TextNote.Create(doc, viewdraft.Id, txtposition2, "Horizontal offset Bend", newtextnote.Id);
-                                    //        note2.HorizontalAlignment = HorizontalTextAlignment.Left;
-                                    //        note2.Width = 1.5;
+                                            //horizontal bends
+                                            XYZ txtposition2 = new XYZ(7, -3.75, 0);
+                                            TextNote note2 = TextNote.Create(doc, viewdraft.Id, txtposition2, "Horizontal offset Bend", newtextnote.Id);
+                                            note2.HorizontalAlignment = HorizontalTextAlignment.Left;
+                                            note2.Width = 1.5;
 
-                                    //        List<CurveLoop> hor_profileloops = new List<CurveLoop>();
-                                    //        XYZ[] Hor_points = new XYZ[5];
-                                    //        Hor_points[0] = new XYZ(0.0, -3, 0.0);
-                                    //        Hor_points[1] = new XYZ(5, -3, 0.0);
-                                    //        Hor_points[2] = new XYZ(5, -4.5, 0.0);
-                                    //        Hor_points[3] = new XYZ(0.0, -4.5, 0.0);
-                                    //        Hor_points[4] = new XYZ(0.0, -3, 0.0);
-                                    //        CurveLoop hor_profileloop = new CurveLoop();
-                                    //        for (int i = 0; i < 4; i++)
-                                    //        {
-                                    //            Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(Hor_points[i],
-                                    //              Hor_points[i + 1]);
+                                            List<CurveLoop> hor_profileloops = new List<CurveLoop>();
+                                            XYZ[] Hor_points = new XYZ[5];
+                                            Hor_points[0] = new XYZ(0.0, -3, 0.0);
+                                            Hor_points[1] = new XYZ(5, -3, 0.0);
+                                            Hor_points[2] = new XYZ(5, -4.5, 0.0);
+                                            Hor_points[3] = new XYZ(0.0, -4.5, 0.0);
+                                            Hor_points[4] = new XYZ(0.0, -3, 0.0);
+                                            CurveLoop hor_profileloop = new CurveLoop();
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(Hor_points[i],
+                                                  Hor_points[i + 1]);
 
-                                    //            hor_profileloop.Append(line);
-                                    //        }
-                                    //        hor_profileloops.Add(hor_profileloop);
+                                                hor_profileloop.Append(line);
+                                            }
+                                            hor_profileloops.Add(hor_profileloop);
 
-                                    //        FilledRegion hor_filledRegions = FilledRegion.Create(
-                                    //          doc, Horizontaloffsetpattern.Id, viewdraft.Id, hor_profileloops);
+                                            FilledRegion hor_filledRegions = FilledRegion.Create(
+                                              doc, Horizontaloffsetpattern.Id, viewdraft.Id, hor_profileloops);
 
-                                    //        FilledRegionType rollingoffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Rolling Offset Bend");
-                                    //        rollingoffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.RoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.RoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                    //        rollingoffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.RoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.RoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            FilledRegionType rollingoffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Rolling Offset Bend");
+                                            rollingoffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.RoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.RoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            rollingoffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.RoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.RoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
 
-                                    //        //rolling bends
-                                    //        XYZ txtposition3 = new XYZ(7, -6.75, 0);
-                                    //        TextNote note3 = TextNote.Create(doc, viewdraft.Id, txtposition3, "Rolling Offset Bend", newtextnote.Id);
-                                    //        note3.HorizontalAlignment = HorizontalTextAlignment.Left;
-                                    //        note3.Width = 1.5;
+                                            //rolling bends
+                                            XYZ txtposition3 = new XYZ(7, -6.75, 0);
+                                            TextNote note3 = TextNote.Create(doc, viewdraft.Id, txtposition3, "Rolling Offset Bend", newtextnote.Id);
+                                            note3.HorizontalAlignment = HorizontalTextAlignment.Left;
+                                            note3.Width = 1.5;
 
-                                    //        List<CurveLoop> roll_profileloops = new List<CurveLoop>();
-                                    //        XYZ[] roll_points = new XYZ[5];
-                                    //        roll_points[0] = new XYZ(0.0, -6, 0.0);
-                                    //        roll_points[1] = new XYZ(5, -6, 0.0);
-                                    //        roll_points[2] = new XYZ(5, -7.5, 0.0);
-                                    //        roll_points[3] = new XYZ(0.0, -7.5, 0.0);
-                                    //        roll_points[4] = new XYZ(0.0, -6, 0.0);
-                                    //        CurveLoop roll_profileloop = new CurveLoop();
-                                    //        for (int i = 0; i < 4; i++)
-                                    //        {
-                                    //            Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(roll_points[i],
-                                    //              roll_points[i + 1]);
+                                            List<CurveLoop> roll_profileloops = new List<CurveLoop>();
+                                            XYZ[] roll_points = new XYZ[5];
+                                            roll_points[0] = new XYZ(0.0, -6, 0.0);
+                                            roll_points[1] = new XYZ(5, -6, 0.0);
+                                            roll_points[2] = new XYZ(5, -7.5, 0.0);
+                                            roll_points[3] = new XYZ(0.0, -7.5, 0.0);
+                                            roll_points[4] = new XYZ(0.0, -6, 0.0);
+                                            CurveLoop roll_profileloop = new CurveLoop();
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(roll_points[i],
+                                                  roll_points[i + 1]);
 
-                                    //            roll_profileloop.Append(line);
-                                    //        }
-                                    //        roll_profileloops.Add(roll_profileloop);
+                                                roll_profileloop.Append(line);
+                                            }
+                                            roll_profileloops.Add(roll_profileloop);
 
-                                    //        FilledRegion roll_filledRegions = FilledRegion.Create(
-                                    //          doc, rollingoffsetpattern.Id, viewdraft.Id, roll_profileloops);
-
-
-                                    //        FilledRegionType Kick90offsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Kick 90 Bend");
-                                    //        Kick90offsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value != null ? ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                    //        Kick90offsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value != null ? ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-
-                                    //        //kick90 bneds 
-                                    //        XYZ txtposition4 = new XYZ(7, -9.75, 0);
-                                    //        TextNote note4 = TextNote.Create(doc, viewdraft.Id, txtposition4, "Kick 90 Bend", newtextnote.Id);
-                                    //        note4.HorizontalAlignment = HorizontalTextAlignment.Left;
-                                    //        note4.Width = 1.5;
-
-                                    //        List<CurveLoop> kick_profileloops = new List<CurveLoop>();
-                                    //        XYZ[] kick_points = new XYZ[5];
-                                    //        kick_points[0] = new XYZ(0.0, -9, 0.0);
-                                    //        kick_points[1] = new XYZ(5, -9, 0.0);
-                                    //        kick_points[2] = new XYZ(5, -10.5, 0.0);
-                                    //        kick_points[3] = new XYZ(0.0, -10.5, 0.0);
-                                    //        kick_points[4] = new XYZ(0.0, -9, 0.0);
-                                    //        CurveLoop kick_profileloop = new CurveLoop();
-                                    //        for (int i = 0; i < 4; i++)
-                                    //        {
-                                    //            Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(kick_points[i],
-                                    //              kick_points[i + 1]);
-
-                                    //            kick_profileloop.Append(line);
-                                    //        }
-                                    //        kick_profileloops.Add(kick_profileloop);
-
-                                    //        FilledRegion kick_filledRegions = FilledRegion.Create(
-                                    //          doc, Kick90offsetpattern.Id, viewdraft.Id, kick_profileloops);
-
-                                    //        //FilledRegionType newFilledregionType = (FilledRegionType)newType;
+                                            FilledRegion roll_filledRegions = FilledRegion.Create(
+                                              doc, rollingoffsetpattern.Id, viewdraft.Id, roll_profileloops);
 
 
-                                    //        FilledRegionType Straightpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Half Offset");
-                                    //        Straightpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Strightor90Color.Value != null ? ProfileColorSettingUserControl.Instance.Strightor90Color.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                    //        Straightpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Strightor90Color.Value != null ? ProfileColorSettingUserControl.Instance.Strightor90Color.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            FilledRegionType Kick90offsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Kick 90 Bend");
+                                            Kick90offsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value != null ? ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Kick90offsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value != null ? ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
 
-                                    //        //kick90 bneds 
-                                    //        XYZ txtposition5 = new XYZ(7, -12.75, 0);
-                                    //        TextNote note5 = TextNote.Create(doc, viewdraft.Id, txtposition5, "Half Offset", newtextnote.Id);
-                                    //        note5.HorizontalAlignment = HorizontalTextAlignment.Left;
-                                    //        note5.Width = 1.5;
+                                            //kick90 bneds 
+                                            XYZ txtposition4 = new XYZ(7, -9.75, 0);
+                                            TextNote note4 = TextNote.Create(doc, viewdraft.Id, txtposition4, "Kick 90 Bend", newtextnote.Id);
+                                            note4.HorizontalAlignment = HorizontalTextAlignment.Left;
+                                            note4.Width = 1.5;
 
-                                    //        List<CurveLoop> straight_profileloops = new List<CurveLoop>();
-                                    //        XYZ[] straights = new XYZ[5];
-                                    //        straights[0] = new XYZ(0.0, -12, 0.0);
-                                    //        straights[1] = new XYZ(5, -12, 0.0);
-                                    //        straights[2] = new XYZ(5, -13.5, 0.0);
-                                    //        straights[3] = new XYZ(0.0, -13.5, 0.0);
-                                    //        straights[4] = new XYZ(0.0, -12, 0.0);
-                                    //        CurveLoop straight_profileloop = new CurveLoop();
-                                    //        for (int i = 0; i < 4; i++)
-                                    //        {
-                                    //            Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(straights[i],
-                                    //              straights[i + 1]);
+                                            List<CurveLoop> kick_profileloops = new List<CurveLoop>();
+                                            XYZ[] kick_points = new XYZ[5];
+                                            kick_points[0] = new XYZ(0.0, -9, 0.0);
+                                            kick_points[1] = new XYZ(5, -9, 0.0);
+                                            kick_points[2] = new XYZ(5, -10.5, 0.0);
+                                            kick_points[3] = new XYZ(0.0, -10.5, 0.0);
+                                            kick_points[4] = new XYZ(0.0, -9, 0.0);
+                                            CurveLoop kick_profileloop = new CurveLoop();
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(kick_points[i],
+                                                  kick_points[i + 1]);
 
-                                    //            straight_profileloop.Append(line);
-                                    //        }
-                                    //        straight_profileloops.Add(straight_profileloop);
+                                                kick_profileloop.Append(line);
+                                            }
+                                            kick_profileloops.Add(kick_profileloop);
 
-                                    //        FilledRegion Straight_filledRegions = FilledRegion.Create(
-                                    //          doc, Straightpattern.Id, viewdraft.Id, straight_profileloops);
+                                            FilledRegion kick_filledRegions = FilledRegion.Create(
+                                              doc, Kick90offsetpattern.Id, viewdraft.Id, kick_profileloops);
 
-                                    //        FilledRegionType Ninetykickpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw NinetyKick");
-                                    //        Ninetykickpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value != null ? ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                    //        Ninetykickpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value != null ? ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-
-                                    //        //kick90 bneds 
-                                    //        XYZ txtposition6 = new XYZ(7, -15.75, 0);
-                                    //        TextNote note6 = TextNote.Create(doc, viewdraft.Id, txtposition6, "Ninety Kick", newtextnote.Id);
-                                    //        note6.HorizontalAlignment = HorizontalTextAlignment.Left;
-                                    //        note6.Width = 1.5;
-
-                                    //        List<CurveLoop> Ninetykick_profileloops = new List<CurveLoop>();
-                                    //        XYZ[] Ninetykick = new XYZ[5];
-                                    //        Ninetykick[0] = new XYZ(0.0, -15, 0.0);
-                                    //        Ninetykick[1] = new XYZ(5, -15, 0.0);
-                                    //        Ninetykick[2] = new XYZ(5, -16.5, 0.0);
-                                    //        Ninetykick[3] = new XYZ(0.0, -16.5, 0.0);
-                                    //        Ninetykick[4] = new XYZ(0.0, -15, 0.0);
-                                    //        CurveLoop Ninetykick_profileloop = new CurveLoop();
-                                    //        for (int i = 0; i < 4; i++)
-                                    //        {
-                                    //            Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(Ninetykick[i],
-                                    //              Ninetykick[i + 1]);
-
-                                    //            Ninetykick_profileloop.Append(line);
-                                    //        }
-                                    //        Ninetykick_profileloops.Add(Ninetykick_profileloop);
-
-                                    //        FilledRegion Ninetykick_filledRegions = FilledRegion.Create(
-                                    //          doc, Ninetykickpattern.Id, viewdraft.Id, Ninetykick_profileloops);
-
-                                    //        FilledRegionType NinetyStubpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw NinetyStub");
-                                    //        NinetyStubpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.ninetystubColor.Value != null ? ProfileColorSettingUserControl.Instance.ninetystubColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                    //        NinetyStubpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.ninetystubColor.Value != null ? ProfileColorSettingUserControl.Instance.ninetystubColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-
-                                    //        //kick90 bneds 
-                                    //        XYZ txtposition7 = new XYZ(7, -18.75, 0);
-                                    //        TextNote note7 = TextNote.Create(doc, viewdraft.Id, txtposition7, "Ninety Stub", newtextnote.Id);
-                                    //        note7.HorizontalAlignment = HorizontalTextAlignment.Left;
-                                    //        note7.Width = 1.5;
-
-                                    //        List<CurveLoop> NinetyStub_profileloops = new List<CurveLoop>();
-                                    //        XYZ[] NinetyStub = new XYZ[5];
-                                    //        NinetyStub[0] = new XYZ(0.0, -18, 0.0);
-                                    //        NinetyStub[1] = new XYZ(5, -18, 0.0);
-                                    //        NinetyStub[2] = new XYZ(5, -19.5, 0.0);
-                                    //        NinetyStub[3] = new XYZ(0.0, -19.5, 0.0);
-                                    //        NinetyStub[4] = new XYZ(0.0, -18, 0.0);
-                                    //        CurveLoop NinetyStub_profileloop = new CurveLoop();
-                                    //        for (int i = 0; i < 4; i++)
-                                    //        {
-                                    //            Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(NinetyStub[i],
-                                    //              NinetyStub[i + 1]);
-
-                                    //            NinetyStub_profileloop.Append(line);
-                                    //        }
-                                    //        NinetyStub_profileloops.Add(NinetyStub_profileloop);
-
-                                    //        FilledRegion NinetyStub_filledRegions = FilledRegion.Create(
-                                    //          doc, NinetyStubpattern.Id, viewdraft.Id, NinetyStub_profileloops);
+                                            //FilledRegionType newFilledregionType = (FilledRegionType)newType;
 
 
+                                            FilledRegionType Straightpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Half Offset");
+                                            Straightpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Strightor90Color.Value != null ? ProfileColorSettingUserControl.Instance.Strightor90Color.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Straightpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Strightor90Color.Value != null ? ProfileColorSettingUserControl.Instance.Strightor90Color.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+
+                                            //kick90 bneds 
+                                            XYZ txtposition5 = new XYZ(7, -12.75, 0);
+                                            TextNote note5 = TextNote.Create(doc, viewdraft.Id, txtposition5, "Half Offset", newtextnote.Id);
+                                            note5.HorizontalAlignment = HorizontalTextAlignment.Left;
+                                            note5.Width = 1.5;
+
+                                            List<CurveLoop> straight_profileloops = new List<CurveLoop>();
+                                            XYZ[] straights = new XYZ[5];
+                                            straights[0] = new XYZ(0.0, -12, 0.0);
+                                            straights[1] = new XYZ(5, -12, 0.0);
+                                            straights[2] = new XYZ(5, -13.5, 0.0);
+                                            straights[3] = new XYZ(0.0, -13.5, 0.0);
+                                            straights[4] = new XYZ(0.0, -12, 0.0);
+                                            CurveLoop straight_profileloop = new CurveLoop();
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(straights[i],
+                                                  straights[i + 1]);
+
+                                                straight_profileloop.Append(line);
+                                            }
+                                            straight_profileloops.Add(straight_profileloop);
+
+                                            FilledRegion Straight_filledRegions = FilledRegion.Create(
+                                              doc, Straightpattern.Id, viewdraft.Id, straight_profileloops);
+
+                                            FilledRegionType Ninetykickpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw NinetyKick");
+                                            Ninetykickpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value != null ? ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Ninetykickpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value != null ? ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+
+                                            //kick90 bneds 
+                                            XYZ txtposition6 = new XYZ(7, -15.75, 0);
+                                            TextNote note6 = TextNote.Create(doc, viewdraft.Id, txtposition6, "Ninety Kick", newtextnote.Id);
+                                            note6.HorizontalAlignment = HorizontalTextAlignment.Left;
+                                            note6.Width = 1.5;
+
+                                            List<CurveLoop> Ninetykick_profileloops = new List<CurveLoop>();
+                                            XYZ[] Ninetykick = new XYZ[5];
+                                            Ninetykick[0] = new XYZ(0.0, -15, 0.0);
+                                            Ninetykick[1] = new XYZ(5, -15, 0.0);
+                                            Ninetykick[2] = new XYZ(5, -16.5, 0.0);
+                                            Ninetykick[3] = new XYZ(0.0, -16.5, 0.0);
+                                            Ninetykick[4] = new XYZ(0.0, -15, 0.0);
+                                            CurveLoop Ninetykick_profileloop = new CurveLoop();
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(Ninetykick[i],
+                                                  Ninetykick[i + 1]);
+
+                                                Ninetykick_profileloop.Append(line);
+                                            }
+                                            Ninetykick_profileloops.Add(Ninetykick_profileloop);
+
+                                            FilledRegion Ninetykick_filledRegions = FilledRegion.Create(
+                                              doc, Ninetykickpattern.Id, viewdraft.Id, Ninetykick_profileloops);
+
+                                            FilledRegionType NinetyStubpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw NinetyStub");
+                                            NinetyStubpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.ninetystubColor.Value != null ? ProfileColorSettingUserControl.Instance.ninetystubColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            NinetyStubpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.ninetystubColor.Value != null ? ProfileColorSettingUserControl.Instance.ninetystubColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+
+                                            //kick90 bneds 
+                                            XYZ txtposition7 = new XYZ(7, -18.75, 0);
+                                            TextNote note7 = TextNote.Create(doc, viewdraft.Id, txtposition7, "Ninety Stub", newtextnote.Id);
+                                            note7.HorizontalAlignment = HorizontalTextAlignment.Left;
+                                            note7.Width = 1.5;
+
+                                            List<CurveLoop> NinetyStub_profileloops = new List<CurveLoop>();
+                                            XYZ[] NinetyStub = new XYZ[5];
+                                            NinetyStub[0] = new XYZ(0.0, -18, 0.0);
+                                            NinetyStub[1] = new XYZ(5, -18, 0.0);
+                                            NinetyStub[2] = new XYZ(5, -19.5, 0.0);
+                                            NinetyStub[3] = new XYZ(0.0, -19.5, 0.0);
+                                            NinetyStub[4] = new XYZ(0.0, -18, 0.0);
+                                            CurveLoop NinetyStub_profileloop = new CurveLoop();
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Autodesk.Revit.DB.Line line = Autodesk.Revit.DB.Line.CreateBound(NinetyStub[i],
+                                                  NinetyStub[i + 1]);
+
+                                                NinetyStub_profileloop.Append(line);
+                                            }
+                                            NinetyStub_profileloops.Add(NinetyStub_profileloop);
+
+                                            FilledRegion NinetyStub_filledRegions = FilledRegion.Create(
+                                              doc, NinetyStubpattern.Id, viewdraft.Id, NinetyStub_profileloops);
 
 
 
-                                    //        tranlen.Commit();
-                                    //    }
-                                    //}
+
+
+                                            tranlen.Commit();
+                                        }
+                                    }
                                 }
                                 using (SubTransaction transfilter = new SubTransaction(doc))
                                 {
@@ -776,20 +776,20 @@ namespace MultiDraw
                                     }
                                     else
                                     {
-                                        //HoffsetValue = profile.HoffsetValue.Text;
-                                        //VoffsetValue = profile.VoffsetValue.Text;
-                                        //RoffsetValue = profile.RoffsetValue.Text;
-                                        //KoffsetValue = profile.KoffsetValue.Text;
-                                        //StraightValue = profile.StraightValue.Text;
-                                        //NightyKickValue = profile.NightyKickValue.Text;
-                                        //NightystubValue = profile.NightystubValue.Text;
-                                        //HoffsetColor = ProfileColorSettingUserControl.Instance.HoffsetColor.Value;
-                                        //VoffsetColor = ProfileColorSettingUserControl.Instance.VoffsetColor.Value;
-                                        //RoffsetColor = ProfileColorSettingUserControl.Instance.RoffsetColor.Value;
-                                        //Kick90offsetColor = ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value;
-                                        //Strightor90Color = ProfileColorSettingUserControl.Instance.Strightor90Color.Value;
-                                        //NinetykickdrawColor = ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value;
-                                        //ninetystubColor = ProfileColorSettingUserControl.Instance.ninetystubColor.Value;
+                                        HoffsetValue = profile.HoffsetValue.Text;
+                                        VoffsetValue = profile.VoffsetValue.Text;
+                                        RoffsetValue = profile.RoffsetValue.Text;
+                                        KoffsetValue = profile.KoffsetValue.Text;
+                                        StraightValue = profile.StraightValue.Text;
+                                        NightyKickValue = profile.NightyKickValue.Text;
+                                        NightystubValue = profile.NightystubValue.Text;
+                                        HoffsetColor = ProfileColorSettingUserControl.Instance.HoffsetColor.Value;
+                                        VoffsetColor = ProfileColorSettingUserControl.Instance.VoffsetColor.Value;
+                                        RoffsetColor = ProfileColorSettingUserControl.Instance.RoffsetColor.Value;
+                                        Kick90offsetColor = ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value;
+                                        Strightor90Color = ProfileColorSettingUserControl.Instance.Strightor90Color.Value;
+                                        NinetykickdrawColor = ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value;
+                                        ninetystubColor = ProfileColorSettingUserControl.Instance.ninetystubColor.Value;
                                     }
                                     if (filtersref == null)
                                     {
