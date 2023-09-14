@@ -34,7 +34,7 @@ namespace MultiDraw
         UIDocument _uidoc = null;
 
         ExternalEvent _externalEvent;
-        ProfileColorSettingsData ProfileColorSettingsData = new ProfileColorSettingsData();
+       public ProfileColorSettingsData ProfileColorSettingsData = new ProfileColorSettingsData();
         public ProfileColorSettingUserControl(ExternalEvent externalEvent, UIApplication uiApp, Window window)
         {
             _uidoc = uiApp.ActiveUIDocument;
@@ -52,10 +52,9 @@ namespace MultiDraw
                 if (!string.IsNullOrEmpty(json))
                 {
                     StraightsDrawParam globalParam = JsonConvert.DeserializeObject<StraightsDrawParam>(json);
-                   
+
                 }
                 string json2 = Properties.Settings.Default.ProfileColorSettings;
-
                 if (string.IsNullOrEmpty(json2))
                 {
                     ProfileColorSettingsData.vOffsetValue = "V Offset";
@@ -77,6 +76,7 @@ namespace MultiDraw
                 else
                 {
                    ProfileColorSettingsData = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json2);
+
                 }
 
                 VoffsetValue.Text = ProfileColorSettingsData.vOffsetValue;

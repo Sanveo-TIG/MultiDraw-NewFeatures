@@ -25,7 +25,7 @@ namespace MultiDraw
                 tx.Start("MultiDraw Settings");
                 Settings settings = GetSettings();
                 string json = JsonConvert.SerializeObject(settings);
-                Utility.SetGlobalParametersManager(uiapp, "MultiDrawSettings", json);
+               // Utility.SetGlobalParametersManager(uiapp, "MultiDrawSettings", json);
                 Properties.Settings.Default.MultiDrawSettings = json;
                 Properties.Settings.Default.Save();
                 tx.Commit();
@@ -50,6 +50,7 @@ namespace MultiDraw
                     RodExtensionAsString = SettingsUserControl.Instance.txtRodExtension.Text,
                     SupportSpacingAsString = SettingsUserControl.Instance.txtSupportSpacing.Text,
                     SupportSpacingAsDouble = SettingsUserControl.Instance.txtSupportSpacing.AsDouble
+
                 };
               
                 return settings;
