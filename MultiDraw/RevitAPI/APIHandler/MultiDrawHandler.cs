@@ -24,6 +24,7 @@ namespace MultiDraw
     public class MultiDrawHandler : IExternalEventHandler
     {
         static int num = 0;
+        public ProfileColorSettingsData ProfileColorSettingsData = new ProfileColorSettingsData();
         public void Execute(UIApplication uiapp)
         {
 
@@ -65,7 +66,8 @@ namespace MultiDraw
             bool Refpiuckpoint = false;
             bool fittingsfailure = false;
             string mainTransName = "MultiDraw-Straight/Bend";
-
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData data = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             try
             {
                 using (Transaction trans2 = new Transaction(doc))
@@ -418,33 +420,33 @@ namespace MultiDraw
 
                                 if (refparameterelement == null)
                                 {
-                                    using (SubTransaction substrans2 = new SubTransaction(doc))
-                                    {
-                                        substrans2.Start();
-                                        MultiDrawProfileSettingsParam globalParam = new MultiDrawProfileSettingsParam();
-                                        if (ProfileColorSettingUserControl.Instance != null)
-                                        {
-                                            globalParam.VoffsetValue = ProfileColorSettingUserControl.Instance.VoffsetValue.Text;
-                                            globalParam.HoffsetValue = ProfileColorSettingUserControl.Instance.HoffsetValue.Text;
-                                            globalParam.RoffsetValue = ProfileColorSettingUserControl.Instance.RoffsetValue.Text;
-                                            globalParam.KoffsetValue = ProfileColorSettingUserControl.Instance.KoffsetValue.Text;
-                                            globalParam.Straight = ProfileColorSettingUserControl.Instance.StraightValue.Text;
-                                            globalParam.NinetyKick = ProfileColorSettingUserControl.Instance.NightyKickValue.Text;
-                                            globalParam.Ninetystub = ProfileColorSettingUserControl.Instance.NightystubValue.Text;
+                                    //using (SubTransaction substrans2 = new SubTransaction(doc))
+                                    //{
+                                    //    substrans2.Start();
+                                    //    MultiDrawProfileSettingsParam globalParam = new MultiDrawProfileSettingsParam();
+                                    //    if (data != null)
+                                    //    {
+                                    //        globalParam.VoffsetValue = data.VoffsetValue.Text;
+                                    //        globalParam.HoffsetValue = data.HoffsetValue.Text;
+                                    //        globalParam.RoffsetValue = data.RoffsetValue.Text;
+                                    //        globalParam.KoffsetValue = data.KoffsetValue.Text;
+                                    //        globalParam.Straight = data.StraightValue.Text;
+                                    //        globalParam.NinetyKick = data.NightyKickValue.Text;
+                                    //        globalParam.Ninetystub = data.NightystubValue.Text;
 
-                                            globalParam.VoffsetValuecolor = ProfileColorSettingUserControl.Instance.VoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.VoffsetColor.Value.Blue.ToString();
-                                            globalParam.HoffsetValuecolor = ProfileColorSettingUserControl.Instance.HoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.HoffsetColor.Value.Blue.ToString();
-                                            globalParam.RoffsetValuecolor = ProfileColorSettingUserControl.Instance.RoffsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.RoffsetColor.Value.Blue.ToString();
-                                            globalParam.KoffsetValuecolor = ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value.Blue.ToString();
-                                            globalParam.Straightcolor = ProfileColorSettingUserControl.Instance.Strightor90Color.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.Strightor90Color.Value.Blue.ToString();
-                                            globalParam.NinetyKickcolor = ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value.Blue.ToString();
-                                            globalParam.Ninetystubcolor = ProfileColorSettingUserControl.Instance.ninetystubColor.Value == null ? string.Empty : ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Red.ToString() + "," + ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Green.ToString() + "," + ProfileColorSettingUserControl.Instance.ninetystubColor.Value.Blue.ToString();
+                                    //        globalParam.VoffsetValuecolor = data.VoffsetColor.Value == null ? string.Empty : data.VoffsetColor.Value.Red.ToString() + "," + data.VoffsetColor.Value.Green.ToString() + "," + data.VoffsetColor.Value.Blue.ToString();
+                                    //        globalParam.HoffsetValuecolor = data.hOffsetColor == null ? string.Empty : data.hOffsetColor.Red.ToString() + "," + data.hOffsetColor.Green.ToString() + "," + data.hOffsetColor.Blue.ToString();
+                                    //        globalParam.RoffsetValuecolor = data.rOffsetColor == null ? string.Empty : data.rOffsetColor.Red.ToString() + "," + data.rOffsetColor.Green.ToString() + "," + data.rOffsetColor.Blue.ToString();
+                                    //        globalParam.KoffsetValuecolor = data.nkOffsetColor == null ? string.Empty : data.nkOffsetColor.Red.ToString() + "," + data.nkOffsetColor.Green.ToString() + "," + data.nkOffsetColor.Blue.ToString();
+                                    //        globalParam.Straightcolor = data.straightColor == null ? string.Empty : data.straightColor.Red.ToString() + "," + data.straightColor.Green.ToString() + "," + data.straightColor.Blue.ToString();
+                                    //        globalParam.NinetyKickcolor = data.nkOffsetColor == null ? string.Empty : data.nkOffsetColor.Red.ToString() + "," + data.nkOffsetColor.Green.ToString() + "," + data.nkOffsetColor.Blue.ToString();
+                                    //        globalParam.Ninetystubcolor = data.nsOffsetColor == null ? string.Empty : data.nsOffsetColor.Red.ToString() + "," + data.nsOffsetColor.Green.ToString() + "," + data.nsOffsetColor.Blue.ToString();
 
-                                            Utility.SetGlobalParametersManager(doc, "MultiDrawProfileSettings", JsonConvert.SerializeObject(globalParam));
-                                        }
-                                        substrans2.Commit();
+                                    //        Utility.SetGlobalParametersManager(doc, "MultiDrawProfileSettings", JsonConvert.SerializeObject(globalParam));
+                                    //    }
+                                    //    substrans2.Commit();
 
-                                    }
+                                    //}
 
 
 
@@ -453,7 +455,7 @@ namespace MultiDraw
                                     viewdrafting = Viewscollections.Where(x => x.Name.Equals("Multi Draw Bends Legends")).FirstOrDefault() as ViewDrafting;
                                     if (viewdrafting == null)
                                     {
-
+                                       
                                         using (SubTransaction tranlen = new SubTransaction(doc))
                                         {
                                             tranlen.Start();
@@ -475,8 +477,8 @@ namespace MultiDraw
                                             //FilledRegionType myPatterns = (FilledRegionType)new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType))./*Where(x => x.LookupParameter("Type").AsValueString().Equals("Solid Black"))*/FirstElement();
 
                                             FilledRegionType verticaloffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Verftical Offset Bend");
-                                             verticaloffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.VoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.VoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                            verticaloffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.VoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.VoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                             verticaloffsetpattern.ForegroundPatternColor = data != null && data.vOffsetColor != null ? data.vOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            verticaloffsetpattern.BackgroundPatternColor = data != null && data.vOffsetColor != null ? data.vOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             List<FilledRegionType> filledtypes = new List<FilledRegionType>();
                                             foreach (FilledRegionType frt in fillRegionTypes)
@@ -525,8 +527,8 @@ namespace MultiDraw
                                               doc, verticaloffsetpattern.Id, viewdraft.Id, profileloops);
 
                                             FilledRegionType Horizontaloffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Horizontal Offset Bend");
-                                            Horizontaloffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.HoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.HoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                            Horizontaloffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.HoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.HoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Horizontaloffsetpattern.ForegroundPatternColor = data != null && data.hOffsetColor != null ? data.hOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Horizontaloffsetpattern.BackgroundPatternColor = data != null && data.hOffsetColor != null ? data.hOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             //horizontal bends
                                             XYZ txtposition2 = new XYZ(7, -3.75, 0);
@@ -555,8 +557,8 @@ namespace MultiDraw
                                               doc, Horizontaloffsetpattern.Id, viewdraft.Id, hor_profileloops);
 
                                             FilledRegionType rollingoffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Rolling Offset Bend");
-                                            rollingoffsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.RoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.RoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                            rollingoffsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.RoffsetColor.Value != null ? ProfileColorSettingUserControl.Instance.RoffsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            rollingoffsetpattern.ForegroundPatternColor = data != null && data.rOffsetColor != null ? data.rOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            rollingoffsetpattern.BackgroundPatternColor = data != null && data.rOffsetColor != null ? data.rOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             //rolling bends
                                             XYZ txtposition3 = new XYZ(7, -6.75, 0);
@@ -586,8 +588,8 @@ namespace MultiDraw
 
 
                                             FilledRegionType Kick90offsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Kick 90 Bend");
-                                            Kick90offsetpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value != null ? ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                            Kick90offsetpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value != null ? ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Kick90offsetpattern.ForegroundPatternColor = data != null && data.kOffsetColor != null ? data.kOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Kick90offsetpattern.BackgroundPatternColor = data != null && data.kOffsetColor != null ? data.kOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             //kick90 bneds 
                                             XYZ txtposition4 = new XYZ(7, -9.75, 0);
@@ -619,8 +621,8 @@ namespace MultiDraw
 
 
                                             FilledRegionType Straightpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Half Offset");
-                                            Straightpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Strightor90Color.Value != null ? ProfileColorSettingUserControl.Instance.Strightor90Color.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                            Straightpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.Strightor90Color.Value != null ? ProfileColorSettingUserControl.Instance.Strightor90Color.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Straightpattern.ForegroundPatternColor = data != null && data.straightColor != null ? data.straightColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Straightpattern.BackgroundPatternColor = data != null && data.straightColor != null ? data.straightColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             //kick90 bneds 
                                             XYZ txtposition5 = new XYZ(7, -12.75, 0);
@@ -649,8 +651,8 @@ namespace MultiDraw
                                               doc, Straightpattern.Id, viewdraft.Id, straight_profileloops);
 
                                             FilledRegionType Ninetykickpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw NinetyKick");
-                                            Ninetykickpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value != null ? ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                            Ninetykickpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value != null ? ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Ninetykickpattern.ForegroundPatternColor = data != null && data.nkOffsetColor != null ? data.nkOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            Ninetykickpattern.BackgroundPatternColor = data != null && data.nkOffsetColor != null ? data.nkOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             //kick90 bneds 
                                             XYZ txtposition6 = new XYZ(7, -15.75, 0);
@@ -679,8 +681,8 @@ namespace MultiDraw
                                               doc, Ninetykickpattern.Id, viewdraft.Id, Ninetykick_profileloops);
 
                                             FilledRegionType NinetyStubpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw NinetyStub");
-                                            NinetyStubpattern.ForegroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.ninetystubColor.Value != null ? ProfileColorSettingUserControl.Instance.ninetystubColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
-                                            NinetyStubpattern.BackgroundPatternColor = ProfileColorSettingUserControl.Instance != null && ProfileColorSettingUserControl.Instance.ninetystubColor.Value != null ? ProfileColorSettingUserControl.Instance.ninetystubColor.Value : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            NinetyStubpattern.ForegroundPatternColor = data != null && data.nsOffsetColor != null ? data.nsOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            NinetyStubpattern.BackgroundPatternColor = data != null && data.nsOffsetColor != null ? data.nsOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             //kick90 bneds 
                                             XYZ txtposition7 = new XYZ(7, -18.75, 0);
@@ -763,8 +765,7 @@ namespace MultiDraw
                                     Autodesk.Revit.DB.Color Strightor90Color = new Autodesk.Revit.DB.Color(255, 153, 204);
                                     Autodesk.Revit.DB.Color NinetykickdrawColor = new Autodesk.Revit.DB.Color(204, 204, 255);
                                     Autodesk.Revit.DB.Color ninetystubColor = new Autodesk.Revit.DB.Color(153, 76, 0);
-                                    ProfileColorSettingUserControl profile = ProfileColorSettingUserControl.Instance;
-                                    if (profile == null)
+                                    if (data == null)
                                     {
                                         HoffsetValue = "V offset";
                                         VoffsetValue = "H offset";
@@ -776,20 +777,20 @@ namespace MultiDraw
                                     }
                                     else
                                     {
-                                        HoffsetValue = profile.HoffsetValue.Text;
-                                        VoffsetValue = profile.VoffsetValue.Text;
-                                        RoffsetValue = profile.RoffsetValue.Text;
-                                        KoffsetValue = profile.KoffsetValue.Text;
-                                        StraightValue = profile.StraightValue.Text;
-                                        NightyKickValue = profile.NightyKickValue.Text;
-                                        NightystubValue = profile.NightystubValue.Text;
-                                        HoffsetColor = ProfileColorSettingUserControl.Instance.HoffsetColor.Value;
-                                        VoffsetColor = ProfileColorSettingUserControl.Instance.VoffsetColor.Value;
-                                        RoffsetColor = ProfileColorSettingUserControl.Instance.RoffsetColor.Value;
-                                        Kick90offsetColor = ProfileColorSettingUserControl.Instance.Kick90offsetColor.Value;
-                                        Strightor90Color = ProfileColorSettingUserControl.Instance.Strightor90Color.Value;
-                                        NinetykickdrawColor = ProfileColorSettingUserControl.Instance.NinetykickdrawColor.Value;
-                                        ninetystubColor = ProfileColorSettingUserControl.Instance.ninetystubColor.Value;
+                                        HoffsetValue = data.hOffsetValue;
+                                        VoffsetValue = data.vOffsetValue;
+                                        RoffsetValue = data.rOffsetValue;
+                                        KoffsetValue = data.kOffsetValue;
+                                        StraightValue = data.straightValue;
+                                        NightyKickValue = data.nkOffsetValue;
+                                        NightystubValue = data.nsOffsetValue;
+                                        HoffsetColor = data.hOffsetColor;
+                                        VoffsetColor = data.vOffsetColor;
+                                        RoffsetColor = data.rOffsetColor;
+                                        Kick90offsetColor = data.kOffsetColor;
+                                        Strightor90Color = data.straightColor;
+                                        NinetykickdrawColor = data.nkOffsetColor;
+                                        ninetystubColor = data.nsOffsetColor;
                                     }
                                     if (filtersref == null)
                                     {

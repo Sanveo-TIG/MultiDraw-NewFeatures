@@ -34,7 +34,7 @@ namespace MultiDraw
         UIDocument _uidoc = null;
 
         ExternalEvent _externalEvent;
-       public ProfileColorSettingsData ProfileColorSettingsData = new ProfileColorSettingsData();
+        public ProfileColorSettingsData ProfileColorSettingsData = new ProfileColorSettingsData();
         public ProfileColorSettingUserControl(ExternalEvent externalEvent, UIApplication uiApp, Window window)
         {
             _uidoc = uiApp.ActiveUIDocument;
