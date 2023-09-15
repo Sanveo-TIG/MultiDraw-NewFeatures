@@ -182,6 +182,8 @@ namespace MultiDraw
         {
             cmbProfileType.SelectedIndex = 4;
             ReadSettings();
+            btnPlay.IsChecked = true;
+            PlayButton_Click(null,null);
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
