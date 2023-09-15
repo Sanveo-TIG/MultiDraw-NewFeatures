@@ -103,7 +103,8 @@ namespace MultiDraw
         public static bool HOffsetDrawHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
             DateTime startDate = DateTime.UtcNow;
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             try
             {
 
@@ -269,7 +270,8 @@ namespace MultiDraw
         }
         public static bool HOffsetDrawPointHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements, ref bool fittingsfailure)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             fittingsfailure = false;
             try
@@ -662,7 +664,8 @@ namespace MultiDraw
 
         public static bool VOffsetDrawHandler(Document _doc, UIDocument _uiDoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, int RevitVersion, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
@@ -957,7 +960,8 @@ namespace MultiDraw
         }
         public static bool VOffsetDrawPointHandler(Document _doc, UIDocument _uiDoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, int RevitVersion, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
@@ -1467,7 +1471,8 @@ namespace MultiDraw
             List<FamilyInstance> bOTTOMForAddtags = new List<FamilyInstance>();
             List<FamilyInstance> TOPForAddtags = new List<FamilyInstance>();
 
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             secondaryElements = new List<Element>();
             RollingOffset.GetSecondaryElements(doc, ref PrimaryElements, l_angle, l_offSet, l_rollOffset, out List<Element> SecondaryElements, offSetVar, PickPoint);
             for (int i = 0; i < PrimaryElements.Count; i++)
@@ -1525,7 +1530,8 @@ namespace MultiDraw
         }
         public static void PointRollUp(Document doc, ref List<Element> PrimaryElements, double l_angle, double l_offSet, string offSetVar, XYZ PickPoint, UIApplication _uiapp, ref List<Element> secondaryElements)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             secondaryElements = new List<Element>();
             RollingOffset.GetSecondarypointElements(doc, ref PrimaryElements, l_angle, l_offSet, out List<Element> SecondaryElements, offSetVar, PickPoint);
             for (int i = 0; i < PrimaryElements.Count; i++)
@@ -1788,7 +1794,8 @@ namespace MultiDraw
             FamilyInstance fittings2 = null;
             List<FamilyInstance> bottomTag = null;
             List<FamilyInstance> toptag = null;
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
@@ -2335,7 +2342,8 @@ namespace MultiDraw
             FamilyInstance fittings2 = null;
             List<FamilyInstance> bottomTag = null;
             List<FamilyInstance> toptag = null;
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
@@ -2900,7 +2908,8 @@ namespace MultiDraw
         }
         public static bool StrightorBend(Document doc, UIDocument uidoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, XYZ Pickpoint)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
@@ -3768,7 +3777,8 @@ namespace MultiDraw
         }
         public static void NinetyApplyBend(Document doc, List<Element> PrimaryElements, string offSetVar, XYZ pickpoint, UIApplication _uiapp)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
@@ -3964,7 +3974,8 @@ namespace MultiDraw
         }
         public static void ApplyKick(Document doc, ref List<Element> PrimaryElements, double l_angle, double l_offSet, double l_Rise, string offSetVar, UIApplication _uiapp, XYZ pickpoint)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
@@ -4115,7 +4126,8 @@ namespace MultiDraw
 
         public static void StubApplyBend(Document doc, ref List<Element> PrimaryElements, double stublength, string offSetVar, XYZ pickpoint, UIApplication _uiapp)
         {
-            ProfileColorSettingsData profileSetting = ParentUserControl.Instance._ProfileColorSettingsData;
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             try
             {
