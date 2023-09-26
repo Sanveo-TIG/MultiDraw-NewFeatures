@@ -10,10 +10,10 @@ namespace MultiDraw
         public const string AddinButtonText = "MultiDraw";
         public const string AddinButtonTooltip = "MultiDraw Helps to do Align functions for conduits";
         public static string ProjectName = "MultiDraw";
-        public const string AddinRibbonTabName = "Sanveo Tools-Beta";
-        public const string InstallerFolderName = "SNVAddins-Beta";
+        public const string AddinRibbonTabName = "Sanveo Tools";
+        public const string InstallerFolderName = "SNVAddins";
         public const string AddinRibbonPanel = "MultiDraw";
-        public const string ProductVersion = "Beta";
+        public const string ProductVersion = "Public";
 
         public const string ApplicationWindowTitle = "MultiDraw";
         public const int ApplicationWindowHeight = 510;
