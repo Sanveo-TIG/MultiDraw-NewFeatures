@@ -802,7 +802,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
                 }
 
                 else
@@ -951,7 +951,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
+                   // Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
 
                 }
             }
@@ -1110,7 +1110,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                   // Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
                 }
 
                 else
@@ -1256,7 +1256,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
+                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
 
                 }
             }

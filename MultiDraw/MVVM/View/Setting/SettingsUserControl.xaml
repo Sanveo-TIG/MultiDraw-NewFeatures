@@ -8,7 +8,7 @@
              xmlns:TIG="clr-namespace:TIGUtility;assembly=TIGUtility"
              mc:Ignorable="d"
              d:DesignHeight="375" 
-             d:DesignWidth="250" Width="360"
+             d:DesignWidth="250" 
              Background="Transparent"
              Loaded="Control_Loaded">
     <UserControl.Resources>
@@ -27,7 +27,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"  Orientation="Horizontal"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center" >
             <TIG:TabPanelControl x:Name="tagControl"
                                     SelectionChanged="TagControl_SelectionChanged"></TIG:TabPanelControl>
 
@@ -62,14 +62,12 @@
             </StackPanel>
             <StackPanel Grid.Row="3"
                     Grid.Column="0">
-                <TextBlock Text="Strut Type"
-                       Margin="0,0,0,18"></TextBlock>
+                <TextBlock Text="Strut Type" Margin="0,8,0,0"></TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="3"
                     Grid.Column="1">
                 <TIG:SingleSelectDropDownControl x:Name="ddlStrutType"
-                                   
-                                     Margin="0,-15,0,0"></TIG:SingleSelectDropDownControl>
+                                     ></TIG:SingleSelectDropDownControl>
             </StackPanel>
             <StackPanel Grid.Row="4"
                     Grid.Column="0"
@@ -127,6 +125,27 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="containerProfileColorSettings" Grid.Row="1" >
+        </Grid>
+        <Grid x:Name="GridAutoSync" Grid.Row="1" >
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="85"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" >
+                    <TIG:MultiSelectDropDown x:Name="ucMultiSelect" 
+                                       DropDownClosed="UcMultiSelect_DropDownClosed"  ></TIG:MultiSelectDropDown>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TIG:ButtonControl Label="Sync"
+                                  Width="70"
+                                  Icon="Tick"
+                                  x:Name="btnsync"
+                                   Margin="0,10,10,0"
+                                  BtnClick="BtnCheck_Click"></TIG:ButtonControl>
+                </StackPanel>
+
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

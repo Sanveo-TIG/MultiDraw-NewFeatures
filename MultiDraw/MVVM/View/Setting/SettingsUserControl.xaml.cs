@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using System;
@@ -28,15 +29,30 @@ namespace MultiDraw
     {
         public static SettingsUserControl Instance;
         public System.Windows.Window _window = new System.Windows.Window();
-        public System.Windows.Window SettingsWindow = new System.Windows.Window();
+        //public System.Windows.Window SettingsWindow = new System.Windows.Window();
         readonly Document _doc = null;
         public UIApplication _uiApp = null;
-        public SettingsUserControl(Document doc, UIApplication uiApp,Window window, ExternalEvent saveEvent)
+        readonly List<string> _removingList = new List<string>();
+        readonly string _offsetVariable = string.Empty;
+        readonly List<MultiSelect> multiSelectList = new List<MultiSelect>();
+        ExternalEvent eventsync= null;
+        public SettingsUserControl(Document doc, UIApplication uiApp, Window window,  ExternalEvent saveEvent)
         {
             try
             {
                 InitializeComponent();
                 Instance = this;
+                eventsync = SettingsWindow.Instance._externalEvents[2];
+                ddlStrutType.Attributes = new MultiSelectAttributes()
+                {
+                    Width = 200
+                };
+                ucMultiSelect.Attributes = new MultiSelectAttributes()
+                {
+                    IsRequired = false,
+                    Width = 250,
+                    Label = "Parameters Collection"
+                };
                 _doc = doc;
                 _uiApp = uiApp;
                 txtSupportSpacing.UIApplication = uiApp;
@@ -61,25 +77,81 @@ namespace MultiDraw
                 ddlStrutType.SelectedItem = sType.Last();
                 _window = window;
                 LoadTab();
-                ddlStrutType.Attributes = new MultiSelectAttributes()
-                {
-                    Width = 200
-                };
+
 
 
                 UserControl userControl = new ProfileColorSettingUserControl(saveEvent, uiApp, window);
                 containerProfileColorSettings.Children.Add(userControl);
-               // ParentUserControl.Instance.AlignConduits.IsEnabled = false;
-                //ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
-                //ParentUserControl.Instance.AlignConduits.IsChecked = false;
-                //ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
+                _offsetVariable = RevitVersion < 2020 ? "Offset" : "Middle Elevation";
+                _removingList = new List<string>()
+            {
+                _offsetVariable,
+                "Horizontal Justification",
+                "Vertical Justification" ,
+                "Reference Level",
+                "Top Elevation",
+                "Bottom Elevation",
+                "Upper End Top Elevation",
+                "Upper End Bottom Elevation",
+                "Upper End Centerline Elevation",
+                "Lower End Top Elevation",
+                "Lower End Bottom Elevation",
+                "Lower End Centerline Elevation"
+            };
+                List<SYNCDataGlobalParam> globalParam = new List<SYNCDataGlobalParam>();
+                string json = Utility.GetGlobalParametersManager(_uiApp, "SyncDataParameters");
+                if (!string.IsNullOrEmpty(json))
+                {
+                    try
+                    {
+                        globalParam = JsonConvert.DeserializeObject<List<SYNCDataGlobalParam>>(json);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        MessageBox.Show("Saved parameters cannot be read. Click okay to delete the saved parameters and reset the form");
+                        //externalEvents[1].Raise();
+                    }
+                }
+                FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
+                List<Element> Conduits = new FilteredElementCollector(_doc).OfClass(typeof(Conduit)).ToList();
+                if (Conduits.Any())
+                {
+                    Element e = Conduits.FirstOrDefault();
+                    foreach (Parameter parameter in e.GetOrderedParameters().ToList().Where(r => !r.IsReadOnly))
+                    {
+                        if (!_removingList.Any(x => x == parameter.Definition.Name))
+                        {
+                            MultiSelect multi = new MultiSelect
+                            {
+                                Name = parameter.Definition.Name,
+                                IsChecked = false,
+                                Id = parameter.Id,
+                                Item = parameter
+                            };
+                            if (globalParam != null && globalParam.Any(r => r.Name == multi.Name))
+                            {
+                                multi.IsChecked = true;
+                            }
+                            multiSelectList.Add(multi);
+                        }
+                    }
+                    multiSelectList = multiSelectList.OrderBy(x => x.Name).ToList();
+                    ucMultiSelect.ItemsSource = multiSelectList.OrderByDescending(x => x.IsChecked).ToList();
+
+
+                    // ParentUserControl.Instance.AlignConduits.IsEnabled = false;
+                    //ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
+                    //ParentUserControl.Instance.AlignConduits.IsChecked = false;
+                    //ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
+                }
             }
             catch (Exception ex)
             {
                 TaskDialog.Show("War", ex.StackTrace);
             }
-            
-           
+
+
         }
         private void LoadTab()
         {
@@ -93,6 +165,12 @@ namespace MultiDraw
             b.Id = 2;
             b.Name = "Profile Color Settings";
             customTabsList.Add(b);
+
+            b = new CustomTab();
+            b.Id = 3;
+            b.Name = "Auto Sync";
+            customTabsList.Add(b);
+
 
             tagControl.ItemsSource = customTabsList;
             tagControl.SelectedIndex = 0;
@@ -115,7 +193,7 @@ namespace MultiDraw
             if (!string.IsNullOrEmpty(jsonFromFile))
             {
                 Settings settings = JsonConvert.DeserializeObject<Settings>(jsonFromFile);
-                if(settings != null)
+                if (settings != null)
                 {
                     IsSupportNeeded.IsChecked = settings.IsSupportNeeded;
                     List<MultiSelect> sType = ddlStrutType.ItemsSource;
@@ -144,12 +222,30 @@ namespace MultiDraw
             {
                 containerSupportSettings.Visibility = System.Windows.Visibility.Visible;
                 containerProfileColorSettings.Visibility = System.Windows.Visibility.Collapsed;
+                GridAutoSync.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else if (tagControl.SelectedIndex == 1)
+            {
+                containerProfileColorSettings.Visibility = System.Windows.Visibility.Visible;
+                containerSupportSettings.Visibility = System.Windows.Visibility.Collapsed;
+                GridAutoSync.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {
+                GridAutoSync.Visibility = System.Windows.Visibility.Visible;
                 containerSupportSettings.Visibility = System.Windows.Visibility.Collapsed;
-                containerProfileColorSettings.Visibility = System.Windows.Visibility.Visible;
+                containerProfileColorSettings.Visibility = System.Windows.Visibility.Collapsed;
             }
+        }
+
+        private void UcMultiSelect_DropDownClosed(object sender)
+        {
+
+        }
+
+        private void BtnCheck_Click(object sender)
+        {
+            eventsync.Raise();
         }
     }
 }

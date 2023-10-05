@@ -75,13 +75,13 @@ namespace MultiDraw
         {
             BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/16x16.png"));
             this.Icon = pb1Image;
-            this.Title = Util.ApplicationWindowTitle;
-            this.MinHeight = Util.ApplicationWindowHeight;
-            this.Height = Util.ApplicationWindowHeight;
-            this.Topmost = Util.IsApplicationWindowTopMost;
-            this.MinWidth = Util.IsApplicationWindowAlowToReSize ? Util.ApplicationWindowWidth : 100;
-            this.Width = Util.ApplicationWindowWidth;
-            this.ResizeMode = Util.IsApplicationWindowAlowToReSize ? System.Windows.ResizeMode.CanResize : System.Windows.ResizeMode.NoResize;
+            this.Title = Utili.ApplicationWindowTitle;
+            this.MinHeight = Utili.ApplicationWindowHeight;
+            this.Height = Utili.ApplicationWindowHeight;
+            this.Topmost = Utili.IsApplicationWindowTopMost;
+            this.MinWidth = Utili.IsApplicationWindowAlowToReSize ? Utili.ApplicationWindowWidth : 100;
+            this.Width = Utili.ApplicationWindowWidth;
+            this.ResizeMode = Utili.IsApplicationWindowAlowToReSize ? System.Windows.ResizeMode.CanResize : System.Windows.ResizeMode.NoResize;
             this.WindowStyle = WindowStyle.None;         
             string tempfilePath = System.IO.Path.GetDirectoryName(typeof(Command).Assembly.Location);
             DirectoryInfo di = new DirectoryInfo(tempfilePath);
@@ -124,7 +124,7 @@ namespace MultiDraw
 
         public static SettingsWindow Instance;
         public UIApplication _UIApp = null;
-        readonly List<ExternalEvent> _externalEvents = new List<ExternalEvent>();
+        public List<ExternalEvent> _externalEvents = new List<ExternalEvent>();
         public SettingsWindow(CustomUIApplication application)
         {
             InitializeWindowProperty();
@@ -143,6 +143,7 @@ namespace MultiDraw
         {
             _externalEvents.Add(ExternalEvent.Create(new MultiDrawHandler()));
             _externalEvents.Add(ExternalEvent.Create(new SettingsHandler()));
+            _externalEvents.Add(ExternalEvent.Create(new ConduitSyncHandler()));
         }
 
        

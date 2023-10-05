@@ -91,6 +91,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
@@ -149,6 +150,7 @@
     <Compile Include="MVVM\Model\RollOffsetGP.cs" />
     <Compile Include="MVVM\Model\VerticalOffsetGP.cs" />
     <Compile Include="MVVM\ViewModel\ViewModel.cs" />
+    <Compile Include="MVVM\View\Setting\Helper\Util.cs" />
     <Compile Include="MVVM\View\Setting\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -209,6 +211,7 @@
     <Compile Include="RevitAPI\APICommon\VerticalOffset.cs" />
     <Compile Include="RevitAPI\APIHandler\MultiDrawHandler.cs" />
     <Compile Include="RevitAPI\APIHandler\MultiDrawProfileSettingsParam.cs" />
+    <Compile Include="RevitAPI\APIHandler\ConduitSyncHandler.cs" />
     <Compile Include="RevitAPI\APIHandler\SettingsHandler.cs" />
   </ItemGroup>
   <ItemGroup>

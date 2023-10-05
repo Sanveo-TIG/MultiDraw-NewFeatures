@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Ridhan Backup\Sorce code\SANVEO TOOLS\MultiDraw-NewFeatures\MultiDraw\obj\Debug\
+C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\obj\Debug\
 MultiDraw
 none
 false
@@ -12,8 +12,8 @@ DEBUG;TRACE
 
 13-1023428506
 3-1929039430
-50379172040
-137-1555337708
+52-478631186
+1381595871845
 MVVM\View\Setting\SettingsWindow.xaml;MVVM\View\MultiDraw\ParentUserControl.xaml;MVVM\View\MultiDraw\MainWindow.xaml;MVVM\View\Setting\UserControl\ProfileColorSettingUserControl.xaml;MVVM\View\Setting\SettingsUserControl.xaml;MVVM\View\MultiDraw\UserControl\SyncDataUserControl.xaml;MVVM\View\MultiDraw\UserControl\HOffsetUserControl.xaml;MVVM\View\MultiDraw\UserControl\KickUserControl.xaml;MVVM\View\MultiDraw\UserControl\NinetyKickUserControl.xaml;MVVM\View\MultiDraw\UserControl\NinetyStubUserControl.xaml;MVVM\View\MultiDraw\UserControl\RollingUserControl.xaml;MVVM\View\MultiDraw\UserControl\StraightOrBendUserControl.xaml;MVVM\View\MultiDraw\UserControl\VOffsetUserControl.xaml;
 
 False
