@@ -31,10 +31,10 @@ namespace MultiDraw
             if (num == 0)
             {
                 bool isTrue = Mainfunction(uiapp);
-                if (!isTrue)
+               /* if (!isTrue)
                 {
                     num++;
-                }
+                }*/
 
             }
             else
