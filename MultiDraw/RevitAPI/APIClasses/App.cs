@@ -169,13 +169,33 @@ namespace MultiDraw
             //panel.Title = tab.Title;
 
             ribbonPanel.AddSlideOut();
-            PushButtonData b1 = new PushButtonData(
-             "MyButton", "My Button",
-               dllLocation,
-             "MultiDraw.CommandSettings");
-            PushButton pushButton = ribbonPanel.AddItem(b1) as PushButton;
-            pushButton.LargeImage = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/32x32.png"));
-            MultiDrawButton = pushButton;
+            /*  PushButtonData b1 = new PushButtonData(
+               "MyButton", "My Button",
+                 dllLocation,
+               "MultiDraw.CommandSettings");
+              PushButton pushButton = ribbonPanel.AddItem(b1) as PushButton;
+              pushButton.LargeImage = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/32x32.png"));
+              MultiDrawButton = pushButton;*/
+            PushButtonData multidrawsupportbuttondata = new PushButtonData("MultidrawSupportBtn", "MultiDrawSetting", dllLocation, "MultiDraw.CommandSettings")
+            {
+                ToolTip = "MultiDrawSetting Helps to do Align functions for conduits"
+            };
+            BitmapImage multidrawsupportpb1Image = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/32x32.png"));
+            multidrawsupportbuttondata.LargeImage = multidrawsupportpb1Image;
+
+            BitmapImage multidrawsupportpb1Image2 = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/16x16.png"));
+            multidrawsupportbuttondata.Image = multidrawsupportpb1Image2;
+
+            MultiDrawButton = ribbonPanel.AddItem(multidrawsupportbuttondata) as PushButton;
+            string pathMultidrawSetting;
+            path = System.IO.Path.GetDirectoryName(
+               System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            ContextualHelp contextHelpMultidrawSetting = new ContextualHelp(
+                ContextualHelpType.ChmFile,
+                path + "\\MultiDraw.html"); // hard coding for simplicity. 
+
+            MultiDrawButton.SetContextualHelp(contextHelpMultidrawSetting);
             //adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
             //foreach (adWin.RibbonTab tab in ribbon.Tabs)
             //{

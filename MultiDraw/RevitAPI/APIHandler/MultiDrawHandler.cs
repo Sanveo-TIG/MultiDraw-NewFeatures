@@ -98,24 +98,26 @@ namespace MultiDraw
 
                     Autodesk.Revit.DB.Binding binding2 = uiapp.Application.Create.NewInstanceBinding(catSet2);
                     Autodesk.Revit.DB.Binding binding_ALL2 = uiapp.Application.Create.NewInstanceBinding(catSet2);
-
-                    foreach (DefinitionGroup dG in defFile.Groups.Where(r => r.Name == "TIG-MultiDraw Parameters"))
+                    if (defFile!= null)
                     {
-                        foreach (Definition def in dG.Definitions)
+                        foreach (DefinitionGroup dG in defFile.Groups.Where(r => r.Name == "TIG-MultiDraw Parameters"))
                         {
-                            if (def.Name != "TIG-Bend Angle")
+                            foreach (Definition def in dG.Definitions)
                             {
-                                BindingMap map = (new UIApplication(uiapp.Application)).ActiveUIDocument.Document.ParameterBindings;
-                                map.Insert(def, binding, def.ParameterGroup);
+                                if (def.Name != "TIG-Bend Angle")
+                                {
+                                    BindingMap map = (new UIApplication(uiapp.Application)).ActiveUIDocument.Document.ParameterBindings;
+                                    map.Insert(def, binding, def.ParameterGroup);
+
+                                }
+                                else
+                                {
+                                    BindingMap map = (new UIApplication(uiapp.Application)).ActiveUIDocument.Document.ParameterBindings;
+                                    map.Insert(def, binding_ALL, def.ParameterGroup);
+
+                                }
 
                             }
-                            else
-                            {
-                                BindingMap map = (new UIApplication(uiapp.Application)).ActiveUIDocument.Document.ParameterBindings;
-                                map.Insert(def, binding_ALL, def.ParameterGroup);
-
-                            }
-
                         }
                     }
                     trans2.Commit();
@@ -455,7 +457,7 @@ namespace MultiDraw
                                     viewdrafting = Viewscollections.Where(x => x.Name.Equals("Multi Draw Bends Legends")).FirstOrDefault() as ViewDrafting;
                                     if (viewdrafting == null)
                                     {
-                                       
+
                                         using (SubTransaction tranlen = new SubTransaction(doc))
                                         {
                                             tranlen.Start();
@@ -477,7 +479,7 @@ namespace MultiDraw
                                             //FilledRegionType myPatterns = (FilledRegionType)new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType))./*Where(x => x.LookupParameter("Type").AsValueString().Equals("Solid Black"))*/FirstElement();
 
                                             FilledRegionType verticaloffsetpattern = (FilledRegionType)myPatterns.Duplicate("MultiDraw Verftical Offset Bend");
-                                             verticaloffsetpattern.ForegroundPatternColor = data != null && data.vOffsetColor != null ? data.vOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
+                                            verticaloffsetpattern.ForegroundPatternColor = data != null && data.vOffsetColor != null ? data.vOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
                                             verticaloffsetpattern.BackgroundPatternColor = data != null && data.vOffsetColor != null ? data.vOffsetColor : new Autodesk.Revit.DB.Color(255, 0, 0);
 
                                             List<FilledRegionType> filledtypes = new List<FilledRegionType>();
@@ -1282,9 +1284,9 @@ namespace MultiDraw
                         {
                             ParentUserControl.Instance._window.Close();
                             break;
-                           
+
                         }
-                      
+
                     }
 
 

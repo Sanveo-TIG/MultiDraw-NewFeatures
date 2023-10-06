@@ -656,3 +656,8 @@ C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.cs
 C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.csproj.CopyComplete
 C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.dll
 C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.pdb
+C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.dll
+C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.pdb
+C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.dll.config
+C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\DocumentFormat.OpenXml.xml
