@@ -3956,13 +3956,13 @@ namespace MultiDraw
                 ParentUserControl.Instance.masterContainer.Children.Clear();
                 UserControl userControl = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
                 ParentUserControl.Instance.masterContainer.Children.Add(userControl);
-                Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "90° Kick", Util.ProductVersion);
+                //Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "90° Kick", Util.ProductVersion);
 
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Kick", Util.ProductVersion);
+                //Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Kick", Util.ProductVersion);
             }
             return true;
         }

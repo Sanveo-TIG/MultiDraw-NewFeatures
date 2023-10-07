@@ -661,3 +661,4 @@ C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\DocumentForm
 C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.pdb
 C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.dll.config
 C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Source Code\New folder\MultiDraw-NewFeatures\MultiDraw\bin\Debug\System.Net.Http.Formatting.xml
