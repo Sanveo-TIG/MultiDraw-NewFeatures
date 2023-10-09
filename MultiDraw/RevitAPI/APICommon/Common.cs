@@ -2669,8 +2669,8 @@ namespace MultiDraw
                                 bendtype2.Set(profileSetting.kOffsetValue);
                                 bendangle2.Set(NinetyAngle);
                                 Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                                //bottomTag.Add(fittings1);
+                                //toptag.Add(fittings2);
                             }
                         }
                         else
@@ -2730,8 +2730,8 @@ namespace MultiDraw
                                 bendtype2.Set(profileSetting.kOffsetValue);
                                 bendangle2.Set(NinetyAngle);
                                 Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                                //bottomTag.Add(fittings1);
+                                //toptag.Add(fittings2);
                             }
                         }
                       //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -2794,8 +2794,8 @@ namespace MultiDraw
                                     bendangle2.Set(NinetyAngle);
 
                                     Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                    //bottomTag.Add(fittings1);
+                                    //toptag.Add(fittings2);
                                 }
                             }
                             else
