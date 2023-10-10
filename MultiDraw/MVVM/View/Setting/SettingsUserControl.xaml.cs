@@ -35,8 +35,8 @@ namespace MultiDraw
         readonly List<string> _removingList = new List<string>();
         readonly string _offsetVariable = string.Empty;
         readonly List<MultiSelect> multiSelectList = new List<MultiSelect>();
-        ExternalEvent eventsync= null;
-        public SettingsUserControl(Document doc, UIApplication uiApp, Window window,  ExternalEvent saveEvent)
+        ExternalEvent eventsync = null;
+        public SettingsUserControl(Document doc, UIApplication uiApp, Window window, ExternalEvent saveEvent)
         {
             try
             {
@@ -126,8 +126,7 @@ namespace MultiDraw
                             {
                                 Name = parameter.Definition.Name,
                                 IsChecked = false,
-                                Id = parameter.Id,
-                                Item = parameter
+                                Id = parameter.Id
                             };
                             if (globalParam != null && globalParam.Any(r => r.Name == multi.Name))
                             {
@@ -206,6 +205,23 @@ namespace MultiDraw
                     txtSupportSpacing.Text = settings.SupportSpacingAsString;
                 }
             }
+            string json = Utility.GetGlobalParametersManager(_uiApp, "ParameterSettings");
+            if (json != null)
+            {
+                List<MultiSelect> globalParam = JsonConvert.DeserializeObject<List<MultiSelect>>(json);
+                foreach (MultiSelect param in globalParam)
+                {
+                    List<MultiSelect> multiSelect = new List<MultiSelect>();
+                    MultiSelect multiSelects = new MultiSelect();
+                    if (param != null)
+                    {
+                        multiSelects = multiSelectList.FirstOrDefault(r => r.Name.Contains(param.Name));
+                        multiSelects.IsChecked = true;
+                        multiSelect.Add(multiSelects);
+                        ucMultiSelect.SelectedItems = multiSelect;
+                    }
+                }
+            }
         }
         private void OnChangeSupportNeeded(object sender, RoutedEventArgs e)
         {
@@ -240,12 +256,9 @@ namespace MultiDraw
 
         private void UcMultiSelect_DropDownClosed(object sender)
         {
-
-        }
-
-        private void BtnCheck_Click(object sender)
-        {
             eventsync.Raise();
         }
+
+
     }
 }

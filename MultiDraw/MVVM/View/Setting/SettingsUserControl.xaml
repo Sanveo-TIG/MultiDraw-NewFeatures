@@ -127,22 +127,12 @@
         <Grid x:Name="GridAutoSync" Grid.Row="1" >
             <Grid >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="85"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" >
+                <StackPanel Grid.Row="0" Margin="0,30,0,0" >
                     <TIG:MultiSelectDropDown x:Name="ucMultiSelect" 
                                        DropDownClosed="UcMultiSelect_DropDownClosed"  ></TIG:MultiSelectDropDown>
                 </StackPanel>
-                <StackPanel Grid.Row="1">
-                    <TIG:ButtonControl Label="Sync"
-                                  Width="70"
-                                  Icon="Tick"
-                                  x:Name="btnsync"
-                                   Margin="0,10,10,0"
-                                  BtnClick="BtnCheck_Click"></TIG:ButtonControl>
-                </StackPanel>
-
             </Grid>
         </Grid>
     </Grid>

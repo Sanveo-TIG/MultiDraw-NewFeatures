@@ -125,7 +125,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="TIGUtility, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Jira Tickets\Sheetmanager Clone Sep 27\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
+      <HintPath>..\..\..\Jira Tickets\QCPak Clone Oct 10\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
