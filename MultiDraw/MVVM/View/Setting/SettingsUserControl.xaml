@@ -124,7 +124,7 @@
         </Grid>
         <Grid x:Name="containerProfileColorSettings" Grid.Row="1" >
         </Grid>
-        <Grid x:Name="GridAutoSync" Grid.Row="1" >
+        <Grid x:Name="GridAutoSync" Grid.Row="1" HorizontalAlignment="Left">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"></RowDefinition>
