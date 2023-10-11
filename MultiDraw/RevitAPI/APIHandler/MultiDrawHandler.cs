@@ -27,16 +27,13 @@ namespace MultiDraw
         public ProfileColorSettingsData ProfileColorSettingsData = new ProfileColorSettingsData();
         public void Execute(UIApplication uiapp)
         {
-
             if (num == 0)
             {
-                
                 bool isTrue = Mainfunction(uiapp);
                /* if (!isTrue)
                 {
                     num++;
                 }*/
-
             }
             else
             {
@@ -1283,9 +1280,8 @@ namespace MultiDraw
                         }
                         else
                         {
-                            ParentUserControl.Instance._window.Close();
+                            //ParentUserControl.Instance._window.Close();
                             break;
-
                         }
 
                     }
