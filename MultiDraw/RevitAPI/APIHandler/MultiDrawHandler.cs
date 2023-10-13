@@ -763,7 +763,7 @@ namespace MultiDraw
                                     Autodesk.Revit.DB.Color RoffsetColor = new Autodesk.Revit.DB.Color(255, 153, 255);
                                     Autodesk.Revit.DB.Color Kick90offsetColor = new Autodesk.Revit.DB.Color(204, 229, 255);
                                     Autodesk.Revit.DB.Color Strightor90Color = new Autodesk.Revit.DB.Color(255, 153, 204);
-                                    Autodesk.Revit.DB.Color NinetykickdrawColor = new Autodesk.Revit.DB.Color(204, 204, 255);
+                                    Autodesk.Revit.DB.Color NinetykickdrawColor = new Autodesk.Revit.DB.Color(255, 0, 0);
                                     Autodesk.Revit.DB.Color ninetystubColor = new Autodesk.Revit.DB.Color(153, 76, 0);
                                     if (data == null)
                                     {

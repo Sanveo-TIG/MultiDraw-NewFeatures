@@ -70,7 +70,7 @@ namespace MultiDraw
                     ProfileColorSettingsData.rOffsetColor = new Autodesk.Revit.DB.Color(255, 153, 255);
                     ProfileColorSettingsData.kOffsetColor = new Autodesk.Revit.DB.Color(204, 229, 255);
                     ProfileColorSettingsData.straightColor = new Autodesk.Revit.DB.Color(255, 153, 204);
-                    ProfileColorSettingsData.nkOffsetColor = new Autodesk.Revit.DB.Color(204, 204, 255);
+                    ProfileColorSettingsData.nkOffsetColor = new Autodesk.Revit.DB.Color(255,0,0);
                     ProfileColorSettingsData.nsOffsetColor = new Autodesk.Revit.DB.Color(153, 76, 0);
                 }
                 else

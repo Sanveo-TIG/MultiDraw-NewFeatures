@@ -105,6 +105,18 @@ namespace MultiDraw
                     try
                     {
                         globalParam = JsonConvert.DeserializeObject<List<SYNCDataGlobalParam>>(json);
+                        /*foreach (SYNCDataGlobalParam param in globalParam)
+                        {
+                            List<MultiSelect> multiSelect = new List<MultiSelect>();
+                            MultiSelect multiSelects = new MultiSelect();
+                            if (param != null)
+                            {
+                                multiSelects = multiSelectList.FirstOrDefault(r => r.Name.Contains(param.Name));
+                                multiSelects.IsChecked = true;
+                                multiSelect.Add(multiSelects);
+                                ucMultiSelect.SelectedItems = multiSelect;
+                            }
+                        }*/
                     }
                     catch (Exception ex)
                     {
@@ -113,7 +125,7 @@ namespace MultiDraw
                         //externalEvents[1].Raise();
                     }
                 }
-                FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
+             //   FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
                 List<Element> Conduits = new FilteredElementCollector(_doc).OfClass(typeof(Conduit)).ToList();
                 if (Conduits.Any())
                 {
@@ -205,23 +217,23 @@ namespace MultiDraw
                     txtSupportSpacing.Text = settings.SupportSpacingAsString;
                 }
             }
-            string json = Utility.GetGlobalParametersManager(_uiApp, "ParameterSettings");
-            if (json != null)
-            {
-                List<MultiSelect> globalParam = JsonConvert.DeserializeObject<List<MultiSelect>>(json);
-                foreach (MultiSelect param in globalParam)
-                {
-                    List<MultiSelect> multiSelect = new List<MultiSelect>();
-                    MultiSelect multiSelects = new MultiSelect();
-                    if (param != null)
-                    {
-                        multiSelects = multiSelectList.FirstOrDefault(r => r.Name.Contains(param.Name));
-                        multiSelects.IsChecked = true;
-                        multiSelect.Add(multiSelects);
-                        ucMultiSelect.SelectedItems = multiSelect;
-                    }
-                }
-            }
+            /*   string json = Utility.GetGlobalParametersManager(_uiApp, "SyncDataParameters");
+               if (json != null)
+               {
+                   List<SYNCDataGlobalParam> syncdata = JsonConvert.DeserializeObject<List<SYNCDataGlobalParam>>(json);
+                   foreach (SYNCDataGlobalParam param in syncdata)
+                   {
+                       List<MultiSelect> multiSelect = new List<MultiSelect>();
+                       MultiSelect multiSelects = new MultiSelect();
+                       if (param != null)
+                       {
+                           multiSelects = multiSelectList.FirstOrDefault(r => r.Name.Contains(param.Name));
+                           multiSelects.IsChecked = true;
+                           multiSelect.Add(multiSelects);
+                           ucMultiSelect.SelectedItems = multiSelect;
+                       }
+                   }
+               }*/
         }
         private void OnChangeSupportNeeded(object sender, RoutedEventArgs e)
         {
