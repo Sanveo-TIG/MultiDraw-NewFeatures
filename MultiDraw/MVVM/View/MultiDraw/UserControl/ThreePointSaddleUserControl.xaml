@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MultiDraw.HOffsetUserControl"
+﻿<UserControl x:Class="MultiDraw.ThreePointSaddleUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -22,22 +22,27 @@
     </UserControl.Resources>
     <Grid MouseDown="Grid_MouseDown">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <TextBlock x:Name="HorizontalOffset"
-                       Text="Horizontal Offset"  Margin="0,5,0,0" FontSize="16"></TextBlock>
+
+        <StackPanel Grid.Row="0" >
+            <TextBlock x:Name="voffset"
+                       Text="Three Point Saddle"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
+
         <StackPanel Grid.Row="1" >
-            <TIG:SingleSelectDropDownControl   x:Name="ddlAngle" HorizontalAlignment="Left" DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
+            <TIG:SingleSelectDropDownControl 
+                                     x:Name="ddlAngle" HorizontalAlignment="Left"
+                                     DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
         </StackPanel>
         <StackPanel Grid.Row="2">
             <TIG:TextBoxControl x:Name="txtOffsetFeet" 
-                                    Label="Offset"  
-                                    UnitsLabel="Feet and inches" 
-                                    IsUnit="True"  LostFocus="TextBox_LostFocus"                            
+                                    Label="Offset" 
+                                    UnitsLabel="Feet and inches"
+                                    IsUnit="True"
+                                    LostFocus="TextBox_LostFocus"
                                     ></TIG:TextBoxControl>
         </StackPanel>
        

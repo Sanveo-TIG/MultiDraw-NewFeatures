@@ -34,7 +34,7 @@
 
         <StackPanel Grid.Row="1" >
             <TIG:SingleSelectDropDownControl 
-                                     x:Name="ddlAngle"
+                                     x:Name="ddlAngle" HorizontalAlignment="Left"
                                      DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
         </StackPanel>
         <StackPanel Grid.Row="2">

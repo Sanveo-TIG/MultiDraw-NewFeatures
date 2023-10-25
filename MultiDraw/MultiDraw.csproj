@@ -149,6 +149,12 @@
     <Compile Include="MVVM\Model\RollOffsetGP.cs" />
     <Compile Include="MVVM\Model\VerticalOffsetGP.cs" />
     <Compile Include="MVVM\ViewModel\ViewModel.cs" />
+    <Compile Include="MVVM\View\MultiDraw\UserControl\ThreePointSaddleUserControl.xaml.cs">
+      <DependentUpon>ThreePointSaddleUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\MultiDraw\UserControl\FourPointSaddleUserControl.xaml.cs">
+      <DependentUpon>FourPointSaddleUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\Setting\Helper\Util.cs" />
     <Compile Include="MVVM\View\Setting\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -214,6 +220,14 @@
     <Compile Include="RevitAPI\APIHandler\SettingsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="MVVM\View\MultiDraw\UserControl\ThreePointSaddleUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\MultiDraw\UserControl\FourPointSaddleUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MVVM\View\Setting\SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

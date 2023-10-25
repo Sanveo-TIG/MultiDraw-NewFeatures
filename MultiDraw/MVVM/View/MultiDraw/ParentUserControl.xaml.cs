@@ -122,11 +122,13 @@ namespace MultiDraw
                     userControl = new NinetyStubUserControl(_externalEvents[0], _application, _window);
                     break;
                 case 7:
+                    userControl = new ThreePointSaddleUserControl(_externalEvents[0], _application, _window);
                   //  userControl = new SyncDataUserControl(_application, _window);
                     break;
                 case 8:
-                    userControl = new SettingsUserControl(_doc, _application.UIApplication, _window, _externalEvents[1]);
-                    settingsControl = userControl as SettingsUserControl;
+                    //userControl = new SettingsUserControl(_doc, _application.UIApplication, _window, _externalEvents[1]);
+                    userControl = new FourPointSaddleUserControl(_externalEvents[0], _application, _window);
+                    //settingsControl = userControl as SettingsUserControl;
                     break;
                 default:
                     break;

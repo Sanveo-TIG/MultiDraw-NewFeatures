@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal">
             <ListBox  Background="White" BorderBrush="#ccc" BorderThickness="1" 
-                     x:Name="cmbProfileType" Style="{x:Null}" Width="242" Height="35"
+                     x:Name="cmbProfileType" Style="{x:Null}" Width="310" Height="35"
                      SelectionChanged="CmbProfileType_SelectionChanged">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type ListBoxItem}">
@@ -148,6 +148,18 @@
                            Cursor="Hand"
                                    Source="/MultiDraw;component/Images/icons/90's Stub Draw 120x120.png"></Image>
                 </ListBoxItem>
+                <ListBoxItem>
+                    <Image Height="25"
+                           ToolTip="Three Point Saddle"
+                           Cursor="Hand"
+                            Source="/MultiDraw;component/Images/icons/90's Stub Draw 120x120.png"></Image>
+                </ListBoxItem>
+                <ListBoxItem>
+                    <Image Height="25"
+                          ToolTip="Four Point Saddle"
+                         Cursor="Hand"
+                         Source="/MultiDraw;component/Images/icons/90's Stub Draw 120x120.png"></Image>
+                </ListBoxItem>
                 <ListBoxItem Visibility="Collapsed">
                     <Image Height="25"
                                    ToolTip="Sync Data"
@@ -160,7 +172,7 @@
 
                 </ListBoxItem>
             </ListBox>
-            <ToggleButton Margin="30,0,0,0" x:Name="btnPlay" Click="PlayButton_Click"
+            <ToggleButton Margin="43,0,0,0" x:Name="btnPlay" Click="PlayButton_Click"
   materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Pause}"
   Content="{materialDesign:PackIcon Kind=Play}"
   Style="{StaticResource MaterialDesignActionToggleButton}"

@@ -777,3 +777,7 @@ C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\
 C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.csproj.CopyComplete
 C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.dll
 C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.pdb
+C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\MultiDraw\UserControl\ThreePointSaddleUserControl.g.cs
+C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\MultiDraw\UserControl\ThreePointSaddleUserControl.baml
+C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\MultiDraw\UserControl\FourPointSaddleUserControl.g.cs
+C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MVVM\View\MultiDraw\UserControl\FourPointSaddleUserControl.baml

@@ -25,48 +25,52 @@ namespace MultiDraw
     /// <summary>
     /// UI Events
     /// </summary>
-    public partial class KickUserControl : UserControl
+    public partial class FourPointSaddleUserControl : UserControl
     {
-        public static KickUserControl Instance;
+        public static FourPointSaddleUserControl Instance;
         public System.Windows.Window _window = new System.Windows.Window();
         readonly Document _doc = null;
         readonly UIDocument _uidoc = null;
-        readonly List<string> _angleList = new List<string>() { "5.00", "11.25", "15.00", "22.50", "30.00", "45.00", "60.00"};
+        readonly List<string> _angleList = new List<string>() { "5.00", "11.25", "15.00", "22.50", "30.00", "45.00", "60.00" };
         readonly ExternalEvent _externalEvents = null;
         public UIApplication _uiApp = null;
-        public KickUserControl(ExternalEvent externalEvents, CustomUIApplication application, Window window)
+        public FourPointSaddleUserControl(ExternalEvent externalEvents, CustomUIApplication application, Window window)
         {
             _uidoc = application.UIApplication.ActiveUIDocument;
-            _uiApp = application.UIApplication;
             _doc = _uidoc.Document;
+            _uiApp = application.UIApplication;
             _externalEvents = externalEvents;
             InitializeComponent();
             Instance = this;
-            ddlAngle.Attributes = new MultiSelectAttributes()
-            {
-                Label = "Angle",
-                Width = 385
-            };
             try
             {
                 _window = window;
                 ParentUserControl.Instance.AlignConduits.IsEnabled = false;
-                ParentUserControl.Instance.Anglefromprimary.IsEnabled = true;               
+                ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
+                ParentUserControl.Instance.AlignConduits.IsChecked = false;
+                ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
+                ddlAngle.Attributes = new MultiSelectAttributes()
+                {
+                    Label = "Angle",
+                    Width=385
+                };
+
             }
             catch (Exception exception)
             {
+
                 System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
         private void SaveSettings()
         {
-            Kick90DrawGP globalParam = new Kick90DrawGP
+            VerticalOffsetGP globalParam = new VerticalOffsetGP
             {
-                AngleValue = ddlAngle == null ? "30.00" : ddlAngle.SelectedItem.Name,
                 OffsetValue = txtOffsetFeet.AsDouble == 0 ? "1.5\'" : txtOffsetFeet.AsString,
-                SelectionMode = rbNinetyNear.IsChecked == true ? "90° Near" : "90° Far"
+                AngleValue = ddlAngle.SelectedItem == null ? "30.00" : ddlAngle.SelectedItem.Name
             };
-            Properties.Settings.Default.Kick90Draw = JsonConvert.SerializeObject(globalParam);
+            Properties.Settings.Default.VerticalOffsetDraw = JsonConvert.SerializeObject(globalParam);
             Properties.Settings.Default.Save();
         }
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -84,11 +88,6 @@ namespace MultiDraw
             SaveSettings();
         }
 
-        private void SelectionMode_Changed(object sender, RoutedEventArgs e)
-        {
-            SaveSettings();
-        }
-
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             txtOffsetFeet.UIApplication = _uiApp;
@@ -97,21 +96,19 @@ namespace MultiDraw
                 angleList.Add(new MultiSelect() { Name = item });
             ddlAngle.ItemsSource = angleList;
             Grid_MouseDown(null, null);
-            string json = Properties.Settings.Default.Kick90Draw;
+            string json = Properties.Settings.Default.VerticalOffsetDraw;
             if (!string.IsNullOrEmpty(json))
             {
-                Kick90DrawGP globalParam = JsonConvert.DeserializeObject<Kick90DrawGP>(json);
+                VerticalOffsetGP globalParam = JsonConvert.DeserializeObject<VerticalOffsetGP>(json);
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
-                rbNinetyNear.IsChecked = globalParam.SelectionMode == "90° Near";
-                rbNinetyFar.IsChecked = string.IsNullOrEmpty(globalParam.SelectionMode) || globalParam.SelectionMode == "90° Far";
-                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];               
+                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
-                ddlAngle.SelectedItem = angleList[4];                
+                ddlAngle.SelectedItem = angleList[4];
             }
-          //  _externalEvents.Raise();
+            // _externalEvents.Raise();
         }
     }
 }

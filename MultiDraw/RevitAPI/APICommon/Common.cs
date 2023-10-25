@@ -125,7 +125,6 @@ namespace MultiDraw
                     {
                         doc.ActiveView.SetElementOverrides(element.Id, orGsty);
                     }
-
                     substrans2.Commit();
                 }
 

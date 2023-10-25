@@ -1130,6 +1130,75 @@ namespace MultiDraw
                                         ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
                                     }
                                 }
+
+                                else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 7)
+                                {
+                                    //if (ParentUserControl.Instance.Anglefromprimary.IsChecked == true)
+                                    //{
+                                    if (ParentUserControl.Instance.Anglefromprimary.IsChecked == false)
+                                    {
+                                        if (!APICommon.VOffsetDrawPointHandler(doc, uidoc, uiapp, ParentUserControl.Instance.Primaryelst, offsetVariable, RevitVersion, Pickpoint, ref secondaryElements))
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            ParentUserControl.Instance.Secondaryelst.Clear();
+                                            ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+                                            ParentUserControl.Instance.Primaryelst.Clear();
+                                            ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!APICommon.VOffsetDrawHandler(doc, uidoc, uiapp, ParentUserControl.Instance.Primaryelst, offsetVariable, RevitVersion, Pickpoint, ref secondaryElements))
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            ParentUserControl.Instance.Secondaryelst.Clear();
+                                            ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+                                            ParentUserControl.Instance.Primaryelst.Clear();
+                                            ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
+                                        }
+                                    }
+                                }
+                                else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 8)
+                                {
+                                    //if (ParentUserControl.Instance.Anglefromprimary.IsChecked == true)
+                                    //{
+                                    if (ParentUserControl.Instance.Anglefromprimary.IsChecked == false)
+                                    {
+                                        if (!APICommon.VOffsetDrawPointHandler(doc, uidoc, uiapp, ParentUserControl.Instance.Primaryelst, offsetVariable, RevitVersion, Pickpoint, ref secondaryElements))
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            ParentUserControl.Instance.Secondaryelst.Clear();
+                                            ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+                                            ParentUserControl.Instance.Primaryelst.Clear();
+                                            ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!APICommon.VOffsetDrawHandler(doc, uidoc, uiapp, ParentUserControl.Instance.Primaryelst, offsetVariable, RevitVersion, Pickpoint, ref secondaryElements))
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            ParentUserControl.Instance.Secondaryelst.Clear();
+                                            ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+                                            ParentUserControl.Instance.Primaryelst.Clear();
+                                            ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
+                                        }
+                                    }
+                                }
+
+
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 3)
                                 {
                                     if (ParentUserControl.Instance.Anglefromprimary.IsChecked == true)
@@ -1162,6 +1231,8 @@ namespace MultiDraw
                                     }
 
                                 }
+
+
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 4 && !APICommon.StrightorBend(doc, uidoc, uiapp, ParentUserControl.Instance.Primaryelst, offsetVariable, Pickpoint))
                                 {
                                     break;
