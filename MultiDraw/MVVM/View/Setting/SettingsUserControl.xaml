@@ -21,13 +21,14 @@
     </UserControl.Resources>
     <Grid  >
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"  Orientation="Horizontal"
-                    HorizontalAlignment="Center" >
-            <TIG:TabPanelControl x:Name="tagControl"
+                    HorizontalAlignment="Left" >
+            <TIG:TabPanelControl x:Name="tagControl" Visibility="Collapsed"
                                     SelectionChanged="TagControl_SelectionChanged"></TIG:TabPanelControl>
+            <TextBlock Text="Auto Sync" Foreground="#005D9A"  FontFamily="/TIGUtility;component/Resources/Font/#Poppins SemiBold" FontSize="14"></TextBlock>
 
         </StackPanel>
         <Grid x:Name="containerSupportSettings" Grid.Row="1" >
@@ -124,12 +125,12 @@
         </Grid>
         <Grid x:Name="containerProfileColorSettings" Grid.Row="1" >
         </Grid>
-        <Grid x:Name="GridAutoSync" Grid.Row="1" HorizontalAlignment="Left">
+        <Grid x:Name="GridAutoSync" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"></RowDefinition>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Margin="0,30,0,0" >
+                <StackPanel Grid.Row="0" Margin="0,20,0,0" >
                     <TIG:MultiSelectDropDown x:Name="ucMultiSelect" 
                                        DropDownClosed="UcMultiSelect_DropDownClosed"  ></TIG:MultiSelectDropDown>
                 </StackPanel>

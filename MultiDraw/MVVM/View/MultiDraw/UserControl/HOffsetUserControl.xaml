@@ -37,6 +37,8 @@
             <TIG:TextBoxControl x:Name="txtOffsetFeet" 
                                     Label="Offset"  
                                     UnitsLabel="Feet and inches" 
+                                 Width="310"
+                                HorizontalAlignment="Left"
                                     IsUnit="True"  LostFocus="TextBox_LostFocus"                            
                                     ></TIG:TextBoxControl>
         </StackPanel>

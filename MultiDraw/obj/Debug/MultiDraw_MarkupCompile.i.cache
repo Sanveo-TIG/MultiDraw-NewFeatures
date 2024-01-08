@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Source Code\MultiDraw New Features\MultiDraw-NewFeatures\MultiDraw\obj\Debug\
+C:\Users\Sabarishwari\Downloads\MultiDraw-NewFeatures 2\MultiDraw-NewFeatures\MultiDraw\obj\Debug\
 MultiDraw
 none
 false
@@ -12,9 +12,9 @@ DEBUG;TRACE
 
 152115064448
 3-1929039430
-55-770392043
-137-1355794865
+572023150967
+1371532509884
 MVVM\View\MultiDraw\UserControl\ThreePointSaddleUserControl.xaml;MVVM\View\MultiDraw\UserControl\FourPointSaddleUserControl.xaml;MVVM\View\Setting\SettingsWindow.xaml;MVVM\View\MultiDraw\ParentUserControl.xaml;MVVM\View\MultiDraw\MainWindow.xaml;MVVM\View\Setting\UserControl\ProfileColorSettingUserControl.xaml;MVVM\View\Setting\SettingsUserControl.xaml;MVVM\View\MultiDraw\UserControl\SyncDataUserControl.xaml;MVVM\View\MultiDraw\UserControl\HOffsetUserControl.xaml;MVVM\View\MultiDraw\UserControl\KickUserControl.xaml;MVVM\View\MultiDraw\UserControl\NinetyKickUserControl.xaml;MVVM\View\MultiDraw\UserControl\NinetyStubUserControl.xaml;MVVM\View\MultiDraw\UserControl\RollingUserControl.xaml;MVVM\View\MultiDraw\UserControl\StraightOrBendUserControl.xaml;MVVM\View\MultiDraw\UserControl\VOffsetUserControl.xaml;
 
-False
+True
 

@@ -125,7 +125,7 @@ namespace MultiDraw
                         //externalEvents[1].Raise();
                     }
                 }
-             //   FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
+                //   FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
                 List<Element> Conduits = new FilteredElementCollector(_doc).OfClass(typeof(Conduit)).ToList();
                 if (Conduits.Any())
                 {
@@ -168,14 +168,14 @@ namespace MultiDraw
         {
             List<CustomTab> customTabsList = new List<CustomTab>();
             CustomTab b = new CustomTab();
-            b.Id = 1;
-            b.Name = "Support Settings";
+            /*  b.Id = 1;
+              b.Name = "Support Settings";
 
-            customTabsList.Add(b);
-            b = new CustomTab();
-            b.Id = 2;
-            b.Name = "Profile Color Settings";
-            customTabsList.Add(b);
+              customTabsList.Add(b);
+              b = new CustomTab();
+              b.Id = 2;
+              b.Name = "Profile Color Settings";
+              customTabsList.Add(b);*/
 
             b = new CustomTab();
             b.Id = 3;
@@ -246,19 +246,19 @@ namespace MultiDraw
 
         private void TagControl_SelectionChanged(object sender)
         {
+            /* if (tagControl.SelectedIndex == 0)
+             {
+                 containerSupportSettings.Visibility = System.Windows.Visibility.Visible;
+                 containerProfileColorSettings.Visibility = System.Windows.Visibility.Collapsed;
+                 GridAutoSync.Visibility = System.Windows.Visibility.Collapsed;
+             }
+             else if (tagControl.SelectedIndex == 1)
+             {
+                 containerProfileColorSettings.Visibility = System.Windows.Visibility.Visible;
+                 containerSupportSettings.Visibility = System.Windows.Visibility.Collapsed;
+                 GridAutoSync.Visibility = System.Windows.Visibility.Collapsed;
+             }*/
             if (tagControl.SelectedIndex == 0)
-            {
-                containerSupportSettings.Visibility = System.Windows.Visibility.Visible;
-                containerProfileColorSettings.Visibility = System.Windows.Visibility.Collapsed;
-                GridAutoSync.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else if (tagControl.SelectedIndex == 1)
-            {
-                containerProfileColorSettings.Visibility = System.Windows.Visibility.Visible;
-                containerSupportSettings.Visibility = System.Windows.Visibility.Collapsed;
-                GridAutoSync.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
             {
                 GridAutoSync.Visibility = System.Windows.Visibility.Visible;
                 containerSupportSettings.Visibility = System.Windows.Visibility.Collapsed;

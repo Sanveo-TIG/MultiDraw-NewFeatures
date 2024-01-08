@@ -25,6 +25,7 @@
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
             <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="85"></RowDefinition>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" >
@@ -42,9 +43,21 @@
                                     Label="Offset" 
                                     UnitsLabel="Feet and inches"
                                     IsUnit="True"
+                                   Width="310"
+                                  HorizontalAlignment="Left"
                                     LostFocus="TextBox_LostFocus"
                                     ></TIG:TextBoxControl>
         </StackPanel>
-       
+        <StackPanel Grid.Row="3">
+            <TIG:TextBoxControl x:Name="txtBaseOffsetFeet" 
+                             Label="Base offset" 
+                             UnitsLabel="Feet and inches"
+                             IsUnit="True"
+                                   Width="310"
+                                  HorizontalAlignment="Left"
+                             LostFocus="TextBox_LostFocus"
+                             ></TIG:TextBoxControl>
+        </StackPanel>
+
     </Grid>
 </UserControl>

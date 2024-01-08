@@ -17,6 +17,7 @@ using TIGUtility;
 using System.Net;
 using System.Collections.ObjectModel;
 using Color = Autodesk.Revit.DB.Color;
+using System.Security.Cryptography;
 
 namespace MultiDraw
 {
@@ -101,6 +102,14 @@ namespace MultiDraw
             Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(50, 205, 50));
             doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
         }
+        public static void PrimryConduitcoloroverride(ElementId eid, Document doc)
+        {
+            var patternCollector = new FilteredElementCollector(doc);
+            patternCollector.OfClass(typeof(FillPatternElement));
+            FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
+            Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(1, 50, 32));
+            doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
+        }
         public static bool HOffsetDrawHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
            /* string jsonParam = Utility.GetGlobalParametersManager(uiapp, "SyncDataParameters");
@@ -169,9 +178,9 @@ namespace MultiDraw
                         Parameter bendangle = secondElement.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = thirdConduit.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.hOffsetValue);
+                        bendtype.Set("H Offset");
                         bendangle.Set(angle);
-                        bendtype2.Set(profileSetting.hOffsetValue);
+                        bendtype2.Set("H Offset");
                         bendangle2.Set(angle);
                        // ApplyParameters(doc, thirdConduit, elements);
                     }
@@ -224,17 +233,25 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.hOffsetValue);
+                        bendtype.Set("H Offset");
                         bendangle.Set(angle);
-                        bendtype2.Set(profileSetting.hOffsetValue);
+                        bendtype2.Set("H Offset");
                         bendangle2.Set(angle);
-                        Conduitcoloroverride(secondaryElements[i].Id, doc);
+                        if (i == 0)
+                        {
+                            PrimryConduitcoloroverride(secondaryElements[i].Id, doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(secondaryElements[i].Id, doc);
+                        }
+                       
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
                     // BOTTOMAddTags(doc, bOTTOMForAddtags);
                     //TOPAddTags(doc, TOPForAddtags);
-                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
+                   // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
                     tx.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -404,9 +421,9 @@ namespace MultiDraw
                         Parameter bendangle = secondElement.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = thirdConduit.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.hOffsetValue);
+                        bendtype.Set("H Offset");
                         bendangle.Set(angle);
-                        bendtype2.Set(profileSetting.hOffsetValue);
+                        bendtype2.Set("H Offset");
                         bendangle2.Set(angle);
                     }
                     //Rotate Elements at Once
@@ -475,11 +492,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.hOffsetValue);
+                                bendtype.Set("H Offset");
                                 bendangle.Set(angle);
-                                bendtype2.Set(profileSetting.hOffsetValue);
+                                bendtype2.Set("H Offset");
                                 bendangle2.Set(angle);
-                                Conduitcoloroverride(secondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(secondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(secondaryElements[i].Id, doc);
+                                }
+                               // Conduitcoloroverride(secondaryElements[i].Id, doc);
                                 bOTTOMForAddtags.Add(fittings1);
                                 TOPForAddtags.Add(fittings2);
                             }
@@ -642,7 +667,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     PointRollUp(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                  //   Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
                 else
@@ -772,9 +797,9 @@ namespace MultiDraw
                         Autodesk.Revit.DB.Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                         Autodesk.Revit.DB.Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                         Autodesk.Revit.DB.Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
 
                     }
@@ -811,18 +836,26 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
+                        if (j == 0)
+                        {
+                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
 
-                        Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
                     // BOTTOMAddTags(_doc, bOTTOMForAddtags);
                     // BOTTOMAddTags(_doc, TOPForAddtags);
-                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     subTransaction.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -890,9 +923,9 @@ namespace MultiDraw
                         Autodesk.Revit.DB.Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                         Autodesk.Revit.DB.Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                         Autodesk.Revit.DB.Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
                     }
 
@@ -941,11 +974,19 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        if (j == 0)
+                        {
+                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+                       // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
 
@@ -953,7 +994,7 @@ namespace MultiDraw
                     // BOTTOMAddTags(_doc, bOTTOMForAddtags);
                     // TOPAddTags(_doc, TOPForAddtags);
 
-                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     trans1.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -1080,9 +1121,9 @@ namespace MultiDraw
                         Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
 
                     }
@@ -1119,18 +1160,26 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
+                        if (j == 0)
+                        {
+                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
 
-                        Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
                     // BOTTOMAddTags(_doc, bOTTOMForAddtags);
                     // TOPAddTags(_doc, TOPForAddtags);
-                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                  //  Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     subTransaction.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -1198,9 +1247,9 @@ namespace MultiDraw
                         Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
                     }
 
@@ -1250,17 +1299,25 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.vOffsetValue);
+                        bendtype.Set("V Offset");
                         bendangle.Set(l_angle);
-                        bendtype2.Set(profileSetting.vOffsetValue);
+                        bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        if (j == 0)
+                        {
+                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+                       // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
                     //BOTTOMAddTags(_doc, bOTTOMForAddtags);
                     // TOPAddTags(_doc, TOPForAddtags);
-                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     trans1.Commit();
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -1279,6 +1336,638 @@ namespace MultiDraw
                         sunstransforrunsync.Commit();
                     }
                 }
+
+                ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
+                ParentUserControl.Instance.masterContainer.Children.Clear();
+                UserControl userControl = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
+                ParentUserControl.Instance.masterContainer.Children.Add(userControl);
+            }
+            catch (Exception exception)
+            {
+                if (exception.Message == "Pick operation aborted.")
+                {
+                    return false;
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
+
+                }
+            }
+
+            return true;
+        }
+
+        public static bool FourpointsaddleDrawPointHandler(Document _doc, UIDocument _uiDoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, int RevitVersion, XYZ Pickpoint, ref List<Element> SecondaryElements)
+        {
+            PrimaryElements = PrimaryElements.Distinct().ToList();
+            List<Element> forthelements = new List<Element>();
+            List<Element> thirdElements = new List<Element>();
+            List<Element> Fifthyelements = new List<Element>();
+            thirdElements.Clear();
+            forthelements.Clear();
+            Fifthyelements.Clear();
+
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
+            DateTime startDate = DateTime.UtcNow;
+            try
+            {
+
+                
+
+                if (FourPointSaddleUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(FourPointSaddleUserControl.Instance.ddlAngle.SelectedItem.Name))
+                {
+                    return false;
+                }
+                VerticalOffsetGP globalParam = new VerticalOffsetGP
+                {
+                    OffsetValue = FourPointSaddleUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : FourPointSaddleUserControl.Instance.txtOffsetFeet.AsString,
+                    AngleValue = FourPointSaddleUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : FourPointSaddleUserControl.Instance.ddlAngle.SelectedItem.Name
+                };
+
+                //XYZ Pickpoint = null;
+
+                //ConduitElevation identification
+                XYZ e1pt1 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                XYZ e1pt2 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+
+                double Z1 = Math.Round(e1pt1.Z, 2);
+                double Z2 = Math.Round(e1pt2.Z, 2);
+
+                using (SubTransaction substrans2 = new SubTransaction(_doc))
+                {
+                    substrans2.Start();
+                    OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                    foreach (Element element in PrimaryElements)
+                    {
+                        _doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                    }
+
+                    substrans2.Commit();
+                }
+
+                if (Z1 == Z2)
+                {
+                    SecondaryElements.Clear();
+                    double l_angle = Convert.ToDouble(FourPointSaddleUserControl.Instance.ddlAngle.SelectedItem.Name
+                    .ToString()) * (Math.PI / 180);
+                    double l_offSet = FourPointSaddleUserControl.Instance.txtOffsetFeet.AsDouble;
+
+
+                    //finding the direction
+                    using SubTransaction subTransaction = new SubTransaction(_doc);
+                    subTransaction.Start();
+                    using (SubTransaction transreset = new SubTransaction(_doc))
+                    {
+                        transreset.Start();
+                        OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                        foreach (Element element in PrimaryElements)
+                        {
+                            _doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                        }
+                        transreset.Commit();
+                    }
+                    Properties.Settings.Default.VerticalOffsetDraw = JsonConvert.SerializeObject(globalParam);
+                    Properties.Settings.Default.Save();
+                    startDate = DateTime.UtcNow;
+                    Threepointsaddle.GetSecondaryPointElements(_doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, offsetVariable, Pickpoint);
+                    ConnectorSet PrimaryConnectors = null;
+                    ConnectorSet SecondaryConnectors = null;
+                   
+                    for (int j = 0; j < PrimaryElements.Count; j++)
+                    {
+                        PrimaryConnectors = Utility.GetConnectors(PrimaryElements[j]);
+                        SecondaryConnectors = Utility.GetConnectors(SecondaryElements[j]);
+                        Utility.GetClosestConnectors(PrimaryConnectors, SecondaryConnectors, out Connector COne, out Connector CTwo);
+                        XYZ newenpt = new XYZ(CTwo.Origin.X, CTwo.Origin.Y, COne.Origin.Z);
+                        Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[j], COne.Origin, newenpt);
+                        Element e = _doc.GetElement(newCon.Id);
+                        thirdElements.Add(e);
+                        Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
+                        Utility.RetainParameters(PrimaryElements[j], e, uiApp);
+
+                        Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
+
+                        bendtype.Set("Four Point Saddle");
+                        bendangle.Set(l_angle);
+                        bendtype2.Set("Four Point Saddle");
+                        bendangle2.Set(l_angle);
+
+                    }
+                    //Rotate Elements at Once
+                    Element ElementOne = PrimaryElements[0];
+                    Element ElementTwo = SecondaryElements[0];
+                    Utility.GetClosestConnectors(ElementOne, ElementTwo, out Connector ConnectorOne, out Connector ConnectorTwo);
+                    LocationCurve newconcurve = thirdElements[0].Location as LocationCurve;
+                    Line ncl1 = newconcurve.Curve as Line;
+                    XYZ direction = ncl1.Direction;
+                    XYZ axisStart = ConnectorOne.Origin;
+                    XYZ axisEnd = axisStart.Add(XYZ.BasisZ.CrossProduct(direction));
+                    Line axisLine = Line.CreateBound(axisStart, axisEnd);
+
+                    if (l_offSet < 0)
+                    {
+                        l_angle = -l_angle;
+                    }
+                    ElementTransformUtils.RotateElements(_doc, thirdElements.Select(r => r.Id).ToList(), axisLine, -l_angle);
+
+                    //second set of conduits creation 
+                   
+                    for (int j = 0; j < SecondaryElements.Count(); j++)
+                    {
+                        double elevation = PrimaryElements[j].LookupParameter(offsetVariable).AsDouble();
+                        Conduit con = SecondaryElements[j] as Conduit;
+                        XYZ condir = ((con.Location as LocationCurve).Curve as Line).Direction;
+                        XYZ conpt1 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                        XYZ conpt2 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0) + condir.Multiply(ncl1.Length);
+                        Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[j], new XYZ(conpt1.X, conpt1.Y, elevation + l_offSet), new XYZ(conpt2.X, conpt2.Y, elevation + l_offSet));
+
+                        Element e = _doc.GetElement(newCon.Id);
+                        forthelements.Add(e);
+
+                        Parameter bendtype = newCon.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = newCon.LookupParameter("TIG-Bend Angle");
+                        bendtype.Set("Four Point Saddle");
+                        bendangle.Set(l_angle);
+
+
+                    }
+                    Element Elementthree = thirdElements[0];
+                    Utility.GetClosestConnectors(ElementTwo, Elementthree, out Connector ConnectorTwo4, out Connector ConnectorThree);
+                    LocationCurve newconcurve4 = forthelements[0].Location as LocationCurve;
+                    Line ncl4 = newconcurve4.Curve as Line;
+                    XYZ direction4 = ncl4.Direction;
+                    XYZ axisStart4 = ConnectorTwo4.Origin;
+                    XYZ axisEnd4 = axisStart4.Add(XYZ.BasisZ.CrossProduct(direction4));
+                    Line axisLine4 = Line.CreateBound(axisStart4, axisEnd4);
+
+                    ElementTransformUtils.RotateElements(_doc, forthelements.Select(r => r.Id).ToList(), axisLine4, l_angle);
+                    DeleteSupports(_doc, PrimaryElements);
+                    List<FamilyInstance> bOTTOMForAddtags = new List<FamilyInstance>();
+                    List<FamilyInstance> TOPForAddtags = new List<FamilyInstance>();
+
+                    // create the saddle distance 
+                    foreach (Element ele in forthelements)
+                    {
+                        LocationCurve curve = ele.Location as LocationCurve;
+                        XYZ pt1 = ((ele.Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                        XYZ pt2 = ((ele.Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                        XYZ newdirection = ((ele.Location as LocationCurve).Curve as Line).Direction;
+                        XYZ newpt1 = pt1 + newdirection.Multiply(5);
+                        XYZ newpt2 = pt2 + newdirection.Multiply(5);
+                        curve.Curve = Line.CreateBound(new XYZ(newpt1.X, newpt1.Y, pt1.Z), new XYZ(newpt2.X, newpt2.Y, pt2.Z));
+                    }
+
+                    for (int j = 0; j < forthelements.Count(); j++)
+                    {
+                        XYZ pt1 = ((forthelements[j].Location as LocationCurve).Curve).GetEndPoint(1);
+                        XYZ pt2 = ((SecondaryElements[j].Location as LocationCurve).Curve).GetEndPoint(0);
+                        XYZ pt3 = ((SecondaryElements[j].Location as LocationCurve).Curve).GetEndPoint(1);
+                        LocationCurve curve = (SecondaryElements[j].Location as LocationCurve);
+                        curve.Curve = Line.CreateBound(new XYZ(pt1.X, pt1.Y, pt3.Z), pt3);
+                    }
+                    //check the minimum basedistance 
+                    XYZ threept1 = ((thirdElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                    XYZ threept2 = ((thirdElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                    XYZ fourpt1 = ((forthelements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                    XYZ fourpt2 = ((forthelements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+
+                    double distanceone = Math.Sqrt(Math.Pow((threept1.X - threept2.X), 2) + Math.Pow((threept1.Y - threept2.Y), 2));
+                    double ditancetwo = Math.Sqrt(Math.Pow((fourpt1.X - fourpt2.X), 2) + Math.Pow((fourpt1.Y - fourpt2.Y), 2));
+
+                    double minimumbasedistance = distanceone + ditancetwo + 2;
+                    double autualbasetance = FourPointSaddleUserControl.Instance.txtBaseOffsetFeet.AsDouble;
+
+                    if (minimumbasedistance < autualbasetance)
+                    {
+                        //set the basedistance 
+                        for (int k = 0; k < forthelements.Count; k++)
+                        {
+                            Line prilineOne = (PrimaryElements[k].Location as LocationCurve).Curve as Line;
+                            XYZ pript1 = prilineOne.GetEndPoint(0);
+                            XYZ pript2 = prilineOne.GetEndPoint(1);
+
+                            Line seclineOne = (SecondaryElements[k].Location as LocationCurve).Curve as Line;
+                            XYZ secpt1 = seclineOne.GetEndPoint(0);
+
+                            double SubdistanceOne = Math.Sqrt(Math.Pow((pript1.X - secpt1.X), 2) + Math.Pow((pript1.Y - secpt1.Y), 2));
+                            double SubdistanceTwo = Math.Sqrt(Math.Pow((pript2.X - secpt1.X), 2) + Math.Pow((pript2.Y - secpt1.Y), 2));
+                            XYZ ConduitStartpt = null;
+                            XYZ conduitEndpoint = null;
+                            if (SubdistanceOne < SubdistanceTwo)
+                            {
+                                ConduitStartpt = pript1;
+                                conduitEndpoint = pript2;
+                            }
+                            else
+                            {
+                                ConduitStartpt = pript2;
+                                conduitEndpoint = pript1;
+                            }
+
+                            double basedistanceOne = Math.Sqrt(Math.Pow((ConduitStartpt.X - secpt1.X), 2) + Math.Pow((ConduitStartpt.Y - secpt1.Y), 2));
+                            double baseoffset = FourPointSaddleUserControl.Instance.txtBaseOffsetFeet.AsDouble;
+
+                            if (basedistanceOne > baseoffset)
+                            {
+                                double distancetomove = basedistanceOne - baseoffset;
+                                XYZ ditrectiontomove = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).Direction;
+
+                                //move the secondary conduits 
+                                XYZ secondpt1 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                                XYZ secondpt2 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                                XYZ secobdpt1move = secondpt1 - ditrectiontomove.Multiply(distancetomove);
+
+                                //move the fourth conduits 
+                                XYZ fourthpt1 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                                XYZ fourthpt2 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                                XYZ forthpt1move = fourthpt1 - ditrectiontomove.Multiply(distancetomove);
+                                XYZ forthpt2move = fourthpt2 - ditrectiontomove.Multiply(distancetomove);
+
+
+                                LocationCurve secondcurve = (SecondaryElements[k].Location as LocationCurve);
+                                LocationCurve forthcurve = (forthelements[k].Location as LocationCurve);
+
+                                secondcurve.Curve = Line.CreateBound(new XYZ(secobdpt1move.X, secobdpt1move.Y, secondpt1.Z), new XYZ(secondpt2.X, secondpt2.Y, secondpt2.Z));
+                                forthcurve.Curve = Line.CreateBound(new XYZ(forthpt1move.X, forthpt1move.Y, fourthpt1.Z), new XYZ(forthpt2move.X, forthpt2move.Y, fourthpt2.Z));
+
+                            }
+                            else
+                            {
+                                double distancetomove = baseoffset - basedistanceOne;
+                                XYZ ditrectiontomove = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).Direction;
+
+                                //move the secondary conduits 
+                                XYZ secondpt1 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                                XYZ secondpt2 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                                XYZ secobdpt1move = secondpt1 + ditrectiontomove.Multiply(distancetomove);
+
+                                //move the fourth conduits 
+                                XYZ fourthpt1 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                                XYZ fourthpt2 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                                XYZ forthpt1move = fourthpt1 + ditrectiontomove.Multiply(distancetomove);
+                                XYZ forthpt2move = fourthpt2 + ditrectiontomove.Multiply(distancetomove);
+
+
+                                LocationCurve secondcurve = (SecondaryElements[k].Location as LocationCurve);
+                                LocationCurve forthcurve = (forthelements[k].Location as LocationCurve);
+
+                                secondcurve.Curve = Line.CreateBound(new XYZ(secobdpt1move.X, secobdpt1move.Y, secondpt1.Z), new XYZ(secondpt2.X, secondpt2.Y, secondpt2.Z));
+                                forthcurve.Curve = Line.CreateBound(new XYZ(forthpt1move.X, forthpt1move.Y, fourthpt1.Z), new XYZ(forthpt2move.X, forthpt2move.Y, fourthpt2.Z));
+                            }
+
+
+                        }
+
+
+
+                        //fith set conduit creation
+                       
+                        for (int k = 0; k < forthelements.Count; k++)
+                        {
+                            XYZ startpt1 = ((thirdElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+                            XYZ startpt2 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                            Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[k], startpt1, startpt2);
+                            Element e = _doc.GetElement(newCon.Id);
+                            Fifthyelements.Add(e);
+
+                            Parameter bendtype = newCon.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle = newCon.LookupParameter("TIG-Bend Angle");
+                            bendtype.Set("Four Point Saddle");
+                            bendangle.Set(l_angle);
+                        }
+                        for (int j = 0; j < PrimaryElements.Count; j++)
+                        {
+                            Element firstElement = PrimaryElements[j];
+                            Element secondElement = SecondaryElements[j];
+                            Element thirdElement = thirdElements[j];
+                            Element fourthElement = forthelements[j];
+                            Element fifthElement = Fifthyelements[j];
+                            ConnectorSet thirdConnectors = Utility.GetConnectors(thirdElement);
+                            ConnectorSet SecondConnectors = Utility.GetConnectors(secondElement);
+                            ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
+                            ConnectorSet fourthConnectors = Utility.GetConnectors(fourthElement);
+                            ConnectorSet fifthConnectors = Utility.GetConnectors(fifthElement);
+                            FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, fifthConnectors, _doc, uiApp, PrimaryElements[j], true);
+                            FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, firstConnectors, _doc, uiApp, PrimaryElements[j], true);
+                            FamilyInstance fittings3 = Utility.CreateElbowFittings(SecondConnectors, fourthConnectors, _doc, uiApp, PrimaryElements[j], true);
+                            FamilyInstance fittings4 = Utility.CreateElbowFittings(fifthConnectors, fourthConnectors, _doc, uiApp, PrimaryElements[j], true);
+                            Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype3 = fittings3.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle3 = fittings3.LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype4 = fittings4.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle4 = fittings4.LookupParameter("TIG-Bend Angle");
+                            bendtype.Set("Four Point Saddle");
+                            bendangle.Set(l_angle);
+                            bendtype2.Set("Four Point Saddle");
+                            bendangle2.Set(l_angle);
+                            bendtype3.Set("Four Point Saddle");
+                            bendangle3.Set(l_angle);
+                            bendtype4.Set("Four Point Saddle");
+                            bendangle4.Set(l_angle);
+
+                            if (j == 0)
+                            {
+                                PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                            }
+                            else
+                            {
+                                Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                            }
+                           // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                            bOTTOMForAddtags.Add(fittings1);
+                            TOPForAddtags.Add(fittings2);
+                        }
+                        thirdElements.Clear();
+                        forthelements.Clear();
+                        Fifthyelements.Clear();
+                    }
+                    
+                    else
+                    {
+                        for (int i = 0; i < SecondaryElements.Count(); i++)
+                        {
+                           if (SecondaryElements.Count() != 0) _doc.Delete(SecondaryElements[i].Id);
+                            if (thirdElements.Count() != 0) _doc.Delete(thirdElements[i].Id);
+                            if (forthelements.Count() != 0) _doc.Delete(forthelements[i].Id);
+                            if (Fifthyelements.Count() != 0) _doc.Delete(Fifthyelements[i].Id);
+                        }
+                        ParentUserControl.Instance.Primaryelst.Clear();
+                        SecondaryElements.Clear();
+                        ParentUserControl.Instance.Primaryelst.AddRange(PrimaryElements);
+                        TaskDialog.Show("Warning","Kindly set the minimum Base Offset is " + minimumbasedistance.ToString());
+                    }
+
+                   
+                    // BOTTOMAddTags(_doc, bOTTOMForAddtags);
+                    // TOPAddTags(_doc, TOPForAddtags);
+                  //  Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    subTransaction.Commit();
+
+                    using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
+                    {
+                        sunstransforrunsync.Start();
+                        foreach (Element element in PrimaryElements)
+                        {
+                            Conduit conduitone = element as Conduit;
+                            ElementId eid = conduitone.RunId;
+                            if (eid != null)
+                            {
+                                Element conduitrun = _doc.GetElement(eid);
+                                Utility.AutoRetainParameters(element, conduitrun, _doc, uiApp);
+                            }
+                        }
+                        sunstransforrunsync.Commit();
+                    }
+                    // Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                }
+
+               
+
+                ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
+                ParentUserControl.Instance.masterContainer.Children.Clear();
+                UserControl userControl = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
+                ParentUserControl.Instance.masterContainer.Children.Add(userControl);
+            }
+            catch (Exception exception)
+            {
+                if (exception.Message == "Pick operation aborted.")
+                {
+                    return false;
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
+
+                }
+            }
+
+            return true;
+        }
+        public static bool ThreepointsaddleDrawPointHandler(Document _doc, UIDocument _uiDoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, int RevitVersion, XYZ Pickpoint, ref List<Element> SecondaryElements)
+        {
+            string json = Properties.Settings.Default.ProfileColorSettings;
+            ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
+            DateTime startDate = DateTime.UtcNow;
+            try
+            {
+
+                List<Element> thirdElements = new List<Element>();
+
+                if (ThreePointSaddleUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(ThreePointSaddleUserControl.Instance.ddlAngle.SelectedItem.Name))
+                {
+                    return false;
+                }
+                VerticalOffsetGP globalParam = new VerticalOffsetGP
+                {
+                    OffsetValue = ThreePointSaddleUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : ThreePointSaddleUserControl.Instance.txtOffsetFeet.AsString,
+                    AngleValue = ThreePointSaddleUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : ThreePointSaddleUserControl.Instance.ddlAngle.SelectedItem.Name
+                };
+
+                //XYZ Pickpoint = null;
+
+                //ConduitElevation identification
+                XYZ e1pt1 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                XYZ e1pt2 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
+
+                double Z1 = Math.Round(e1pt1.Z, 2);
+                double Z2 = Math.Round(e1pt2.Z, 2);
+
+                using (SubTransaction substrans2 = new SubTransaction(_doc))
+                {
+                    substrans2.Start();
+                    OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                    foreach (Element element in PrimaryElements)
+                    {
+                        _doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                    }
+
+                    substrans2.Commit();
+                }
+
+                if (Z1 == Z2)
+                {
+
+                    double l_angle = Convert.ToDouble(ThreePointSaddleUserControl.Instance.ddlAngle.SelectedItem.Name
+                    .ToString()) * (Math.PI / 180);
+                    double l_offSet = ThreePointSaddleUserControl.Instance.txtOffsetFeet.AsDouble;
+
+
+                    //finding the direction
+                    using SubTransaction subTransaction = new SubTransaction(_doc);
+                    subTransaction.Start();
+                    using (SubTransaction transreset = new SubTransaction(_doc))
+                    {
+                        transreset.Start();
+                        OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                        foreach (Element element in PrimaryElements)
+                        {
+                            _doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                        }
+                        transreset.Commit();
+                    }
+                    Properties.Settings.Default.VerticalOffsetDraw = JsonConvert.SerializeObject(globalParam);
+                    Properties.Settings.Default.Save();
+                    startDate = DateTime.UtcNow;
+                    Threepointsaddle.GetSecondaryPointElements(_doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, offsetVariable, Pickpoint);
+                    ConnectorSet PrimaryConnectors = null;
+                    ConnectorSet SecondaryConnectors = null;
+                    for (int j = 0; j < PrimaryElements.Count; j++)
+                    {
+                        PrimaryConnectors = Utility.GetConnectors(PrimaryElements[j]);
+                        SecondaryConnectors = Utility.GetConnectors(SecondaryElements[j]);
+                        Utility.GetClosestConnectors(PrimaryConnectors, SecondaryConnectors, out Connector COne, out Connector CTwo);
+                        XYZ newenpt = new XYZ(CTwo.Origin.X, CTwo.Origin.Y, COne.Origin.Z);
+                        Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[j], COne.Origin, newenpt);
+                        Element e = _doc.GetElement(newCon.Id);
+                        thirdElements.Add(e);
+                        Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
+                        Utility.RetainParameters(PrimaryElements[j], e, uiApp);
+
+                        Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
+                        bendtype.Set("Three Point Saddle");
+                        bendangle.Set(l_angle);
+                        bendtype2.Set("Three Point Saddle");
+                        bendangle2.Set(l_angle);
+
+                    }
+                    //Rotate Elements at Once
+                    Element ElementOne = PrimaryElements[0];
+                    Element ElementTwo = SecondaryElements[0];
+                    Utility.GetClosestConnectors(ElementOne, ElementTwo, out Connector ConnectorOne, out Connector ConnectorTwo);
+                    LocationCurve newconcurve = thirdElements[0].Location as LocationCurve;
+                    Line ncl1 = newconcurve.Curve as Line;
+                    XYZ direction = ncl1.Direction;
+                    XYZ axisStart = ConnectorOne.Origin;
+                    XYZ axisEnd = axisStart.Add(XYZ.BasisZ.CrossProduct(direction));
+                    Line axisLine = Line.CreateBound(axisStart, axisEnd);
+
+                    if (l_offSet < 0)
+                    {
+                        l_angle = -l_angle;
+                    }
+                    ElementTransformUtils.RotateElements(_doc, thirdElements.Select(r => r.Id).ToList(), axisLine, -l_angle);
+
+                    //second set of conduits creation 
+                    List<Element> forthelements = new List<Element>();
+                    for (int j = 0; j < SecondaryElements.Count(); j++)
+                    {
+                        double elevation = PrimaryElements[j].LookupParameter(offsetVariable).AsDouble();
+                        Conduit con = SecondaryElements[j] as Conduit;
+                        XYZ condir = ((con.Location as LocationCurve).Curve as Line).Direction;
+                        XYZ conpt1 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0);
+                        XYZ conpt2 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0) + condir.Multiply(ncl1.Length);
+                        Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[j], new XYZ(conpt1.X, conpt1.Y, elevation + l_offSet), new XYZ(conpt2.X, conpt2.Y, elevation + l_offSet));
+
+                        Element e = _doc.GetElement(newCon.Id);
+                        forthelements.Add(e);
+
+                        Parameter bendtype = newCon.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = newCon.LookupParameter("TIG-Bend Angle");
+                       
+                        bendtype.Set("Three Point Saddle");
+                        bendangle.Set(l_angle);
+
+                    }
+                    Element Elementthree = thirdElements[0];
+                    Utility.GetClosestConnectors(ElementTwo, Elementthree, out Connector ConnectorTwo4, out Connector ConnectorThree);
+                    LocationCurve newconcurve4 = forthelements[0].Location as LocationCurve;
+                    Line ncl4 = newconcurve4.Curve as Line;
+                    XYZ direction4 = ncl4.Direction;
+                    XYZ axisStart4 = ConnectorTwo4.Origin;
+                    XYZ axisEnd4 = axisStart4.Add(XYZ.BasisZ.CrossProduct(direction4));
+                    Line axisLine4 = Line.CreateBound(axisStart4, axisEnd4);
+
+                    ElementTransformUtils.RotateElements(_doc, forthelements.Select(r => r.Id).ToList(), axisLine4, l_angle);
+                    DeleteSupports(_doc, PrimaryElements);
+                    List<FamilyInstance> bOTTOMForAddtags = new List<FamilyInstance>();
+                    List<FamilyInstance> TOPForAddtags = new List<FamilyInstance>();
+
+
+                    for (int j = 0; j < forthelements.Count(); j++)
+                    {
+                        XYZ pt1 = ((forthelements[j].Location as LocationCurve).Curve).GetEndPoint(1);
+                        XYZ pt2 = ((SecondaryElements[j].Location as LocationCurve).Curve).GetEndPoint(0);
+                        XYZ pt3 = ((SecondaryElements[j].Location as LocationCurve).Curve).GetEndPoint(1);
+                        LocationCurve curve = (SecondaryElements[j].Location as LocationCurve);
+                        curve.Curve = Line.CreateBound(new XYZ(pt1.X, pt1.Y, pt3.Z), pt3);
+                    }
+
+
+                    for (int j = 0; j < PrimaryElements.Count; j++)
+                    {
+                        Element firstElement = PrimaryElements[j];
+                        Element secondElement = SecondaryElements[j];
+                        Element thirdElement = thirdElements[j];
+                        Element fourthElement = forthelements[j];
+                        ConnectorSet thirdConnectors = Utility.GetConnectors(thirdElement);
+                        ConnectorSet SecondConnectors = Utility.GetConnectors(secondElement);
+                        ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
+                        ConnectorSet fourthConnectors = Utility.GetConnectors(fourthElement);
+                        FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, fourthConnectors, _doc, uiApp, PrimaryElements[j], true);
+                        FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, firstConnectors, _doc, uiApp, PrimaryElements[j], true);
+                        FamilyInstance fittings3 = Utility.CreateElbowFittings(SecondConnectors, fourthConnectors, _doc, uiApp, PrimaryElements[j], true);
+                        Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype3 = fittings3.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle3 = fittings3.LookupParameter("TIG-Bend Angle");
+                        bendtype.Set("Three Point Saddle");
+                        bendangle.Set(l_angle);
+                        bendtype2.Set("Three Point Saddle");
+                        bendangle2.Set(l_angle);
+                        bendtype3.Set("Three Point Saddle");
+                        bendangle3.Set(l_angle);
+                        if (j == 0)
+                        {
+                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        }
+
+                       // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        bOTTOMForAddtags.Add(fittings1);
+                        TOPForAddtags.Add(fittings2);
+                    }
+                    // BOTTOMAddTags(_doc, bOTTOMForAddtags);
+                    // TOPAddTags(_doc, TOPForAddtags);
+                    //Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                    subTransaction.Commit();
+
+                    using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
+                    {
+                        sunstransforrunsync.Start();
+                        foreach (Element element in PrimaryElements)
+                        {
+                            Conduit conduitone = element as Conduit;
+                            ElementId eid = conduitone.RunId;
+                            if (eid != null)
+                            {
+                                Element conduitrun = _doc.GetElement(eid);
+                                Utility.AutoRetainParameters(element, conduitrun, _doc, uiApp);
+                            }
+                        }
+                        sunstransforrunsync.Commit();
+                    }
+                    // Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                }
+
+               
 
                 ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
                 ParentUserControl.Instance.masterContainer.Children.Clear();
@@ -1445,7 +2134,7 @@ namespace MultiDraw
                     Properties.Settings.Default.RollingOffsetDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
                     RollUp(doc, ref PrimaryElements, l_angle, l_rollOffset, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
                 else
@@ -1476,7 +2165,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     RollUp(doc, ref PrimaryElements, l_angle, l_rollOffset, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
 
@@ -1537,11 +2226,19 @@ namespace MultiDraw
                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                bendtype.Set(profileSetting.rOffsetValue);
+                bendtype.Set("R Offset");
                 bendangle.Set(l_angle);
-                bendtype2.Set(profileSetting.rOffsetValue);
+                bendtype2.Set("R Offset");
                 bendangle2.Set(l_angle);
-                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                if (i == 0)
+                {
+                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                }
+                else
+                {
+                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                }
+                //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 bOTTOMForAddtags.Add(fittings1);
                 TOPForAddtags.Add(fittings2);
             }
@@ -1596,11 +2293,19 @@ namespace MultiDraw
                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                bendtype.Set(profileSetting.rOffsetValue);
+                bendtype.Set("R Offset");
                 bendangle.Set(l_angle);
-                bendtype2.Set(profileSetting.rOffsetValue);
+                bendtype2.Set("R Offset");
                 bendangle2.Set(l_angle);
-                Conduitcoloroverride(secondaryElements[i].Id, doc);
+                if (i == 0)
+                {
+                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                }
+                else
+                {
+                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                }
+              //  Conduitcoloroverride(secondaryElements[i].Id, doc);
             }
 
             using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -1881,9 +2586,9 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                C_bendtype.Set("Kick Offset");
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -1892,11 +2597,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                               // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
                             }
@@ -1955,12 +2668,20 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
 
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                               // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
                             }
@@ -2008,9 +2729,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2019,11 +2740,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                  //  Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
                                 }
@@ -2070,9 +2799,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2081,12 +2810,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
                                 }
@@ -2143,9 +2879,9 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                C_bendtype.Set("Kick Offset");
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2154,12 +2890,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
                             }
@@ -2206,9 +2949,9 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                C_bendtype.Set("Kick Offset");
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2217,11 +2960,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                               // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
                             }
@@ -2269,9 +3020,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2280,12 +3031,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
                                 }
@@ -2332,9 +3090,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2343,11 +3101,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
                                 }
@@ -2429,9 +3195,9 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                C_bendtype.Set("Kick Offset");
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2440,11 +3206,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                               // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
                             }
@@ -2492,9 +3266,9 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                C_bendtype.Set("Kick Offset");
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2503,11 +3277,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
                             }
@@ -2554,9 +3336,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2565,12 +3347,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                  //  Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
                                 }
@@ -2617,9 +3406,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2628,12 +3417,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
                                 }
@@ -2689,9 +3485,9 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                C_bendtype.Set("Kick Offset");
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2700,11 +3496,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                               // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 //bottomTag.Add(fittings1);
                                 //toptag.Add(fittings2);
                             }
@@ -2750,9 +3554,9 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                C_bendtype.Set("Kick Offset");
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2761,11 +3565,19 @@ namespace MultiDraw
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set(profileSetting.kOffsetValue);
+                                bendtype.Set("Kick Offset");
                                 bendangle.Set(l_angle);
-                                bendtype2.Set(profileSetting.kOffsetValue);
+                                bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                if (i == 0)
+                                {
+                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                                else
+                                {
+                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                }
+                               // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 //bottomTag.Add(fittings1);
                                 //toptag.Add(fittings2);
                             }
@@ -2813,9 +3625,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2824,12 +3636,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     //bottomTag.Add(fittings1);
                                     //toptag.Add(fittings2);
                                 }
@@ -2876,9 +3695,9 @@ namespace MultiDraw
                                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                    C_bendtype.Set("Kick Offset");
                                     C_bendangle.Set(l_angle);
-                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                    C_bendtype2.Set("Kick Offset");
                                     C_bendangle2.Set(NinetyAngle);
 
                                     fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -2887,12 +3706,19 @@ namespace MultiDraw
                                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                    bendtype.Set(profileSetting.kOffsetValue);
+                                    bendtype.Set("Kick Offset");
                                     bendangle.Set(l_angle);
-                                    bendtype2.Set(profileSetting.kOffsetValue);
+                                    bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                    }
+                                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
                                 }
@@ -2944,6 +3770,7 @@ namespace MultiDraw
         }
         public static bool StrightorBend(Document doc, UIDocument uidoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, XYZ Pickpoint)
         {
+            PrimaryElements = PrimaryElements.Distinct().ToList();
             string json = Properties.Settings.Default.ProfileColorSettings;
             ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
@@ -3045,7 +3872,7 @@ namespace MultiDraw
                                     if (!isAllNull)
                                     {
                                         // removingPoint = Utility.PickPoint(uidoc, "Select the connor to trim");
-
+                                        int i = 0;
                                         foreach (Element element in PrimaryElements)
                                         {
                                             Line zLine = Utility.GetLineFromConduit(element);
@@ -3068,9 +3895,18 @@ namespace MultiDraw
                                                 (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(zLine.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
                                                 Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                                C_bendtype.Set(profileSetting.straightValue);
+                                                C_bendtype.Set("Straight");
                                                 C_bendangle.Set(StraightAngle);
-                                                Conduitcoloroverride(element.Id, doc);
+                                                if (i == 0)
+                                                {
+                                                    PrimryConduitcoloroverride(element.Id, doc);
+                                                }
+                                                else
+                                                {
+                                                    Conduitcoloroverride(element.Id, doc);
+                                                }
+                                                // Conduitcoloroverride(element.Id, doc);
+                                                
                                             }
                                             else
                                             {
@@ -3081,17 +3917,29 @@ namespace MultiDraw
                                                 (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(zLine.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
                                                 Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                                C_bendtype.Set(profileSetting.straightValue);
+                                                C_bendtype.Set("Straight");
                                                 C_bendangle.Set(StraightAngle);
 
-                                                Conduitcoloroverride(element.Id, doc);
+                                                if (i == 0)
+                                                {
+                                                    PrimryConduitcoloroverride(element.Id, doc);
+                                                }
+                                                else
+                                                {
+                                                    Conduitcoloroverride(element.Id, doc);
+                                                }
+
+                                              //  Conduitcoloroverride(element.Id, doc);
 
 
                                             }
+
+                                            i++;
                                         }
                                     }
                                     else
                                     {
+                                        int i = 0;
                                         foreach (Element element in PrimaryElements)
                                         {
                                             Line xyLine = Utility.GetLineFromConduit(element, true);
@@ -3104,9 +3952,19 @@ namespace MultiDraw
                                             (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(line.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
                                             Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
                                             Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                            C_bendtype.Set(profileSetting.straightValue);
+                                            C_bendtype.Set("Straight");
                                             C_bendangle.Set(StraightAngle);
-                                            Conduitcoloroverride(element.Id, doc);
+
+                                            if (i == 0)
+                                            {
+                                                PrimryConduitcoloroverride(element.Id, doc);
+                                            }
+                                            else
+                                            {
+                                                Conduitcoloroverride(element.Id, doc);
+                                            }
+                                            // Conduitcoloroverride(element.Id, doc);
+                                            i++;
                                         }
                                     }
 
@@ -3136,10 +3994,20 @@ namespace MultiDraw
                                 }
                                 else
                                 {
+                                    int i = 0;
                                     bool breakloop = false;
                                     foreach (Element element in PrimaryElements)
                                     {
-                                        Conduitcoloroverride(element.Id, doc);
+                                        if (i == 0)
+                                        {
+                                            PrimryConduitcoloroverride(element.Id, doc);
+                                        }
+                                        else
+                                        {
+                                            Conduitcoloroverride(element.Id, doc);
+                                        }
+                                       // Conduitcoloroverride(element.Id, doc);
+
                                         Line zLine = Utility.GetLineFromConduit(element);
                                         Line xyLine = Utility.GetLineFromConduit(element, true);
 
@@ -3148,6 +4016,7 @@ namespace MultiDraw
                                         if (interSecPoint != null)
                                         {
                                             ConnectorSet connectorSet = Utility.GetConnectors(element);
+                                            int j = 0;
                                             foreach (Connector con in connectorSet)
                                             {
                                                 if (con.IsConnected)
@@ -3169,9 +4038,17 @@ namespace MultiDraw
                                                                 (element.Location as LocationCurve).Curve = Line.CreateBound(con.Origin, Utility.SetZvalue(interSecPoint, con.Origin));
                                                                 Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
                                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                                                C_bendtype.Set(profileSetting.straightValue);
+                                                                C_bendtype.Set("Straight");
                                                                 C_bendangle.Set(StraightAngle);
-                                                                Conduitcoloroverride(element.Id, doc);
+                                                                if (j == 0)
+                                                                {
+                                                                    PrimryConduitcoloroverride(element.Id, doc);
+                                                                }
+                                                                else
+                                                                {
+                                                                    Conduitcoloroverride(element.Id, doc);
+                                                                }
+                                                                //Conduitcoloroverride(element.Id, doc);
                                                             }
                                                             else
                                                             {
@@ -3201,9 +4078,17 @@ namespace MultiDraw
                                                                 (element.Location as LocationCurve).Curve = Line.CreateBound(Utility.SetZvalue(interSecPoint, con.Origin), con.Origin);
                                                                 Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
                                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                                                C_bendtype.Set(profileSetting.straightValue);
+                                                                C_bendtype.Set("Straight");
                                                                 C_bendangle.Set(StraightAngle);
-                                                                Conduitcoloroverride(element.Id, doc);
+                                                                if (j == 0)
+                                                                {
+                                                                    PrimryConduitcoloroverride(element.Id, doc);
+                                                                }
+                                                                else
+                                                                {
+                                                                    Conduitcoloroverride(element.Id, doc);
+                                                                }
+                                                                //Conduitcoloroverride(element.Id, doc);
                                                             }
                                                             else
                                                             {
@@ -3216,6 +4101,8 @@ namespace MultiDraw
                                                         }
                                                     }
                                                 }
+
+                                                j++;
                                             }
                                         }
                                         else
@@ -3226,11 +4113,12 @@ namespace MultiDraw
                                         {
                                             break;
                                         }
+                                        i++;
                                     }
                                 }
 
                             }
-                            //Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
+                           // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                             transaction.Commit();
                             // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
                         }
@@ -3394,15 +4282,24 @@ namespace MultiDraw
 
                                                 Parameter C_bendtype = secondElement.LookupParameter("TIG-Bend Type");
                                                 Parameter C_bendangle = secondElement.LookupParameter("TIG-Bend Angle");
-                                                C_bendtype.Set(profileSetting.straightValue);
+                                                C_bendtype.Set("Half Offset");
                                                 C_bendangle.Set(halfbend.LookupParameter("Angle").AsDouble());
 
                                                 Parameter C_bendtype_bd = halfbend.LookupParameter("TIG-Bend Type");
                                                 Parameter C_bendangle_bd = halfbend.LookupParameter("TIG-Bend Angle");
-                                                C_bendtype_bd.Set(profileSetting.straightValue);
+                                                C_bendtype_bd.Set("Half Offset");
                                                 C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
 
-                                                Conduitcoloroverride(secondElement.Id, doc);
+                                                if (i == 0)
+                                                {
+                                                    PrimryConduitcoloroverride(secondElement.Id, doc);
+                                                }
+                                                else
+                                                {
+                                                    Conduitcoloroverride(secondElement.Id, doc);
+                                                }
+
+                                               //Conduitcoloroverride(secondElement.Id, doc);
                                             }
 
                                             using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -3517,15 +4414,24 @@ namespace MultiDraw
 
                                     Parameter C_bendtype = secondElement.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle = secondElement.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype.Set(profileSetting.straightValue);
+                                    C_bendtype.Set("Half Offset");
                                     C_bendangle.Set(halfbend.LookupParameter("Angle").AsDouble());
 
                                     Parameter C_bendtype_bd = halfbend.LookupParameter("TIG-Bend Type");
                                     Parameter C_bendangle_bd = halfbend.LookupParameter("TIG-Bend Angle");
-                                    C_bendtype_bd.Set(profileSetting.straightValue);
+                                    C_bendtype_bd.Set("Half Offset");
                                     C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
 
-                                    Conduitcoloroverride(secondElement.Id, doc);
+                                    if (i == 0)
+                                    {
+                                        PrimryConduitcoloroverride(secondElement.Id, doc);
+                                    }
+                                    else
+                                    {
+                                        Conduitcoloroverride(secondElement.Id, doc);
+                                    }
+
+                                    //Conduitcoloroverride(secondElement.Id, doc);
                                 }
                                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                                 {
@@ -3542,7 +4448,7 @@ namespace MultiDraw
                                     }
                                     sunstransforrunsync.Commit();
                                 }
-                                //Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(inclindconduits) });
+                               // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(inclindconduits) });
                                 ParentUserControl.Instance.Secondaryelst.Clear();
                                 ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                                 ParentUserControl.Instance.Primaryelst.Clear();
@@ -3840,15 +4746,23 @@ namespace MultiDraw
 
                         Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
                         Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
-                        C_bendtype.Set(profileSetting.nsOffsetValue);
+                        C_bendtype.Set("90° Bend");
                         C_bendangle.Set(90 * (Math.PI / 180));
 
                         Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.nsOffsetValue);
+                        bendtype.Set("90° Bend");
                         bendangle.Set(90 * (Math.PI / 180));
+                        if (i == 0)
+                        {
+                            PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                        }
 
-                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                       // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                     }
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -3867,7 +4781,7 @@ namespace MultiDraw
                         sunstransforrunsync.Commit();
                     }
 
-                    //Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                 }
                 else
                 {
@@ -3891,15 +4805,24 @@ namespace MultiDraw
 
                         Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
                         Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
-                        C_bendtype.Set(profileSetting.nsOffsetValue);
+                        C_bendtype.Set("90° Bend");
                         C_bendangle.Set(90 * (Math.PI / 180));
 
                         Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
-                        bendtype.Set(profileSetting.nsOffsetValue);
+                        bendtype.Set("90° Bend");
                         bendangle.Set(90 * (Math.PI / 180));
 
-                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                        if (i == 0)
+                        {
+                            PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                        }
+                        else
+                        {
+                            Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                        }
+
+                        //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                     }
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -3918,7 +4841,7 @@ namespace MultiDraw
                         sunstransforrunsync.Commit();
                     }
 
-                    //Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
+                   // Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                 }
 
 
@@ -3968,7 +4891,7 @@ namespace MultiDraw
                     l_angle = Convert.ToDouble(angleSelected.Name);
                     DeleteSupports(doc, PrimaryElements);
                     ApplyKick(doc, ref PrimaryElements, l_angle, l_offSet, l_Rise, offsetVariable, uiapp, pickpoint);
-                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
+                   // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                     transKick.Commit();
                 }
 
@@ -4043,9 +4966,9 @@ namespace MultiDraw
                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                     Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                     Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                    C_bendtype.Set(profileSetting.nkOffsetValue);
+                    C_bendtype.Set("90° Kick Offset");
                     C_bendangle.Set(l_angle * (Math.PI / 180));
-                    C_bendtype2.Set(profileSetting.nkOffsetValue);
+                    C_bendtype2.Set("90° Kick Offset");
                     C_bendangle2.Set(90 * (Math.PI / 180));
 
                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
@@ -4054,12 +4977,21 @@ namespace MultiDraw
                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                     Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                     Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                    bendtype.Set(profileSetting.nkOffsetValue);
+                    bendtype.Set("90° Kick Offset");
                     bendangle.Set(l_angle * (Math.PI / 180));
-                    bendtype2.Set(profileSetting.nkOffsetValue);
+                    bendtype2.Set("90° Kick Offset");
                     bendangle2.Set(90 * (Math.PI / 180));
 
-                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                    if (i == 0)
+                    {
+                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                    }
+                    else
+                    {
+                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                    }
+
+                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 }
 
                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -4120,7 +5052,7 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(_doc, PrimaryElements);
                     StubApplyBend(_doc, ref PrimaryElements, l_offSet, offsetVariable, Pickpoint, _uiapp);
-                    //Support.AddSupport(_uiapp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
+                  //  Support.AddSupport(_uiapp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                     tx.Commit();
                 }
                 using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -4178,17 +5110,26 @@ namespace MultiDraw
 
                     Parameter C_bendtype = SecondaryElements[i].LookupParameter("TIG-Bend Type");
                     Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
-                    C_bendtype.Set(profileSetting.nsOffsetValue);
+                    C_bendtype.Set("90° Stub");
                     C_bendangle.Set(90 * (Math.PI / 180));
 
                     FamilyInstance fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, PrimaryConnectors, doc, _uiapp, PrimaryElements[i], true);
 
                     Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
-                    bendtype.Set(profileSetting.nsOffsetValue);
+                    bendtype.Set("90° Stub");
                     bendangle.Set(90 * (Math.PI / 180));
 
-                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                    if (i == 0)
+                    {
+                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                    }
+                    else
+                    {
+                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                    }
+
+                   // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 }
 
                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))

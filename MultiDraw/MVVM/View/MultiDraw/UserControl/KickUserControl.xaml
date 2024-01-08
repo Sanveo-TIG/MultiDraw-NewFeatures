@@ -45,6 +45,8 @@
             <Border x:Name="border" Padding="10" Margin="0,4,0,0"
                 Background="White"
                 BorderBrush="#ccc"
+                       Width="310"
+                      HorizontalAlignment="Left"
                 BorderThickness="1" CornerRadius="0">
 
                 <StackPanel  x:Name="container"
@@ -84,6 +86,8 @@
             <TIG:TextBoxControl x:Name="txtOffsetFeet" 
                                     Label="Offset"
                                     UnitsLabel="Feet and inches"
+                                   Width="310"
+                                  HorizontalAlignment="Left"
                                     LostFocus="TextBox_LostFocus"
                                     IsUnit="True"></TIG:TextBoxControl>
         </StackPanel>

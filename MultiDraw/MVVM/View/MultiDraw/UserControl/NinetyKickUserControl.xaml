@@ -38,12 +38,16 @@
                                     Label="Offset"  
                                     UnitsLabel="Feet and inches"
                                     IsUnit="True"
+                                   Width="310"
+                                  HorizontalAlignment="Left"
                                     LostFocus="TextBox_LostFocus"                                
                                     ></TIG:TextBoxControl>
         </StackPanel>
         <StackPanel Grid.Row="3">
             <TIG:TextBoxControl x:Name="txtRise"
                                     Label="Rise"
+                                   Width="310"
+                                  HorizontalAlignment="Left"
                                     UnitsLabel="Feet and inches"
                                     LostFocus="TextBox_LostFocus"
                                     IsUnit="True"></TIG:TextBoxControl>

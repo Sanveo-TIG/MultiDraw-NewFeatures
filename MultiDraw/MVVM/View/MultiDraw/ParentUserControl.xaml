@@ -172,7 +172,7 @@
 
                 </ListBoxItem>
             </ListBox>
-            <ToggleButton Margin="43,0,0,0" x:Name="btnPlay" Click="PlayButton_Click"
+            <ToggleButton Margin="24,0,0,0" x:Name="btnPlay" Click="PlayButton_Click"
   materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Pause}"
   Content="{materialDesign:PackIcon Kind=Play}"
   Style="{StaticResource MaterialDesignActionToggleButton}"

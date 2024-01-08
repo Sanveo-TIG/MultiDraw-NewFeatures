@@ -57,13 +57,13 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="ReachFramework" />
-    <Reference Include="RevitAPI, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="RevitAPI, Version=23.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2023\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
     </Reference>
-    <Reference Include="RevitAPIUI, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="RevitAPIUI, Version=23.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2023\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.CodeDom, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -125,7 +125,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="TIGUtility, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Jira Tickets\QCPak Clone Oct 10\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Source Code\Jira Tickets\December-12 SheetPak\TIGUtility\bin\Debug\TIGUtility.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -205,6 +205,7 @@
     <Compile Include="MVVM\View\Setting\CommandSettings.cs" />
     <Compile Include="RevitAPI\APIClasses\WindowProperty.cs" />
     <Compile Include="MVVM\View\MultiDraw\Command.cs" />
+    <Compile Include="RevitAPI\APICommon\Fourpointsaddle.cs" />
     <Compile Include="RevitAPI\APICommon\Support.cs" />
     <Compile Include="RevitAPI\APICommon\Common.cs" />
     <Compile Include="RevitAPI\APICommon\HorizontalOffset.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="RevitAPI\APICommon\NinetyBend.cs" />
     <Compile Include="RevitAPI\APICommon\NinetyBendstub.cs" />
     <Compile Include="RevitAPI\APICommon\RollingOffset.cs" />
+    <Compile Include="RevitAPI\APICommon\Threepointsaddle.cs" />
     <Compile Include="RevitAPI\APICommon\VerticalOffset.cs" />
     <Compile Include="RevitAPI\APIHandler\MultiDrawHandler.cs" />
     <Compile Include="RevitAPI\APIHandler\MultiDrawProfileSettingsParam.cs" />
@@ -301,6 +303,10 @@
     <Resource Include="Images\icons\Straights 120x120.png" />
     <Resource Include="Images\icons\Settings 120x120.png" />
     <Resource Include="Images\icons\Play Button.png" />
+    <Resource Include="Images\icons\Amol-H Offset.png" />
+    <Resource Include="Images\icons\Amol-Kick.png" />
+    <Resource Include="Images\icons\Amol-Rolling.png" />
+    <Resource Include="Images\icons\Amol-Vertical.png" />
     <Content Include="Images\whiteback.PNG" />
     <Content Include="MultiDraw.addin">
       <SubType>Designer</SubType>

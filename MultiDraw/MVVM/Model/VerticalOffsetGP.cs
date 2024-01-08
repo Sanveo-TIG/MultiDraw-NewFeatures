@@ -10,5 +10,6 @@ namespace MultiDraw
     {
         public string AngleValue { get; set; }
         public string OffsetValue { get; set; }
+        public string BaseOffsetValue { get; set; }
     }
 }

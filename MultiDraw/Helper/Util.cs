@@ -17,7 +17,7 @@ namespace MultiDraw
 
         public const string ApplicationWindowTitle = "MultiDraw";
         public const int ApplicationWindowHeight = 510;
-        public const int ApplicationWindowWidth = 420;
+        public const int ApplicationWindowWidth = 400;
         public const bool IsApplicationWindowTopMost = true;
         public const bool IsApplicationWindowAlowToReSize = false;
 

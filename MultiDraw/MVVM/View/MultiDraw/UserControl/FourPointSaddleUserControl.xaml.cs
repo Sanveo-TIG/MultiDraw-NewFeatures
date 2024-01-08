@@ -52,7 +52,7 @@ namespace MultiDraw
                 ddlAngle.Attributes = new MultiSelectAttributes()
                 {
                     Label = "Angle",
-                    Width=385
+                    Width=310
                 };
 
             }
@@ -68,6 +68,7 @@ namespace MultiDraw
             VerticalOffsetGP globalParam = new VerticalOffsetGP
             {
                 OffsetValue = txtOffsetFeet.AsDouble == 0 ? "1.5\'" : txtOffsetFeet.AsString,
+                BaseOffsetValue = txtBaseOffsetFeet.AsDouble == 0 ? "1.5\'" : txtBaseOffsetFeet.AsString,
                 AngleValue = ddlAngle.SelectedItem == null ? "30.00" : ddlAngle.SelectedItem.Name
             };
             Properties.Settings.Default.VerticalOffsetDraw = JsonConvert.SerializeObject(globalParam);
@@ -91,6 +92,7 @@ namespace MultiDraw
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             txtOffsetFeet.UIApplication = _uiApp;
+            txtBaseOffsetFeet.UIApplication = _uiApp;
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
                 angleList.Add(new MultiSelect() { Name = item });
@@ -101,11 +103,13 @@ namespace MultiDraw
             {
                 VerticalOffsetGP globalParam = JsonConvert.DeserializeObject<VerticalOffsetGP>(json);
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
+                txtBaseOffsetFeet.Text = !string.IsNullOrEmpty(globalParam.BaseOffsetValue) ? globalParam.BaseOffsetValue : "1.5\'";
                 ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
+                txtBaseOffsetFeet.Text = "1.5\'";
                 ddlAngle.SelectedItem = angleList[4];
             }
             // _externalEvents.Raise();

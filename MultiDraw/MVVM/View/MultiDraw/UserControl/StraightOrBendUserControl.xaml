@@ -53,6 +53,8 @@
             <ListBox x:Name="angleList"  BorderBrush="#ccc" BorderThickness="1"
                  Background="White"
                  Foreground="#333333" 
+                        Width="310"
+                       HorizontalAlignment="Left"
                  Style="{x:Null}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">

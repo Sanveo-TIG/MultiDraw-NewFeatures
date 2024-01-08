@@ -35,6 +35,8 @@
                                     Label="Stub Length"  
                                     UnitsLabel="Feet and inches" 
                                     IsUnit="True"
+                                   Width="310"
+                                  HorizontalAlignment="Left"
                                     LostFocus="TextBox_LostFocus"
                                     ></TIG:TextBoxControl>
         </StackPanel>

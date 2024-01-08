@@ -53,7 +53,7 @@
         <!--HEADER-->
         <DockPanel x:Name="TitleBar"
                    DockPanel.Dock="Top">
-            <customUC:HeaderPanelControl Tittle="Multi Draw" x:Name="HeaderPanel"
+            <customUC:HeaderPanelControl Tittle="Multi Draw Settings" x:Name="HeaderPanel"
                                        Logo="/MultiDraw;component/Resources/32x32.png"
                                              DocumentPath="MultiDraw.html"></customUC:HeaderPanelControl>
         </DockPanel>

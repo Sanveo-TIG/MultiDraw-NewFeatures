@@ -45,7 +45,7 @@ namespace MultiDraw
             ddlAngle.Attributes = new MultiSelectAttributes()
             {
                 Label= "Angle",
-                Width=385
+                Width=310
             };
             try
             {
