@@ -206,6 +206,43 @@ namespace MultiDraw
                 _isStopedTransaction = true;
             }
         }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (cmbProfileType.SelectedIndex)
+            {
+                case 0:
+                    VOffsetUserControl.Instance.txtOffsetFeet.Click_load(VOffsetUserControl.Instance.txtOffsetFeet);
+                    break;
+                case 1:
+                    HOffsetUserControl.Instance.txtOffsetFeet.Click_load(HOffsetUserControl.Instance.txtOffsetFeet);
+                    break;
+                case 2:
+                    RollingUserControl.Instance.txtOffsetFeet.Click_load(RollingUserControl.Instance.txtOffsetFeet);
+                    RollingUserControl.Instance.txtRollFeet.Click_load(RollingUserControl.Instance.txtRollFeet);
+                    break;
+                case 3:
+                    KickUserControl.Instance.txtOffsetFeet.Click_load(KickUserControl.Instance.txtOffsetFeet);
+                    break;
+               
+                case 5:
+                    NinetyKickUserControl.Instance.txtOffset.Click_load(NinetyKickUserControl.Instance.txtOffset);
+                    NinetyKickUserControl.Instance.txtRise.Click_load(NinetyKickUserControl.Instance.txtRise);
+                    break;
+                case 6:
+                    NinetyStubUserControl.Instance.txtOffsetFeet.Click_load(NinetyStubUserControl.Instance.txtOffsetFeet);
+                    break;
+                case 7:
+                    ThreePointSaddleUserControl.Instance.txtOffsetFeet.Click_load(ThreePointSaddleUserControl.Instance.txtOffsetFeet);
+                    break;
+                case 8:
+                    FourPointSaddleUserControl.Instance.txtOffsetFeet.Click_load(FourPointSaddleUserControl.Instance.txtOffsetFeet);
+                    FourPointSaddleUserControl.Instance.txtBaseOffsetFeet.Click_load(FourPointSaddleUserControl.Instance.txtBaseOffsetFeet);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
 

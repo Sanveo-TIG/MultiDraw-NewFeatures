@@ -20,11 +20,11 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid MouseDown="Grid_MouseDown">
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="85"></RowDefinition>
-            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock x:Name="Ninetystub"

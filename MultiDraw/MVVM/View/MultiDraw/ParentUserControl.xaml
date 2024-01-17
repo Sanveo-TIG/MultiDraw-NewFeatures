@@ -22,7 +22,8 @@
         </ResourceDictionary>
 
     </UserControl.Resources>
-    <Grid>
+    <Grid MouseDown="Grid_MouseDown"
+          Background="Transparent" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
