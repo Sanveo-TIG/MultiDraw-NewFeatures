@@ -30,12 +30,6 @@ namespace MultiDraw
             application.ViewActivated += Application_ViewActivated;
             application.ApplicationClosing += Application_Closing;
 
-            // Create a custom ribbon tab
-            string tabName = "Sanveo Tools-Beta";
-            //application.CreateRibbonTab(tabName);
-
-
-
             return Result.Succeeded;
         }
         void ComponentManager_UIElementActivated(
@@ -178,7 +172,7 @@ namespace MultiDraw
               MultiDrawButton = pushButton;*/
             PushButtonData multidrawsupportbuttondata = new PushButtonData("MultidrawSupportBtn", "MultiDrawSetting", dllLocation, "MultiDraw.CommandSettings")
             {
-                ToolTip = "MultiDrawSetting Helps to do Align functions for conduits"
+                ToolTip = buttonTooltip
             };
             BitmapImage multidrawsupportpb1Image = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/32x32.png"));
             multidrawsupportbuttondata.LargeImage = multidrawsupportpb1Image;
@@ -187,7 +181,6 @@ namespace MultiDraw
             multidrawsupportbuttondata.Image = multidrawsupportpb1Image2;
 
             MultiDrawButton = ribbonPanel.AddItem(multidrawsupportbuttondata) as PushButton;
-            string pathMultidrawSetting;
             path = System.IO.Path.GetDirectoryName(
                System.Reflection.Assembly.GetExecutingAssembly().Location);
 
