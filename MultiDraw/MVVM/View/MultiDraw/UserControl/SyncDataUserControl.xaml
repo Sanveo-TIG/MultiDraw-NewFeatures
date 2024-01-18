@@ -22,8 +22,8 @@
     </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">

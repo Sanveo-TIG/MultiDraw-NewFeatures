@@ -77,6 +77,7 @@ namespace MultiDraw
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             txtOffsetFeet.Click_load(txtOffsetFeet);
+            txtBaseOffsetFeet.Click_load(txtBaseOffsetFeet);
         }
 
         private void DdlAngle_Changed(object sender)
