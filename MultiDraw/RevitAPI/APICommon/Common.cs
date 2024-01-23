@@ -94,22 +94,22 @@ namespace MultiDraw
         //        j++;
         //    }
         //}
-        public static void Conduitcoloroverride(ElementId eid, Document doc)
-        {
-            var patternCollector = new FilteredElementCollector(doc);
-            patternCollector.OfClass(typeof(FillPatternElement));
-            FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
-            Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(50, 205, 50));
-            doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
-        }
-        public static void PrimryConduitcoloroverride(ElementId eid, Document doc)
-        {
-            var patternCollector = new FilteredElementCollector(doc);
-            patternCollector.OfClass(typeof(FillPatternElement));
-            FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
-            Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(1, 50, 32));
-            doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
-        }
+        //public static void Conduitcoloroverride(ElementId eid, Document doc)
+        //{
+        //    var patternCollector = new FilteredElementCollector(doc);
+        //    patternCollector.OfClass(typeof(FillPatternElement));
+        //    FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
+        //    Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(50, 205, 50));
+        //    doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
+        //}
+        //public static void PrimryConduitcoloroverride(ElementId eid, Document doc)
+        //{
+        //    var patternCollector = new FilteredElementCollector(doc);
+        //    patternCollector.OfClass(typeof(FillPatternElement));
+        //    FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
+        //    Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(1, 50, 32));
+        //    doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
+        //}
         public static bool HOffsetDrawHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
            /* string jsonParam = Utility.GetGlobalParametersManager(uiapp, "SyncDataParameters");
@@ -237,14 +237,15 @@ namespace MultiDraw
                         bendangle.Set(angle);
                         bendtype2.Set("H Offset");
                         bendangle2.Set(angle);
-                        if (i == 0)
-                        {
-                            PrimryConduitcoloroverride(secondaryElements[i].Id, doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(secondaryElements[i].Id, doc);
-                        }
+
+                        //if (i == 0)
+                        //{
+                        //    PrimryConduitcoloroverride(secondaryElements[i].Id, doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(secondaryElements[i].Id, doc);
+                        //}
                        
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
@@ -496,14 +497,15 @@ namespace MultiDraw
                                 bendangle.Set(angle);
                                 bendtype2.Set("H Offset");
                                 bendangle2.Set(angle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(secondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(secondaryElements[i].Id, doc);
-                                }
+
+                                //if (i == 0)
+                                //{
+                                //    PrimryConduitcoloroverride(secondaryElements[i].Id, doc);
+                                //}
+                                //else
+                                //{
+                                //    Conduitcoloroverride(secondaryElements[i].Id, doc);
+                                //}
                                // Conduitcoloroverride(secondaryElements[i].Id, doc);
                                 bOTTOMForAddtags.Add(fittings1);
                                 TOPForAddtags.Add(fittings2);
@@ -840,14 +842,15 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        if (j == 0)
-                        {
-                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
+
+                        //if (j == 0)
+                        //{
+                        //    PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
 
                         //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
@@ -978,14 +981,15 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        if (j == 0)
-                        {
-                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
+
+                        //if (j == 0)
+                        //{
+                        //    PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
                        // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
@@ -1164,14 +1168,14 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        if (j == 0)
-                        {
-                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
+                        //if (j == 0)
+                        //{
+                        //    PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
 
                         //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
@@ -1303,14 +1307,14 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        if (j == 0)
-                        {
-                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
+                        //if (j == 0)
+                        //{
+                        //    //PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
                        // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
@@ -1674,14 +1678,14 @@ namespace MultiDraw
                             bendtype4.Set("Four Point Saddle");
                             bendangle4.Set(l_angle);
 
-                            if (j == 0)
-                            {
-                                PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                            }
-                            else
-                            {
-                                Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                            }
+                            //if (j == 0)
+                            //{
+                            //    PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                            //}
+                            //else
+                            //{
+                            //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                            //}
                            // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                             bOTTOMForAddtags.Add(fittings1);
                             TOPForAddtags.Add(fittings2);
@@ -1931,14 +1935,15 @@ namespace MultiDraw
                         bendangle2.Set(l_angle);
                         bendtype3.Set("Three Point Saddle");
                         bendangle3.Set(l_angle);
-                        if (j == 0)
-                        {
-                            PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        }
+
+                        //if (j == 0)
+                        //{
+                        //    PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //}
 
                        // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
@@ -2230,14 +2235,15 @@ namespace MultiDraw
                 bendangle.Set(l_angle);
                 bendtype2.Set("R Offset");
                 bendangle2.Set(l_angle);
-                if (i == 0)
-                {
-                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                }
-                else
-                {
-                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                }
+
+                //if (i == 0)
+                //{
+                //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                //}
+                //else
+                //{
+                //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                //}
                 //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 bOTTOMForAddtags.Add(fittings1);
                 TOPForAddtags.Add(fittings2);
@@ -2297,14 +2303,7 @@ namespace MultiDraw
                 bendangle.Set(l_angle);
                 bendtype2.Set("R Offset");
                 bendangle2.Set(l_angle);
-                if (i == 0)
-                {
-                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                }
-                else
-                {
-                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                }
+
               //  Conduitcoloroverride(secondaryElements[i].Id, doc);
             }
 
@@ -2601,14 +2600,15 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
+
+                                //if (i == 0)
+                                //{
+                                //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                //}
+                                //else
+                                //{
+                                //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                //}
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
@@ -2672,14 +2672,14 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
+                                //if (i == 0)
+                                //{
+                                //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                                //}
+                                //else
+                                //{
+                                //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                                //}
 
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
@@ -2744,14 +2744,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                   //  Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
@@ -2814,14 +2806,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
@@ -2894,14 +2878,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
                                 //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
@@ -2964,14 +2940,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
@@ -3035,14 +3003,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
@@ -3105,14 +3065,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
@@ -3210,14 +3162,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
@@ -3281,14 +3225,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
                                 //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 bottomTag.Add(fittings1);
                                 toptag.Add(fittings2);
@@ -3351,14 +3287,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                   //  Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
@@ -3421,17 +3349,10 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
+                                    
                                 }
                             }
                             // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -3500,14 +3421,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 //bottomTag.Add(fittings1);
                                 //toptag.Add(fittings2);
@@ -3569,14 +3482,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                if (i == 0)
-                                {
-                                    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
-                                else
-                                {
-                                    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                }
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 //bottomTag.Add(fittings1);
                                 //toptag.Add(fittings2);
@@ -3640,14 +3545,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     //bottomTag.Add(fittings1);
                                     //toptag.Add(fittings2);
@@ -3710,14 +3607,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    }
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                     bottomTag.Add(fittings1);
                                     toptag.Add(fittings2);
@@ -3897,14 +3786,7 @@ namespace MultiDraw
                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
                                                 C_bendtype.Set("Straight");
                                                 C_bendangle.Set(StraightAngle);
-                                                if (i == 0)
-                                                {
-                                                    PrimryConduitcoloroverride(element.Id, doc);
-                                                }
-                                                else
-                                                {
-                                                    Conduitcoloroverride(element.Id, doc);
-                                                }
+                                              
                                                 // Conduitcoloroverride(element.Id, doc);
                                                 
                                             }
@@ -3920,14 +3802,7 @@ namespace MultiDraw
                                                 C_bendtype.Set("Straight");
                                                 C_bendangle.Set(StraightAngle);
 
-                                                if (i == 0)
-                                                {
-                                                    PrimryConduitcoloroverride(element.Id, doc);
-                                                }
-                                                else
-                                                {
-                                                    Conduitcoloroverride(element.Id, doc);
-                                                }
+                                               
 
                                               //  Conduitcoloroverride(element.Id, doc);
 
@@ -3955,14 +3830,7 @@ namespace MultiDraw
                                             C_bendtype.Set("Straight");
                                             C_bendangle.Set(StraightAngle);
 
-                                            if (i == 0)
-                                            {
-                                                PrimryConduitcoloroverride(element.Id, doc);
-                                            }
-                                            else
-                                            {
-                                                Conduitcoloroverride(element.Id, doc);
-                                            }
+                                            
                                             // Conduitcoloroverride(element.Id, doc);
                                             i++;
                                         }
@@ -3998,14 +3866,7 @@ namespace MultiDraw
                                     bool breakloop = false;
                                     foreach (Element element in PrimaryElements)
                                     {
-                                        if (i == 0)
-                                        {
-                                            PrimryConduitcoloroverride(element.Id, doc);
-                                        }
-                                        else
-                                        {
-                                            Conduitcoloroverride(element.Id, doc);
-                                        }
+                                       
                                        // Conduitcoloroverride(element.Id, doc);
 
                                         Line zLine = Utility.GetLineFromConduit(element);
@@ -4040,14 +3901,7 @@ namespace MultiDraw
                                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
                                                                 C_bendtype.Set("Straight");
                                                                 C_bendangle.Set(StraightAngle);
-                                                                if (j == 0)
-                                                                {
-                                                                    PrimryConduitcoloroverride(element.Id, doc);
-                                                                }
-                                                                else
-                                                                {
-                                                                    Conduitcoloroverride(element.Id, doc);
-                                                                }
+                                                               
                                                                 //Conduitcoloroverride(element.Id, doc);
                                                             }
                                                             else
@@ -4080,15 +3934,7 @@ namespace MultiDraw
                                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
                                                                 C_bendtype.Set("Straight");
                                                                 C_bendangle.Set(StraightAngle);
-                                                                if (j == 0)
-                                                                {
-                                                                    PrimryConduitcoloroverride(element.Id, doc);
-                                                                }
-                                                                else
-                                                                {
-                                                                    Conduitcoloroverride(element.Id, doc);
-                                                                }
-                                                                //Conduitcoloroverride(element.Id, doc);
+                                                              
                                                             }
                                                             else
                                                             {
@@ -4118,7 +3964,27 @@ namespace MultiDraw
                                 }
 
                             }
-                           // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
+
+                            //int nk = 0;
+                            //using (SubTransaction sunstransforcolorapply = new SubTransaction(doc))
+                            //{
+                            //    sunstransforcolorapply.Start();
+                            //    foreach (Element element in PrimaryElements)
+                            //    {
+                            //        if (nk == 0)
+                            //        {
+                            //            PrimryConduitcoloroverride(element.Id, doc);
+                            //        }
+                            //        else
+                            //        {
+                            //            Conduitcoloroverride(element.Id, doc);
+                            //        }
+
+                            //        nk++;
+                            //    }
+                            //    sunstransforcolorapply.Commit();
+                            //}
+                            // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                             transaction.Commit();
                             // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
                         }
@@ -4290,17 +4156,30 @@ namespace MultiDraw
                                                 C_bendtype_bd.Set("Half Offset");
                                                 C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
 
-                                                if (i == 0)
-                                                {
-                                                    PrimryConduitcoloroverride(secondElement.Id, doc);
-                                                }
-                                                else
-                                                {
-                                                    Conduitcoloroverride(secondElement.Id, doc);
-                                                }
+                                               
 
                                                //Conduitcoloroverride(secondElement.Id, doc);
                                             }
+                                            //fill the colors
+                                            //using (SubTransaction sunstransforcolorapply = new SubTransaction(doc))
+                                            //{
+                                            //    ElementId conduitrunid = (PrimaryElements[PrimaryElements.Count() -1] as Conduit).RunId;
+                                            //    sunstransforcolorapply.Start();
+                                            //    foreach (Element element in inclindconduits)
+                                            //    {
+                                            //        ElementId inclindconduitrunid = (element as Conduit).RunId;
+
+                                            //        if (inclindconduitrunid == conduitrunid)
+                                            //        {
+                                            //            PrimryConduitcoloroverride(element.Id, doc);
+                                            //        }
+                                            //        else
+                                            //        {
+                                            //            Conduitcoloroverride(element.Id, doc);
+                                            //        }
+                                            //    }
+                                            //    sunstransforcolorapply.Commit();
+                                            //}
 
                                             using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                                             {
@@ -4422,17 +4301,31 @@ namespace MultiDraw
                                     C_bendtype_bd.Set("Half Offset");
                                     C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
 
-                                    if (i == 0)
-                                    {
-                                        PrimryConduitcoloroverride(secondElement.Id, doc);
-                                    }
-                                    else
-                                    {
-                                        Conduitcoloroverride(secondElement.Id, doc);
-                                    }
 
                                     //Conduitcoloroverride(secondElement.Id, doc);
                                 }
+
+                                //fill the colors
+                                //using (SubTransaction sunstransforcolorapply = new SubTransaction(doc))
+                                //{
+                                //    ElementId conduitrunid = (PrimaryElements[PrimaryElements.Count() - 1] as Conduit).RunId;
+                                //    sunstransforcolorapply.Start();
+                                //    foreach (Element element in inclindconduits)
+                                //    {
+                                //        ElementId inclindconduitrunid = (element as Conduit).RunId;
+
+                                //        if (conduitrunid == inclindconduitrunid)
+                                //        {
+                                //            PrimryConduitcoloroverride(element.Id, doc);
+                                //        }
+                                //        else
+                                //        {
+                                //            Conduitcoloroverride(element.Id, doc);
+                                //        }
+                                //    }
+                                //    sunstransforcolorapply.Commit();
+                                //}
+
                                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                                 {
                                     sunstransforrunsync.Start();
@@ -4753,14 +4646,14 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         bendtype.Set("90° Bend");
                         bendangle.Set(90 * (Math.PI / 180));
-                        if (i == 0)
-                        {
-                            PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                        }
+                        //if (i == 0)
+                        //{
+                        //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                        //}
 
                        // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                     }
@@ -4813,14 +4706,14 @@ namespace MultiDraw
                         bendtype.Set("90° Bend");
                         bendangle.Set(90 * (Math.PI / 180));
 
-                        if (i == 0)
-                        {
-                            PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                        }
-                        else
-                        {
-                            Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                        }
+                        //if (i == 0)
+                        //{
+                        //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                        //}
+                        //else
+                        //{
+                        //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                        //}
 
                         //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                     }
@@ -4982,14 +4875,14 @@ namespace MultiDraw
                     bendtype2.Set("90° Kick Offset");
                     bendangle2.Set(90 * (Math.PI / 180));
 
-                    if (i == 0)
-                    {
-                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                    }
-                    else
-                    {
-                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                    }
+                    //if (i == 0)
+                    //{
+                    //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                    //}
+                    //else
+                    //{
+                    //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                    //}
 
                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 }
@@ -5120,14 +5013,14 @@ namespace MultiDraw
                     bendtype.Set("90° Stub");
                     bendangle.Set(90 * (Math.PI / 180));
 
-                    if (i == 0)
-                    {
-                        PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                    }
-                    else
-                    {
-                        Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                    }
+                    //if (i == 0)
+                    //{
+                    //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
+                    //}
+                    //else
+                    //{
+                    //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
+                    //}
 
                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 }

@@ -17,6 +17,7 @@ using adWin = Autodesk.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
 using MultiDraw.RevitAPI.APIHandler;
+using Color = Autodesk.Revit.DB.Color;
 
 namespace MultiDraw
 {
@@ -46,6 +47,7 @@ namespace MultiDraw
             {
 
             }
+            ElementId PrimaryConduitRunid = null;
             string filePath_SharedParams_path = null;
             string family_folder = System.IO.Path.GetDirectoryName(typeof(Command).Assembly.Location);
             DateTime startDate = DateTime.UtcNow;
@@ -151,6 +153,11 @@ namespace MultiDraw
                 }
 
                 ParentUserControl.Instance.Primaryelst = Utility.GetPickedElements(uidoc, "Select conduits to perform action", typeof(Conduit), true);
+
+                if (PrimaryConduitRunid == null)
+                {
+                    PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).Id;
+                }
                 for (int k = 0; k < 100; k++)
                 {
                     if (ParentUserControl.Instance.cmbProfileType.SelectedIndex != 7)
@@ -223,6 +230,7 @@ namespace MultiDraw
 
                                 }
                                 ParentUserControl.Instance.Primaryelst = Utility.GetPickedElements(uidoc, "Select conduits to perform action", typeof(Conduit), true);
+                                PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).Id;
                                 continue;
 
                             }
@@ -281,6 +289,7 @@ namespace MultiDraw
                                     transRibbonColorChange_2.Commit();
                                 }
                                 ParentUserControl.Instance.Primaryelst = Utility.GetPickedElements(uidoc, "Select conduits to perform action", typeof(Conduit), true);
+                                PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).Id;
                             }
                         }
 
@@ -371,6 +380,57 @@ namespace MultiDraw
                             {
 
                             }
+
+                            View activeview = doc.ActiveView;
+                            //coloring the primary conduits
+                            List<Element> conduitList = new FilteredElementCollector(doc, activeview.Id).OfClass(typeof(Conduit)).Where(x => (x as Conduit).RunId == (doc.GetElement(PrimaryConduitRunid) as Conduit).RunId).ToList();
+                            Element lastconduit = null;
+                            foreach (Element item in conduitList)
+                            {
+                                if ((item as Conduit).ConnectorManager.UnusedConnectors.Size == 1 && item.Id != PrimaryConduitRunid && conduitList.Count() > 1)
+                                {
+                                    lastconduit = item;
+                                }
+                            }
+                            using (SubTransaction Primarycolorfillsub = new SubTransaction(doc))
+                            {
+                                Primarycolorfillsub.Start();
+                                if (PrimaryConduitRunid == null)
+                                {
+                                    PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).RunId;
+                                }
+
+                                int nk = 0;
+                                foreach (Element conduit in ParentUserControl.Instance.Primaryelst)
+                                {
+                                    if (lastconduit != null)
+                                    {
+                                        if (conduit.Id == lastconduit.Id)
+                                        {
+                                            PrimryConduitcoloroverride(conduit.Id, doc);
+                                        }
+                                        else
+                                        {
+                                            SubConduitcoloroverride(conduit.Id, doc);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (nk == 0)
+                                        {
+                                            PrimryConduitcoloroverride(conduit.Id, doc);
+                                        }
+                                        else
+                                        {
+                                            SubConduitcoloroverride(conduit.Id, doc);
+                                        }
+
+                                    }
+                                    nk++;
+                                }
+                                Primarycolorfillsub.Commit();
+                            }
+
                             XYZ Pickpoint = Utility.PickPoint(uidoc);
                             //if (ParentUserControl.Instance._isStopedTransaction)
                             //{
@@ -389,6 +449,12 @@ namespace MultiDraw
                                 };
                                 Properties.Settings.Default.StraightsDraw = JsonConvert.SerializeObject(globalParam);
                                 Properties.Settings.Default.Save();
+
+                               if ( PrimaryConduitRunid == null)
+                                {
+                                    PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).RunId;
+                                }
+
                                 foreach (Element item in ParentUserControl.Instance.Primaryelst)
                                 {
                                     Conduit conduit = item as Conduit;
@@ -408,9 +474,16 @@ namespace MultiDraw
                                 }
                                 ParentUserControl.Instance.AlignConduits.IsChecked = false;
                                 subone.Commit();
+
+                               Family fam = null;
+                                View vie = fam.Document.ActiveView;
+
+
                             }
                             else
                             {
+                              
+
                                 if (k > 0)
                                 {
 
@@ -1250,10 +1323,12 @@ namespace MultiDraw
 
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 4 && !APICommon.StrightorBend(doc, uidoc, uiapp, ParentUserControl.Instance.Primaryelst, offsetVariable, Pickpoint))
                                 {
+
                                     break;
                                 }
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 5 && !APICommon.Ninetykickdrawhandler(doc, ParentUserControl.Instance.Primaryelst, offsetVariable, uiapp, Pickpoint))
                                 {
+
                                     break;
                                 }
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 6 && !APICommon.Nietystubdrawhandler(doc, uidoc, ParentUserControl.Instance.Primaryelst, offsetVariable, uiapp, Pickpoint))
@@ -1458,6 +1533,23 @@ namespace MultiDraw
             ogs.SetSurfaceForegroundPatternVisible(true);
             return ogs;
         }
+
+        public static void SubConduitcoloroverride(ElementId eid, Document doc)
+        {
+            var patternCollector = new FilteredElementCollector(doc);
+            patternCollector.OfClass(typeof(FillPatternElement));
+            FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
+            Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Autodesk.Revit.DB.Color(50, 205, 50));
+            doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
+        }
+        public static void PrimryConduitcoloroverride(ElementId eid, Document doc)
+        {
+            var patternCollector = new FilteredElementCollector(doc);
+            patternCollector.OfClass(typeof(FillPatternElement));
+            FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
+            Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(1, 50, 32));
+            doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
+        }
         private static ElementFilter CreateElementFilterFromFilterRules(IList<FilterRule> filterRules)
         {
             // We use a LogicalAndFilter containing one ElementParameterFilter
@@ -1492,6 +1584,20 @@ namespace MultiDraw
             public bool AllowReference(Reference r, XYZ p)
             {
                 return false;
+            }
+
+            public static bool IsOneSideConnectors(Element e)
+            {
+
+                if (e is Conduit conduit)
+                {
+
+                    return conduit.ConnectorManager.UnusedConnectors.Size == 1;
+
+                }
+                return false;
+
+
             }
         }
     }

@@ -1983,14 +1983,7 @@ C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\EnergyAnalysisUtilitiesAPI.dll
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\DetailUIAPI.dll
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\DocumentFormat.OpenXml.dll
-C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\UIFramework.dll
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\System.Net.Http.Formatting.dll
-C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\UIFrameworkServices.dll
-C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\Autodesk.UI.Windows.dll
-C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\Autodesk.UI.Themes.dll
-C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\Xceed.Wpf.AvalonDock.dll
-C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\DBManagedServices.dll
-C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\CompositionServices.dll
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\System.Memory.dll
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\System.Threading.Tasks.Extensions.dll
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\Newtonsoft.Json.Bson.dll
@@ -2068,3 +2061,4 @@ C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.csproj.CopyComplete
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.dll
 C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\obj\Debug\MultiDraw.pdb
+C:\Users\Nantha\Desktop\SanveoTIG\Multi Draw new features with four point saddle\05.01.2023\MultiDraw-NewFeatures\MultiDraw\bin\Debug\TIGUtility.dll
