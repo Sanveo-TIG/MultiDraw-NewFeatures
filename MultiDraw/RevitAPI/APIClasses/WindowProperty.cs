@@ -10,5 +10,6 @@ namespace MultiDraw
     {
         public double Top { get; set; }
         public double Left { get; set; }
+        public bool IsPrimaryScreen { get; set; }
     }
 }

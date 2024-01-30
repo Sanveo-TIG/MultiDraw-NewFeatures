@@ -8,7 +8,8 @@ namespace MultiDraw
         #region Revit Addin Info
 
         public const string AddinButtonText = "MultiDraw";
-        public const string AddinButtonTooltip = "MultiDraw Helps to do Align functions for conduits";
+        public const string AddinButtonTooltip = "Efficiently handle modeling of multiple conduits simultaneously. " +
+            "Allows you to add bends, extend or trim conduits, add supports, and synchronize data on the fly.";
         public static string ProjectName = "MultiDraw";
         public const string AddinRibbonTabName = "Sanveo Tools";
         public const string InstallerFolderName = "SNVAddins";

@@ -82,43 +82,58 @@ namespace MultiDraw
             this.MinWidth = Util.IsApplicationWindowAlowToReSize ? Util.ApplicationWindowWidth : 100;
             this.Width = Util.ApplicationWindowWidth;
             this.ResizeMode = Util.IsApplicationWindowAlowToReSize ? System.Windows.ResizeMode.CanResize : System.Windows.ResizeMode.NoResize;
-            this.WindowStyle = WindowStyle.None;         
-            string tempfilePath = System.IO.Path.GetDirectoryName(typeof(Command).Assembly.Location);
-            DirectoryInfo di = new DirectoryInfo(tempfilePath);
-            string tempfileName = System.IO.Path.Combine(di.FullName, "WindowProperty.txt");
-            if (File.Exists(tempfileName))
-            {
-                WindowProperty property = new WindowProperty();
-                using (StreamReader reader = new StreamReader(tempfileName))
-                {
-                    string jsonFromFile = reader.ReadToEnd();
-                    property = JsonConvert.DeserializeObject<WindowProperty>(jsonFromFile);
-                }
-                this.Top = property.Top;
-                this.Left = property.Left;
-                int width = Screen.PrimaryScreen.Bounds.Width;
-                Screen[] Screens = Screen.AllScreens;
-                if(Screens != null && this.Left >= width && Screens.Length == 1)
-                {
-                    foreach(Screen screen in Screens)
-                    {
-                        if(this.Left >= screen.Bounds.Width)
-                        {
-                            this.Left -= screen.Bounds.Width;
-                            break;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            }
+            this.WindowStyle = WindowStyle.None;
+            GetMainWindowLocation();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HeaderPanel.Instance = this;
+        }
+
+        System.Windows.Forms.Screen Screen;
+        private void GetMainWindowLocation()
+        {
+            Screen = System.Windows.Forms.Screen.FromRectangle(
+               new System.Drawing.Rectangle((int)Instance.Left, (int)Instance.Top, (int)Instance.Width, (int)Instance.Height));
+            Left = Screen.WorkingArea.Right - (Screen.WorkingArea.Width * 0.25);
+            Top = Screen.WorkingArea.Top + (Screen.WorkingArea.Height * 0.25);
+            if (Screen.Primary)
+            {
+                Left = Screen.WorkingArea.Right - (Screen.WorkingArea.Width * 0.4);
+                Top = Screen.WorkingArea.Top + (Screen.WorkingArea.Height * 0.25);
+            }
+            // Load saved settings
+            string locationDetails = Properties.Settings.Default.WindowLocation;
+            if (!string.IsNullOrEmpty(locationDetails))
+            {
+                WindowProperty WP = JsonConvert.DeserializeObject<WindowProperty>(locationDetails);
+                if (WP.IsPrimaryScreen && Screen.Primary)
+                {
+                    Left = WP.Left;
+                    Top = WP.Top;
+                }
+            }
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            SaveWindowPosition();
+        }
+
+        private void SaveWindowPosition()
+        {
+            Screen = System.Windows.Forms.Screen.FromRectangle(
+               new System.Drawing.Rectangle((int)Instance.Left, (int)Instance.Top, (int)Instance.Width, (int)Instance.Height));
+            WindowProperty pos = new WindowProperty
+            {
+                Left = Left,
+                Top = Top,
+                IsPrimaryScreen = Screen.Primary
+            };
+            string json = JsonConvert.SerializeObject(pos);
+            Properties.Settings.Default.WindowLocation = json;
+            Properties.Settings.Default.Save();
         }
         #endregion
 
