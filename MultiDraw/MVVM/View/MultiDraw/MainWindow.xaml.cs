@@ -83,12 +83,13 @@ namespace MultiDraw
             this.Width = Util.ApplicationWindowWidth;
             this.ResizeMode = Util.IsApplicationWindowAlowToReSize ? System.Windows.ResizeMode.CanResize : System.Windows.ResizeMode.NoResize;
             this.WindowStyle = WindowStyle.None;
-            GetMainWindowLocation();
+            //GetMainWindowLocation();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HeaderPanel.Instance = this;
+            GetMainWindowLocation();
         }
 
         System.Windows.Forms.Screen Screen;
