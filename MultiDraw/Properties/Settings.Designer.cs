@@ -142,5 +142,20 @@ namespace MultiDraw.Properties {
                 this["ProfileColorSettings"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WindowLocation
+        {
+            get
+            {
+                return ((string)(this["WindowLocation"]));
+            }
+            set
+            {
+                this["WindowLocation"] = value;
+            }
+        }
     }
 }
