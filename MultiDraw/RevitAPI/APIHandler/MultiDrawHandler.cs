@@ -154,6 +154,12 @@ namespace MultiDraw
 
                 ParentUserControl.Instance.Primaryelst = Utility.GetPickedElements(uidoc, "Select conduits to perform action", typeof(Conduit), true);
 
+                if (ParentUserControl.Instance.Primaryelst == null)
+                {
+                    ParentUserControl.Instance.btnPlay.IsChecked = false;
+                    return false;
+                }
+
                 if (PrimaryConduitRunid == null)
                 {
                     PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).Id;
@@ -405,7 +411,7 @@ namespace MultiDraw
                                 {
                                     if (lastconduit != null)
                                     {
-                                        if (conduit.Id == lastconduit.Id)
+                                        if ((conduit as Conduit).RunId == (lastconduit as Conduit).RunId)
                                         {
                                             PrimryConduitcoloroverride(conduit.Id, doc);
                                         }
