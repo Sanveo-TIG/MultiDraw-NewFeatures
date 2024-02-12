@@ -467,29 +467,25 @@ namespace MultiDraw
                                     XYZ pt1 = ((conduit.Location as LocationCurve).Curve as Line).GetEndPoint(0);
                                     XYZ pt2 = ((conduit.Location as LocationCurve).Curve as Line).GetEndPoint(1);
                                     XYZ intersections = Utility.FindIntersectionPoint(Pickpoint, Pickpoint_Two, pt1, pt2);
-                                    double distanceone = Math.Sqrt(Math.Pow((intersections.X - pt1.X), 2) + Math.Pow((intersections.Y - pt1.Y), 2));
-                                    double distancetwo = Math.Sqrt(Math.Pow((intersections.X - pt2.X), 2) + Math.Pow((intersections.Y - pt2.Y), 2));
-                                    if (distanceone < distancetwo)
+                                    if (intersections != null)
                                     {
-                                        (conduit.Location as LocationCurve).Curve = Line.CreateBound(new XYZ(intersections.X, intersections.Y, pt1.Z), pt2);
-                                    }
-                                    else
-                                    {
-                                        (conduit.Location as LocationCurve).Curve = Line.CreateBound(pt1, new XYZ(intersections.X, intersections.Y, pt2.Z));
+                                        double distanceone = Math.Sqrt(Math.Pow((intersections.X - pt1.X), 2) + Math.Pow((intersections.Y - pt1.Y), 2));
+                                        double distancetwo = Math.Sqrt(Math.Pow((intersections.X - pt2.X), 2) + Math.Pow((intersections.Y - pt2.Y), 2));
+                                        if (distanceone < distancetwo)
+                                        {
+                                            (conduit.Location as LocationCurve).Curve = Line.CreateBound(new XYZ(intersections.X, intersections.Y, pt1.Z), pt2);
+                                        }
+                                        else
+                                        {
+                                            (conduit.Location as LocationCurve).Curve = Line.CreateBound(pt1, new XYZ(intersections.X, intersections.Y, pt2.Z));
+                                        }
                                     }
                                 }
                                 ParentUserControl.Instance.AlignConduits.IsChecked = false;
                                 subone.Commit();
-
-                               Family fam = null;
-                                View vie = fam.Document.ActiveView;
-
-
                             }
                             else
                             {
-                              
-
                                 if (k > 0)
                                 {
 
