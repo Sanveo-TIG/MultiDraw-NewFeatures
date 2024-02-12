@@ -83,7 +83,6 @@ namespace MultiDraw
             this.Width = Util.ApplicationWindowWidth;
             this.ResizeMode = Util.IsApplicationWindowAlowToReSize ? System.Windows.ResizeMode.CanResize : System.Windows.ResizeMode.NoResize;
             this.WindowStyle = WindowStyle.None;
-            //GetMainWindowLocation();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

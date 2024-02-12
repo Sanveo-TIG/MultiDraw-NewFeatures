@@ -3742,7 +3742,6 @@ namespace MultiDraw
                             {
                                 try
                                 {
-
                                     bool isAllNull = true;
                                     foreach (Element element in PrimaryElements)
                                     {
@@ -3784,11 +3783,11 @@ namespace MultiDraw
                                                 (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(zLine.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
                                                 Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                                C_bendtype.Set("Straight");
-                                                C_bendangle.Set(StraightAngle);
-                                              
+                                                C_bendtype?.Set("Straight");
+                                                C_bendangle?.Set(StraightAngle);
+
                                                 // Conduitcoloroverride(element.Id, doc);
-                                                
+
                                             }
                                             else
                                             {
@@ -3799,12 +3798,12 @@ namespace MultiDraw
                                                 (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(zLine.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
                                                 Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                                C_bendtype.Set("Straight");
-                                                C_bendangle.Set(StraightAngle);
+                                                C_bendtype?.Set("Straight");
+                                                C_bendangle?.Set(StraightAngle);
 
-                                               
 
-                                              //  Conduitcoloroverride(element.Id, doc);
+
+                                                //  Conduitcoloroverride(element.Id, doc);
 
 
                                             }
@@ -3820,15 +3819,18 @@ namespace MultiDraw
                                             Line xyLine = Utility.GetLineFromConduit(element, true);
                                             Line trimLine = Utility.CrossProductLine(element, trimPoint, 50, true);
                                             XYZ ipTrim = Utility.FindIntersection(element, trimLine);
-                                            XYZ maxDisPoint = Utility.GetMaximumXYZ(xyLine.GetEndPoint(0), xyLine.GetEndPoint(1), ipTrim);
-                                            Line line = Utility.GetLineFromConduit(element);
-                                            maxDisPoint = Utility.SetZvalue(maxDisPoint, line.GetEndPoint(0));
-                                            ipTrim = Utility.SetZvalue(ipTrim, line.GetEndPoint(0));
-                                            (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(line.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
-                                            Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
-                                            Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
-                                            C_bendtype.Set("Straight");
-                                            C_bendangle.Set(StraightAngle);
+                                            if (ipTrim != null)
+                                            {
+                                                XYZ maxDisPoint = Utility.GetMaximumXYZ(xyLine.GetEndPoint(0), xyLine.GetEndPoint(1), ipTrim);
+                                                Line line = Utility.GetLineFromConduit(element);
+                                                maxDisPoint = Utility.SetZvalue(maxDisPoint, line.GetEndPoint(0));
+                                                ipTrim = Utility.SetZvalue(ipTrim, line.GetEndPoint(0));
+                                                (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(line.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
+                                                Parameter C_bendtype = element.LookupParameter("TIG-Bend Type");
+                                                Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
+                                                C_bendtype?.Set("Straight");
+                                                C_bendangle?.Set(StraightAngle);
+                                            }
 
                                             
                                             // Conduitcoloroverride(element.Id, doc);
@@ -3837,9 +3839,9 @@ namespace MultiDraw
                                     }
 
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
-
+                                    MessageBox.Show(ex.StackTrace);
                                     transaction.Dispose();
                                     ParentUserControl.Instance._window.Close();
                                     return false;

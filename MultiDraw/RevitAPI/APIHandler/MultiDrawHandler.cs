@@ -160,7 +160,7 @@ namespace MultiDraw
                     return false;
                 }
 
-                if (PrimaryConduitRunid == null)
+                if (PrimaryConduitRunid == null && ParentUserControl.Instance.Primaryelst != null)
                 {
                     PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).Id;
                 }
