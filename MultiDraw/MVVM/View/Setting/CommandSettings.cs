@@ -42,7 +42,7 @@ namespace MultiDraw
         {
             try
             {
-                if (true)
+                if (Utility.HasValidLicense(Util.ProductVersion))
                 {
                     CustomUIApplication customUIApplication = new CustomUIApplication
                     {
