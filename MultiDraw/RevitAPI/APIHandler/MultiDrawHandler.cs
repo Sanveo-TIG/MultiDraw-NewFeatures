@@ -1549,7 +1549,7 @@ namespace MultiDraw
             var patternCollector = new FilteredElementCollector(doc);
             patternCollector.OfClass(typeof(FillPatternElement));
             FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
-            Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(1, 50, 32));
+            Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(50, 205, 50));
             doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
         }
         private static ElementFilter CreateElementFilterFromFilterRules(IList<FilterRule> filterRules)

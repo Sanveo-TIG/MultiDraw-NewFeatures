@@ -22,9 +22,9 @@
     </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="190"></RowDefinition>
             <RowDefinition Height="110"></RowDefinition>
-            <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="55"></RowDefinition>
         </Grid.RowDefinitions>
@@ -34,6 +34,41 @@
                        Text="Kick"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1">
+            <!--<TIG:SingleSelectDropDownControl  
+                                       x:Name="ddlAngle" HorizontalAlignment="Left"
+                                       DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>-->
+            <ListBox x:Name="ddlAngle" Margin="0 0 0 0"  BorderBrush="#ccc" BorderThickness="1" SelectionChanged="ddlAngle_SelectionChanged"
+      
+Foreground="#333333" 
+       Width="310"
+      HorizontalAlignment="Left"
+Style="{x:Null}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#005D9A"  >
+                                </Setter>
+                                <Setter Property="Foreground" Value="White" ></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                        <Style.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue"/>
+                        </Style.Resources>
+                        <Setter Property="Padding"
+           Value="7,1,3,5" />
+                        <Setter Property="Foreground"
+           Value="#333333"></Setter>
+                        <Setter Property="BorderBrush"
+           Value="#ccc"></Setter>
+                        <Setter Property="BorderThickness"
+           Value="0,0,0,1"></Setter>
+
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
 
             <TextBlock  x:Name="lbl"
                         Text="Kick Options"
@@ -75,12 +110,6 @@
                     </RadioButton>
                 </StackPanel>
             </Border>
-        </StackPanel>
-        <StackPanel Grid.Row="2">
-            <TIG:SingleSelectDropDownControl  
-                                       x:Name="ddlAngle" HorizontalAlignment="Left"
-                                       DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>
-           
         </StackPanel>
         <StackPanel Grid.Row="3">
             <TIG:TextBoxControl x:Name="txtOffsetFeet" 

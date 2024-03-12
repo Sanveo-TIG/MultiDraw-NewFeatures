@@ -137,19 +137,19 @@ namespace MultiDraw
                     substrans2.Commit();
                 }
 
-                if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
                 HOffsetGP globalParam = new HOffsetGP
                 {
                     OffsetValue = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : HOffsetUserControl.Instance.txtOffsetFeet.AsString,
-                    AngleValue = HOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : HOffsetUserControl.Instance.ddlAngle.SelectedItem.Name
+                    AngleValue = HOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
                 bool isVerticalConduits = false;
 
 
-                double angle = Convert.ToDouble(HOffsetUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                double angle = Convert.ToDouble(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                 double offSet = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
                 using (SubTransaction tx = new SubTransaction(doc))
                 {
@@ -336,14 +336,14 @@ namespace MultiDraw
                 List<Element> thirdElements = new List<Element>();
 
 
-                if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
                 HOffsetGP globalParam = new HOffsetGP
                 {
                     OffsetValue = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : HOffsetUserControl.Instance.txtOffsetFeet.AsString,
-                    AngleValue = HOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : HOffsetUserControl.Instance.ddlAngle.SelectedItem.Name
+                    AngleValue = HOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
                 bool isVerticalConduits = false;
 
@@ -360,7 +360,7 @@ namespace MultiDraw
                 }
 
 
-                double angle = Convert.ToDouble(HOffsetUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                double angle = Convert.ToDouble(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                 double offSet = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
                 using (SubTransaction tx = new SubTransaction(doc))
                 {
@@ -615,7 +615,7 @@ namespace MultiDraw
             try
             {
                 startDate = DateTime.UtcNow;
-                if (RollingUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(RollingUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (RollingUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
@@ -636,7 +636,7 @@ namespace MultiDraw
                 {
                     OffsetValue = RollingUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "3" : RollingUserControl.Instance.txtOffsetFeet.AsString,
                     RollOffsetValue = RollingUserControl.Instance.txtRollFeet.AsDouble == 0 ? "2" : RollingUserControl.Instance.txtRollFeet.AsString,
-                    AngleValue = RollingUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : RollingUserControl.Instance.ddlAngle.SelectedItem.Name
+                    AngleValue = RollingUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
 
                 //ConduitElevation identification
@@ -662,7 +662,7 @@ namespace MultiDraw
 
                     double l_offSet = RollingUserControl.Instance.txtOffsetFeet.AsDouble;
                     double l_rollOffset = RollingUserControl.Instance.txtRollFeet.AsDouble;
-                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     using SubTransaction tx = new SubTransaction(doc);
                     tx.Start();
                     Properties.Settings.Default.RollingOffsetDraw = JsonConvert.SerializeObject(globalParam);
@@ -694,7 +694,7 @@ namespace MultiDraw
                         return false;
 
                     double l_offSet = RollingUserControl.Instance.txtOffsetFeet.AsDouble;
-                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
 
                     Properties.Settings.Default.RollingOffsetDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
@@ -737,14 +737,14 @@ namespace MultiDraw
 
                 List<Element> thirdElements = new List<Element>();
 
-                if (VOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (VOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
                 VerticalOffsetGP globalParam = new VerticalOffsetGP
                 {
                     OffsetValue = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : VOffsetUserControl.Instance.txtOffsetFeet.AsString,
-                    AngleValue = VOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name
+                    AngleValue = VOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
                 using (SubTransaction substrans2 = new SubTransaction(_doc))
                 {
@@ -768,8 +768,7 @@ namespace MultiDraw
                 if (Z1 == Z2)
                 {
 
-                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name
-                    .ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     double l_offSet = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
 
 
@@ -900,7 +899,7 @@ namespace MultiDraw
                     if (Pickpoint == null)
                         return false;
 
-                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     double l_offSet = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
 
                     startDate = DateTime.UtcNow;
@@ -1051,14 +1050,14 @@ namespace MultiDraw
 
                 List<Element> thirdElements = new List<Element>();
 
-                if (VOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (VOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
                 VerticalOffsetGP globalParam = new VerticalOffsetGP
                 {
                     OffsetValue = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : VOffsetUserControl.Instance.txtOffsetFeet.AsString,
-                    AngleValue = VOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name
+                    AngleValue = VOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
 
                 //XYZ Pickpoint = null;
@@ -1085,7 +1084,7 @@ namespace MultiDraw
                 if (Z1 == Z2)
                 {
 
-                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name
+                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem
                     .ToString()) * (Math.PI / 180);
                     double l_offSet = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
 
@@ -1225,7 +1224,7 @@ namespace MultiDraw
                     if (Pickpoint == null)
                         return false;
 
-                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     double l_offSet = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
 
                     startDate = DateTime.UtcNow;
@@ -2099,7 +2098,7 @@ namespace MultiDraw
             try
             {
                 startDate = DateTime.UtcNow;
-                if (RollingUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(RollingUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (RollingUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
@@ -2118,7 +2117,7 @@ namespace MultiDraw
                 {
                     OffsetValue = RollingUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "3" : RollingUserControl.Instance.txtOffsetFeet.AsString,
                     RollOffsetValue = RollingUserControl.Instance.txtRollFeet.AsDouble == 0 ? "2" : RollingUserControl.Instance.txtRollFeet.AsString,
-                    AngleValue = RollingUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : RollingUserControl.Instance.ddlAngle.SelectedItem.Name
+                    AngleValue = RollingUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
 
                 //ConduitElevation identification
@@ -2133,7 +2132,7 @@ namespace MultiDraw
 
                     double l_offSet = RollingUserControl.Instance.txtOffsetFeet.AsDouble;
                     double l_rollOffset = RollingUserControl.Instance.txtRollFeet.AsDouble;
-                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     using SubTransaction tx = new SubTransaction(doc);
                     tx.Start();
                     Properties.Settings.Default.RollingOffsetDraw = JsonConvert.SerializeObject(globalParam);
@@ -2164,7 +2163,7 @@ namespace MultiDraw
 
                     double l_offSet = RollingUserControl.Instance.txtOffsetFeet.AsDouble;
                     double l_rollOffset = RollingUserControl.Instance.txtRollFeet.AsDouble;
-                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.Name.ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(RollingUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
 
                     Properties.Settings.Default.RollingOffsetDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
@@ -2334,7 +2333,7 @@ namespace MultiDraw
             try
             {
                 startDate = DateTime.UtcNow;
-                if (KickUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(KickUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (KickUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
@@ -2352,12 +2351,12 @@ namespace MultiDraw
                 Kick90DrawGP globalParam = new Kick90DrawGP
                 {
                     OffsetValue = KickUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : KickUserControl.Instance.txtOffsetFeet.AsString,
-                    AngleValue = KickUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : KickUserControl.Instance.ddlAngle.SelectedItem.Name,
+                    AngleValue = KickUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : KickUserControl.Instance.ddlAngle.SelectedItem.ToString(),
                     SelectionMode = KickUserControl.Instance.rbNinetyNear.IsChecked == true ? "90° Near" : "90° Far"
                 };
 
                 double l_offSet = KickUserControl.Instance.txtOffsetFeet.AsDouble;
-                double l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.Name) * (Math.PI / 180);
+                double l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                 using (SubTransaction subtrans = new SubTransaction(doc))
                 {
                     subtrans.Start();
@@ -2445,7 +2444,7 @@ namespace MultiDraw
                 startDate = DateTime.UtcNow;
 
 
-                if (KickUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(KickUserControl.Instance.ddlAngle.SelectedItem.Name))
+                if (KickUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
                 }
@@ -2464,7 +2463,7 @@ namespace MultiDraw
                 Kick90DrawGP globalParam = new Kick90DrawGP
                 {
                     OffsetValue = KickUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : KickUserControl.Instance.txtOffsetFeet.AsString,
-                    AngleValue = KickUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : KickUserControl.Instance.ddlAngle.SelectedItem.Name,
+                    AngleValue = KickUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : KickUserControl.Instance.ddlAngle.SelectedItem.ToString(),
                     SelectionMode = KickUserControl.Instance.rbNinetyNear.IsChecked == true ? "90° Near" : "90° Far"
                 };
                 using (SubTransaction transreset = new SubTransaction(doc))
@@ -2478,7 +2477,7 @@ namespace MultiDraw
                     transreset.Commit();
                 }
                 double l_offSet = KickUserControl.Instance.txtOffsetFeet.AsDouble;
-                double l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.Name) * (Math.PI / 180);
+                double l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                 using (SubTransaction subtrans = new SubTransaction(doc))
                 {
                     subtrans.Start();
@@ -2532,8 +2531,8 @@ namespace MultiDraw
         {
             FamilyInstance fittings1 = null;
             FamilyInstance fittings2 = null;
-            List<FamilyInstance> bottomTag = null;
-            List<FamilyInstance> toptag = null;
+            //List<FamilyInstance> bottomTag = null;
+            //List<FamilyInstance> toptag = null;
             string json = Properties.Settings.Default.ProfileColorSettings;
             ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
@@ -2545,7 +2544,7 @@ namespace MultiDraw
                     SecondaryElements.FirstOrDefault().LookupParameter(offSetVar).AsDouble();
                 if (!isUp)
                 {
-                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.Name) * (Math.PI / 180);
+                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     try
                     {
                         ConnectorSet PrimaryConnectors = null;
@@ -2610,8 +2609,8 @@ namespace MultiDraw
                                 //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
                                 //}
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                               // bottomTag.Add(fittings1);
+                               // toptag.Add(fittings2);
                             }
                         }
                         else
@@ -2682,8 +2681,8 @@ namespace MultiDraw
                                 //}
 
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                               // bottomTag.Add(fittings1);
+                                //toptag.Add(fittings2);
                             }
                         }
                         //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -2745,8 +2744,8 @@ namespace MultiDraw
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
                                   //  Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                   // bottomTag.Add(fittings1);
+                                    //toptag.Add(fittings2);
                                 }
                             }
                             else
@@ -2807,8 +2806,8 @@ namespace MultiDraw
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                   // bottomTag.Add(fittings1);
+                                    //toptag.Add(fittings2);
                                 }
                             }
                             // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -2822,7 +2821,7 @@ namespace MultiDraw
                 }
                 if (isUp)
                 {
-                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.Name) * (Math.PI / 180);
+                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     try
                     {
 
@@ -2879,8 +2878,8 @@ namespace MultiDraw
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
                                 //Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                               // bottomTag.Add(fittings1);
+                               // toptag.Add(fittings2);
                             }
                         }
                         else
@@ -2941,8 +2940,8 @@ namespace MultiDraw
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                                //bottomTag.Add(fittings1);
+                                //toptag.Add(fittings2);
                             }
                         }
                         // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -3004,8 +3003,8 @@ namespace MultiDraw
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                   // bottomTag.Add(fittings1);
+                                   // toptag.Add(fittings2);
                                 }
                             }
                             else
@@ -3066,8 +3065,8 @@ namespace MultiDraw
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                   // bottomTag.Add(fittings1);
+                                    //toptag.Add(fittings2);
                                 }
                             }
                             // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -3094,8 +3093,8 @@ namespace MultiDraw
         {
             FamilyInstance fittings1 = null;
             FamilyInstance fittings2 = null;
-            List<FamilyInstance> bottomTag = null;
-            List<FamilyInstance> toptag = null;
+           // List<FamilyInstance> bottomTag = null;
+            //List<FamilyInstance> toptag = null;
             string json = Properties.Settings.Default.ProfileColorSettings;
             ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
@@ -3107,7 +3106,7 @@ namespace MultiDraw
                     SecondaryElements.FirstOrDefault().LookupParameter(offSetVar).AsDouble();
                 if (!isUp)
                 {
-                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.Name) * (Math.PI / 180);
+                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     try
                     {
                         ConnectorSet PrimaryConnectors = null;
@@ -3163,8 +3162,8 @@ namespace MultiDraw
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                                //bottomTag.Add(fittings1);
+                               // toptag.Add(fittings2);
                             }
                         }
                         else
@@ -3226,8 +3225,8 @@ namespace MultiDraw
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
                                 //Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                bottomTag.Add(fittings1);
-                                toptag.Add(fittings2);
+                               // bottomTag.Add(fittings1);
+                                //toptag.Add(fittings2);
                             }
                         }
                         // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -3288,8 +3287,8 @@ namespace MultiDraw
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
                                   //  Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                   // bottomTag.Add(fittings1);
+                                   // toptag.Add(fittings2);
                                 }
                             }
                             else
@@ -3350,8 +3349,8 @@ namespace MultiDraw
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                   // bottomTag.Add(fittings1);
+                                    //toptag.Add(fittings2);
                                     
                                 }
                             }
@@ -3366,7 +3365,7 @@ namespace MultiDraw
                 }
                 if (isUp)
                 {
-                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.Name) * (Math.PI / 180);
+                    l_angle = Convert.ToDouble(KickUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     try
                     {
 
@@ -3608,8 +3607,8 @@ namespace MultiDraw
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    bottomTag.Add(fittings1);
-                                    toptag.Add(fittings2);
+                                   // bottomTag.Add(fittings1);
+                                   // toptag.Add(fittings2);
                                 }
                             }
                             // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -4759,7 +4758,7 @@ namespace MultiDraw
                 {
                     OffsetValue = NinetyKickUserControl.Instance.txtOffset.AsDouble == 0 ? "1.5" : NinetyKickUserControl.Instance.txtOffset.AsString,
                     RiseValue = NinetyKickUserControl.Instance.txtRise.AsDouble == 0 ? "10.0" : NinetyKickUserControl.Instance.txtRise.AsString,
-                    AngleValue = NinetyKickUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : NinetyKickUserControl.Instance.ddlAngle.SelectedItem.Name
+                    AngleValue = NinetyKickUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : NinetyKickUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
 
                 double l_angle;
@@ -4782,8 +4781,8 @@ namespace MultiDraw
                     transKick.Start();
                     Properties.Settings.Default.NinetyKickDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
-                    MultiSelect angleSelected = NinetyKickUserControl.Instance.ddlAngle.SelectedItem;
-                    l_angle = Convert.ToDouble(angleSelected.Name);
+                    //MultiSelect angleSelected = NinetyKickUserControl.Instance.ddlAngle.SelectedItem.ToString();
+                    l_angle = Convert.ToDouble(NinetyKickUserControl.Instance.ddlAngle.SelectedItem.ToString());
                     DeleteSupports(doc, PrimaryElements);
                     ApplyKick(doc, ref PrimaryElements, l_angle, l_offSet, l_Rise, offsetVariable, uiapp, pickpoint);
                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });

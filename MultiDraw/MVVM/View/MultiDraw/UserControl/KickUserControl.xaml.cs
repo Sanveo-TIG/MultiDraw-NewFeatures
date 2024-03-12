@@ -42,11 +42,11 @@ namespace MultiDraw
             _externalEvents = externalEvents;
             InitializeComponent();
             Instance = this;
-            ddlAngle.Attributes = new MultiSelectAttributes()
-            {
-                Label = "Angle",
-                Width = 310
-            };
+            //ddlAngle.Attributes = new MultiSelectAttributes()
+            //{
+            //    Label = "Angle",
+            //    Width = 310
+            //};
             try
             {
                 _window = window;
@@ -62,7 +62,7 @@ namespace MultiDraw
         {
             Kick90DrawGP globalParam = new Kick90DrawGP
             {
-                AngleValue = ddlAngle == null ? "30.00" : ddlAngle.SelectedItem.Name,
+                AngleValue = ddlAngle == null ? "30.00" : ddlAngle.SelectedItem.ToString(),
                 OffsetValue = txtOffsetFeet.AsDouble == 0 ? "1.5\'" : txtOffsetFeet.AsString,
                 SelectionMode = rbNinetyNear.IsChecked == true ? "90° Near" : "90° Far"
             };
@@ -74,10 +74,10 @@ namespace MultiDraw
             txtOffsetFeet.Click_load(txtOffsetFeet);
         }
 
-        private void DdlAngle_Changed(object sender)
-        {
-            SaveSettings();
-        }
+        //private void DdlAngle_Changed(object sender)
+        //{
+        //    SaveSettings();
+        //}
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -95,7 +95,8 @@ namespace MultiDraw
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
                 angleList.Add(new MultiSelect() { Name = item });
-            ddlAngle.ItemsSource = angleList;
+            ddlAngle.ItemsSource = _angleList;
+            ddlAngle.SelectedIndex = 4;
             Grid_MouseDown(null, null);
             string json = Properties.Settings.Default.Kick90Draw;
             if (!string.IsNullOrEmpty(json))
@@ -104,14 +105,19 @@ namespace MultiDraw
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
                 rbNinetyNear.IsChecked = globalParam.SelectionMode == "90° Near";
                 rbNinetyFar.IsChecked = string.IsNullOrEmpty(globalParam.SelectionMode) || globalParam.SelectionMode == "90° Far";
-                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];               
+                ddlAngle.SelectedItem = angleList.FindIndex(x => x.Name == globalParam.AngleValue);               
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
-                ddlAngle.SelectedItem = angleList[4];                
+                ddlAngle.SelectedItem = 4;                
             }
           //  _externalEvents.Raise();
+        }
+
+        private void ddlAngle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveSettings();
         }
     }
 }

@@ -49,11 +49,12 @@ namespace MultiDraw
                 ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
                 ParentUserControl.Instance.AlignConduits.IsChecked = false;
                 ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
-                ddlAngle.Attributes = new MultiSelectAttributes()
-                {
-                    Label = "Angle",
-                    Width=310
-                };
+
+                //ddlAngle.Attributes = new MultiSelectAttributes()
+                //{
+                //    Label = "Angle",
+                //    Width=310
+                //};
 
             }
             catch (Exception exception)
@@ -68,7 +69,7 @@ namespace MultiDraw
             VerticalOffsetGP globalParam = new VerticalOffsetGP
             {
                 OffsetValue = txtOffsetFeet.AsDouble == 0 ? "1.5\'" : txtOffsetFeet.AsString,
-                AngleValue = ddlAngle.SelectedItem == null ? "30.00" : ddlAngle.SelectedItem.Name
+                AngleValue = ddlAngle.SelectedItem == null ? "30.00" : ddlAngle.SelectedItem.ToString(),
             };
             Properties.Settings.Default.VerticalOffsetDraw = JsonConvert.SerializeObject(globalParam);
             Properties.Settings.Default.Save();
@@ -78,10 +79,10 @@ namespace MultiDraw
             txtOffsetFeet.Click_load(txtOffsetFeet);
         }
 
-        private void DdlAngle_Changed(object sender)
-        {
-            SaveSettings();
-        }
+        //private void DdlAngle_Changed(object sender)
+        //{
+        //    SaveSettings();
+        //}
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -94,21 +95,27 @@ namespace MultiDraw
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
                 angleList.Add(new MultiSelect() { Name = item });
-            ddlAngle.ItemsSource = angleList;
+            ddlAngle.ItemsSource = _angleList;
+            ddlAngle.SelectedIndex = 4;
             Grid_MouseDown(null, null);
             string json = Properties.Settings.Default.VerticalOffsetDraw;
             if (!string.IsNullOrEmpty(json))
             {
                 VerticalOffsetGP globalParam = JsonConvert.DeserializeObject<VerticalOffsetGP>(json);
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
-                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];
+                ddlAngle.SelectedItem = angleList.FindIndex(x => x.Name == globalParam.AngleValue);
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
-                ddlAngle.SelectedItem = angleList[4];
+                ddlAngle.SelectedItem = 4;
             }
             // _externalEvents.Raise();
+        }
+
+        private void ddlAngle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveSettings();
         }
     }
 }
