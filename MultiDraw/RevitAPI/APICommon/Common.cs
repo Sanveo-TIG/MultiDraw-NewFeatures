@@ -2218,9 +2218,15 @@ namespace MultiDraw
                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                C_bendtype.Set(profileSetting.rOffsetValue);
+                if (profileSetting != null)
+                {
+                    C_bendtype.Set(profileSetting.rOffsetValue);
+                }
                 C_bendangle.Set(l_angle);
-                C_bendtype2.Set(profileSetting.rOffsetValue);
+                if (profileSetting != null)
+                {
+                    C_bendtype2.Set(profileSetting.rOffsetValue);
+                }
                 C_bendangle2.Set(l_angle);
 
                 ConnectorSet thirdConnectors = Utility.GetConnectors(e);
@@ -2286,9 +2292,15 @@ namespace MultiDraw
                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                C_bendtype.Set(profileSetting.rOffsetValue);
+                if (profileSetting != null)
+                {
+                    C_bendtype.Set(profileSetting.rOffsetValue);
+                }
                 C_bendangle.Set(l_angle);
-                C_bendtype2.Set(profileSetting.rOffsetValue);
+                if (profileSetting != null)
+                {
+                    C_bendtype2.Set(profileSetting.rOffsetValue);
+                }
                 C_bendangle2.Set(l_angle);
 
                 ConnectorSet thirdConnectors = Utility.GetConnectors(e);
@@ -2656,9 +2668,15 @@ namespace MultiDraw
                                 Parameter C_bendangle = SecondaryElements[i].LookupParameter("TIG-Bend Angle");
                                 Parameter C_bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                                 Parameter C_bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                                C_bendtype.Set(profileSetting.kOffsetValue);
+                                if (profileSetting != null)
+                                {
+                                    C_bendtype.Set(profileSetting.kOffsetValue);
+                                }
                                 C_bendangle.Set(l_angle);
-                                C_bendtype2.Set(profileSetting.kOffsetValue);
+                                if (profileSetting != null)
+                                {
+                                    C_bendtype2.Set(profileSetting.kOffsetValue);
+                                }
                                 C_bendangle2.Set(NinetyAngle);
 
                                 fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
