@@ -13,6 +13,7 @@ using adWin = Autodesk.Windows;
 using TIGUtility;
 using System.Diagnostics;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Configuration.Assemblies;
 #endregion
 
 
@@ -189,6 +190,16 @@ namespace MultiDraw
                 path + "\\MultiDraw.html"); // hard coding for simplicity. 
 
             MultiDrawButton.SetContextualHelp(contextHelpMultidrawSetting);
+
+            //// Create primary button
+            //SplitButton splitButton = ribbonPanel.AddItem(buttondata) as SplitButton;
+
+            //// Add dropdown items
+            //PushButtonData dropdownItem1 = new PushButtonData("DropdownItem1", "Dropdown Item 1", assemblyPath, "Namespace.DropdownCommand1");
+            //splitButton.AddPushButton(dropdownItem1);
+
+            //PushButtonData dropdownItem2 = new PushButtonData("DropdownItem2", "Dropdown Item 2", assemblyPath, "Namespace.DropdownCommand2");
+            //splitButton.AddPushButton(dropdownItem2);
             //adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
             //foreach (adWin.RibbonTab tab in ribbon.Tabs)
             //{

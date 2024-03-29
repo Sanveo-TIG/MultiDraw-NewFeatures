@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/MultiDraw/FileContentIndex
+/.vs/MultiDraw-NewFeatures/FileContentIndex
+/.vs/MultiDraw-NewFeatures/v17
+/.vs
