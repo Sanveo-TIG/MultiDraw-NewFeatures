@@ -44,18 +44,25 @@ namespace MultiDraw
             {
                 if (Utility.HasValidLicense(Util.ProductVersion))
                 {
-                    CustomUIApplication customUIApplication = new CustomUIApplication
+                    if (Utility.ReadPremiumLicense(Util.ProjectName))
                     {
-                        CommandData = commandData
-                    };
-                    if (Keyboard.Modifiers.ToString() != ModifierKeys.Shift.ToString())
-                    {
-                        System.Windows.Window window = new SettingsWindow(customUIApplication);
-                        window.Show();
-                        window.Closed += OnClosing;
-                        if (App.MultiDrawButton != null)
-                            App.MultiDrawButton.Enabled = false;
-                    }  
+                        CustomUIApplication customUIApplication = new CustomUIApplication
+                        {
+                            CommandData = commandData
+                        };
+                        if (Keyboard.Modifiers.ToString() != ModifierKeys.Shift.ToString())
+                        {
+                            System.Windows.Window window = new SettingsWindow(customUIApplication);
+                            window.Show();
+                            window.Closed += OnClosing;
+                            if (App.MultiDrawButton != null)
+                                App.MultiDrawButton.Enabled = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("You dont have access to Premium Tool");
+                        }
+                    }
                     else
                     {
                         Window SettingsWindow = new Window();

@@ -42,24 +42,30 @@ namespace MultiDraw
         {
             try
             {
-                
                 if (Utility.HasValidLicense(Util.ProductVersion))
                 {
-                    CustomUIApplication customUIApplication = new CustomUIApplication
+                    if (Utility.ReadPremiumLicense(Util.ProjectName))
                     {
-                        CommandData = commandData
-                    };
-                    if (Keyboard.Modifiers.ToString() != ModifierKeys.Shift.ToString())
-                    {
-                        System.Windows.Window window = new MainWindow(customUIApplication);
-                        window.Show();
-                        window.Closed += OnClosing;
-                        if (App.MultiDrawButton != null)
-                            App.MultiDrawButton.Enabled = false;
-                    }  
+                        CustomUIApplication customUIApplication = new CustomUIApplication
+                        {
+                            CommandData = commandData
+                        };
+                        if (Keyboard.Modifiers.ToString() != ModifierKeys.Shift.ToString())
+                        {
+                            System.Windows.Window window = new MainWindow(customUIApplication);
+                            window.Show();
+                            window.Closed += OnClosing;
+                            if (App.MultiDrawButton != null)
+                                App.MultiDrawButton.Enabled = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("You dont have access to Premium Tool");
+                        }
+                    }
                     else
                     {
-                       var e= ExternalEvent.Create(new SettingsHandler());
+                        var e = ExternalEvent.Create(new SettingsHandler());
                         Window SettingsWindow = new Window();
                         SettingsUserControl settings = new SettingsUserControl(commandData.Application.ActiveUIDocument.Document, commandData.Application, SettingsWindow, e);
                         SettingsWindow.ResizeMode = ResizeMode.NoResize;
@@ -79,6 +85,7 @@ namespace MultiDraw
                 return Result.Failed;
             }
         }
+
         public void OnClosing(object senMultiDrawr, EventArgs e)
         {
             if (App.MultiDrawButton != null)
@@ -96,7 +103,6 @@ namespace MultiDraw
                             RibbonItemCollection collctn = panel.Source.Items;
                             foreach (Autodesk.Windows.RibbonItem ri in collctn)
                             {
-
                                 if (ri is RibbonRowPanel)
                                 {
                                     foreach (var item in (ri as RibbonRowPanel).Items)
