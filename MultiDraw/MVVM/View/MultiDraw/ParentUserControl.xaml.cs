@@ -55,8 +55,12 @@ namespace MultiDraw
             try
             {
                 _window = window;
-              
+               
                 _window.LocationChanged += Window_LocationChanged;
+               
+
+
+
             }
             catch (Exception exception)
             {
@@ -94,11 +98,91 @@ namespace MultiDraw
             File.WriteAllText(tempfileName, strWindowProp);
         }
 
+        private void FromGlobalSearch()
+        {
+            try
+            {
+
+                string tempfilePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                DirectoryInfo di = new DirectoryInfo(tempfilePath);
+                if (new DirectoryInfo(di.Parent.FullName).Exists)
+                {
+                    di = new DirectoryInfo(di.Parent.FullName);
+                }
+
+               
+               string tempfileName = System.IO.Path.Combine(di.Parent.FullName, "TriggerFile.txt");
+                if (File.Exists(tempfileName))
+                {
+
+                    string lines = File.ReadLines(tempfileName).Skip(1).FirstOrDefault();
+                    if (lines != null && lines.Length > 0)
+                    {
+                        string route = lines;
+
+                        if (!string.IsNullOrEmpty(route) && route.EndsWith("-Vertical Offset"))
+                        {
+                            cmbProfileType.SelectedIndex = 0;
+
+
+                        }
+                        else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Horizontal Offset"))
+                        {
+
+                            cmbProfileType.SelectedIndex = 1;
+
+                        }
+                        else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Rolling Offset"))
+                        {
+                            cmbProfileType.SelectedIndex = 2;
+                        }
+                        else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Kick"))
+                        {
+                            cmbProfileType.SelectedIndex = 3;
+                        }
+                        else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Straight/Bend"))
+                        {
+                            cmbProfileType.SelectedIndex = 4;
+                        }
+                        else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Kick 90"))
+                        {
+                            cmbProfileType.SelectedIndex = 5;
+                        }
+                        else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Stub 90"))
+                        {
+                            cmbProfileType.SelectedIndex = 6;
+                        }
+                        else
+                        {
+                            cmbProfileType.SelectedIndex = 4;
+                        }
+
+                    }
+                    else
+                    {
+                        cmbProfileType.SelectedIndex = 4;
+                    }
+                }
+                else
+                {
+                    cmbProfileType.SelectedIndex = 4;
+                }
+            }
+            catch { }
+
+        }
+
+
+
         public void CmbProfileType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+           
+
+
             masterContainer.Children.Clear();
             UserControl userControl = new UserControl();
-            switch (((System.Windows.Controls.Primitives.Selector)sender).SelectedIndex)
+           // switch (((System.Windows.Controls.Primitives.Selector)sender).SelectedIndex)
+           switch(cmbProfileType.SelectedIndex)
             {
                 case 0:
                     userControl = new VOffsetUserControl(_externalEvents[0], _application, _window);
@@ -182,7 +266,8 @@ namespace MultiDraw
 
         private void OnControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbProfileType.SelectedIndex = 4;
+            FromGlobalSearch();
+            //cmbProfileType.SelectedIndex = 4;
             ReadSettings();
             btnPlay.IsChecked = true;
             PlayButton_Click(null,null);
@@ -209,6 +294,7 @@ namespace MultiDraw
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
+           
             switch (cmbProfileType.SelectedIndex)
             {
                 case 0:

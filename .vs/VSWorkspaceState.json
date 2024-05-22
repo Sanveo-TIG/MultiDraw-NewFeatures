@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\MultiDraw",
+    "\\MultiDraw\\MVVM",
+    "\\MultiDraw\\MVVM\\View",
+    "\\MultiDraw\\MVVM\\View\\Setting"
   ],
+  "SelectedNode": "\\MultiDraw\\MVVM\\View\\Setting\\CommandSettings.cs",
   "PreviewInSolutionExplorer": false
 }
