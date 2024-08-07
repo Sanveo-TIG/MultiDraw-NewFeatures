@@ -11,7 +11,7 @@
         Background="#E5EEF5"
         Title="SettingsWindow"
         Loaded="Window_Loaded" 
-        FontFamily="/MultiDraw;component/Resources/Font/#Poppins Medium">
+        FontFamily="/MultiDraw;component/Resources/Font/#Poppins Medium"  Closing="Window_Closing">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"   />       
     </WindowChrome.WindowChrome>

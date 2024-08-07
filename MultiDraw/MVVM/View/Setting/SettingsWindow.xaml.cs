@@ -129,6 +129,7 @@ namespace MultiDraw
             System.Windows.Controls.UserControl userControl = new SettingsUserControl(application.UIApplication.ActiveUIDocument.Document,application.UIApplication,this, _externalEvents[1]);
             Container.Children.Add(userControl);
         }
+
         private void InitializeHandlers()
         {
             _externalEvents.Add(ExternalEvent.Create(new MultiDrawHandler()));
@@ -136,6 +137,13 @@ namespace MultiDraw
             _externalEvents.Add(ExternalEvent.Create(new ConduitSyncHandler()));
         }
 
-       
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _externalEvents[2].Raise();
+        }
     }
 }
+
+
+
+
