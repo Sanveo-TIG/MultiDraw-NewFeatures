@@ -42,14 +42,14 @@ namespace MultiDraw
             {
                 Settings settings = new Settings
                 {
-                    IsSupportNeeded = (bool)SettingsUserControl.Instance.IsSupportNeeded.IsChecked,
-                    StrutType = SettingsUserControl.Instance.ddlStrutType.SelectedItem != null ? SettingsUserControl.Instance.ddlStrutType.SelectedItem.Name : string.Empty,
-                    RodDiaAsDouble = SettingsUserControl.Instance.txtRodDia.AsDouble,
-                    RodDiaAsString = SettingsUserControl.Instance.txtRodDia.Text,
-                    RodExtensionAsDouble = SettingsUserControl.Instance.txtRodExtension.AsDouble,
-                    RodExtensionAsString = SettingsUserControl.Instance.txtRodExtension.Text,
-                    SupportSpacingAsString = SettingsUserControl.Instance.txtSupportSpacing.Text,
-                    SupportSpacingAsDouble = SettingsUserControl.Instance.txtSupportSpacing.AsDouble
+                    //IsSupportNeeded = (bool)SettingsUserControl.Instance.IsSupportNeeded.IsChecked,
+                    //StrutType = SettingsUserControl.Instance.ddlStrutType.SelectedItem != null ? SettingsUserControl.Instance.ddlStrutType.SelectedItem.Name : string.Empty,
+                    //RodDiaAsDouble = SettingsUserControl.Instance.txtRodDia.AsDouble,
+                    //RodDiaAsString = SettingsUserControl.Instance.txtRodDia.Text,
+                    //RodExtensionAsDouble = SettingsUserControl.Instance.txtRodExtension.AsDouble,
+                    //RodExtensionAsString = SettingsUserControl.Instance.txtRodExtension.Text,
+                    //SupportSpacingAsString = SettingsUserControl.Instance.txtSupportSpacing.Text,
+                    //SupportSpacingAsDouble = SettingsUserControl.Instance.txtSupportSpacing.AsDouble
 
                 };
               

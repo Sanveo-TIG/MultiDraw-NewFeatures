@@ -41,7 +41,7 @@ namespace MultiDraw
         public CustomUIApplication _application = null;
         public Settings MultiDrawSettings = null;
         public SettingsUserControl settingsControl = null;
-       public ProfileColorSettingsData _ProfileColorSettingsData = new ProfileColorSettingsData();
+        public ProfileColorSettingsData _ProfileColorSettingsData = new ProfileColorSettingsData();
         public Transaction _transaction = null;
         public bool _isStopedTransaction = false;
         public ParentUserControl(List<ExternalEvent> externalEvents, CustomUIApplication application, Window window)
@@ -55,19 +55,12 @@ namespace MultiDraw
             try
             {
                 _window = window;
-               
                 _window.LocationChanged += Window_LocationChanged;
-               
-
-
-
             }
             catch (Exception exception)
             {
-
                 System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -102,19 +95,15 @@ namespace MultiDraw
         {
             try
             {
-
                 string tempfilePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 DirectoryInfo di = new DirectoryInfo(tempfilePath);
                 if (new DirectoryInfo(di.Parent.FullName).Exists)
                 {
                     di = new DirectoryInfo(di.Parent.FullName);
                 }
-
-               
-               string tempfileName = System.IO.Path.Combine(di.Parent.FullName, "TriggerFile.txt");
+                string tempfileName = System.IO.Path.Combine(di.Parent.FullName, "TriggerFile.txt");
                 if (File.Exists(tempfileName))
                 {
-
                     string lines = File.ReadLines(tempfileName).Skip(1).FirstOrDefault();
                     if (lines != null && lines.Length > 0)
                     {
@@ -123,14 +112,10 @@ namespace MultiDraw
                         if (!string.IsNullOrEmpty(route) && route.EndsWith("-Vertical Offset"))
                         {
                             cmbProfileType.SelectedIndex = 0;
-
-
                         }
                         else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Horizontal Offset"))
                         {
-
                             cmbProfileType.SelectedIndex = 1;
-
                         }
                         else if (!string.IsNullOrEmpty(route) && route.EndsWith("-Rolling Offset"))
                         {
@@ -156,7 +141,6 @@ namespace MultiDraw
                         {
                             cmbProfileType.SelectedIndex = 4;
                         }
-
                     }
                     else
                     {
@@ -169,20 +153,15 @@ namespace MultiDraw
                 }
             }
             catch { }
-
         }
-
 
 
         public void CmbProfileType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
-
-
             masterContainer.Children.Clear();
             UserControl userControl = new UserControl();
-           // switch (((System.Windows.Controls.Primitives.Selector)sender).SelectedIndex)
-           switch(cmbProfileType.SelectedIndex)
+            // switch (((System.Windows.Controls.Primitives.Selector)sender).SelectedIndex)
+            switch (cmbProfileType.SelectedIndex)
             {
                 case 0:
                     userControl = new VOffsetUserControl(_externalEvents[0], _application, _window);
@@ -207,7 +186,7 @@ namespace MultiDraw
                     break;
                 case 7:
                     userControl = new ThreePointSaddleUserControl(_externalEvents[0], _application, _window);
-                  //  userControl = new SyncDataUserControl(_application, _window);
+                    //  userControl = new SyncDataUserControl(_application, _window);
                     break;
                 case 8:
                     //userControl = new SettingsUserControl(_doc, _application.UIApplication, _window, _externalEvents[1]);
@@ -218,7 +197,6 @@ namespace MultiDraw
                     break;
             }
             masterContainer.Children.Add(userControl);
-
         }
 
         private void ReadSettings()
@@ -249,14 +227,14 @@ namespace MultiDraw
             {
                 Settings settings = new Settings
                 {
-                    IsSupportNeeded = (bool)settingsControl.IsSupportNeeded.IsChecked,
-                    StrutType = settingsControl.ddlStrutType.SelectedItem.Name,
-                    RodDiaAsDouble = settingsControl.txtRodDia.AsDouble,
-                    RodDiaAsString = settingsControl.txtRodDia.Text,
-                    RodExtensionAsDouble = settingsControl.txtRodExtension.AsDouble,
-                    RodExtensionAsString = settingsControl.txtRodExtension.Text,
-                    SupportSpacingAsString = settingsControl.txtSupportSpacing.Text,
-                    SupportSpacingAsDouble = settingsControl.txtSupportSpacing.AsDouble
+                //    IsSupportNeeded = (bool)settingsControl.IsSupportNeeded.IsChecked,
+                //    StrutType = settingsControl.ddlStrutType.SelectedItem.Name,
+                //    RodDiaAsDouble = settingsControl.txtRodDia.AsDouble,
+                //    RodDiaAsString = settingsControl.txtRodDia.Text,
+                //    RodExtensionAsDouble = settingsControl.txtRodExtension.AsDouble,
+                //    RodExtensionAsString = settingsControl.txtRodExtension.Text,
+                //    SupportSpacingAsString = settingsControl.txtSupportSpacing.Text,
+                //    SupportSpacingAsDouble = settingsControl.txtSupportSpacing.AsDouble
                 };
                 MultiDrawSettings = settings;
                 return settings;
@@ -270,12 +248,12 @@ namespace MultiDraw
             //cmbProfileType.SelectedIndex = 4;
             ReadSettings();
             btnPlay.IsChecked = true;
-            PlayButton_Click(null,null);
+            PlayButton_Click(null, null);
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -294,7 +272,7 @@ namespace MultiDraw
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-           
+
             switch (cmbProfileType.SelectedIndex)
             {
                 case 0:
@@ -310,7 +288,7 @@ namespace MultiDraw
                 case 3:
                     KickUserControl.Instance.txtOffsetFeet.Click_load(KickUserControl.Instance.txtOffsetFeet);
                     break;
-               
+
                 case 5:
                     NinetyKickUserControl.Instance.txtOffset.Click_load(NinetyKickUserControl.Instance.txtOffset);
                     NinetyKickUserControl.Instance.txtRise.Click_load(NinetyKickUserControl.Instance.txtRise);
