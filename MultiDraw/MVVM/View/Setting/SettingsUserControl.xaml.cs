@@ -86,7 +86,7 @@ namespace MultiDraw
                 LoadTab();
 
                 UserControl userControl = new ProfileColorSettingUserControl(saveEvent, uiApp, window);
-               // containerProfileColorSettings.Children.Add(userControl);
+                // containerProfileColorSettings.Children.Add(userControl);
                 _offsetVariable = RevitVersion < 2020 ? "Offset" : "Middle Elevation";
                 _removingList = new List<string>()
                 {
@@ -105,43 +105,9 @@ namespace MultiDraw
                 };
 
                 // List<SYNCDataGlobalParam> globalParam = new List<SYNCDataGlobalParam>();
-                
-                SyncDataConfig syncDataConfig = new SyncDataConfig();
-                List<BaseClass> syncDataParameters = new List<BaseClass>();
-                string json = Utility.GetGlobalParametersManager(_uiApp, "SyncDataParameters");
-                
-                if (!string.IsNullOrEmpty(json))
-                {
-                    try
-                    {
-                        syncDataConfig = JsonConvert.DeserializeObject<SyncDataConfig>(json);
-                        syncDataParameters = syncDataConfig.Parameters;
-                        chkWholeRun.IsChecked = syncDataConfig.IsWholeRunChecked;
 
-                        /*foreach (SYNCDataGlobalParam param in globalParam)
-                        {
-                            List<MultiSelect> multiSelect = new List<MultiSelect>();
-                            MultiSelect multiSelects = new MultiSelect();
-                            if (param != null)
-                            {
-                                multiSelects = multiSelectList.FirstOrDefault(r => r.Name.Contains(param.Name));
-                                multiSelects.IsChecked = true;
-                                multiSelect.Add(multiSelects);
-                                ucMultiSelect.SelectedItems = multiSelect;
-                            }
-                        }*/
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        MessageBox.Show("Saved parameters cannot be read. Click okay to delete the saved parameters and reset the form");
-                        //externalEvents[1].Raise();
-                    }
-                }
 
                 //FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
-
                 /* List<Element> Conduits = new FilteredElementCollector(_doc).OfClass(typeof(Conduit)).ToList();
                  if (Conduits.Any())
                  {
@@ -166,50 +132,6 @@ namespace MultiDraw
                      multiSelectList = multiSelectList.OrderBy(x => x.Name).ToList();
                      //lstAssignParamValue.ItemsSource = multiSelectList.OrderByDescending(x => x.IsChecked).ToList();
                  }*/
-
-                FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
-                List<Element> Conduits = new FilteredElementCollector(_doc).OfClass(typeof(Conduit)).ToList();
-                if (Conduits.Any())
-                {
-                    Element ele = Conduits.FirstOrDefault();
-                    multiSelectList.Clear();
-                    if (syncDataParameters != null && syncDataParameters.Any())
-                    {
-                        foreach (Parameter parameter in ele.GetOrderedParameters().ToList().Where(r => !r.IsReadOnly
-                        && !_removingList.Any(x => x == r.Definition.Name) && !syncDataParameters.Any(x => x.Name == r.Definition.Name)))
-                        {
-                            if (!multiSelectList.Any(x => x.Name == parameter.Definition.Name))
-                            {
-                                MultiSelect multi = new MultiSelect
-                                {
-                                    Name = parameter.Definition.Name,
-                                    Id = parameter.Id
-                                };
-                                multiSelectList.Add(multi);
-                            }
-                        }
-                        
-                        lstAssignParamValue.ItemsSource = syncDataParameters.Select(r => new MultiSelect { Name = r.Name }).ToList();
-                    }
-                    else
-                    {
-                        foreach (Parameter parameter in ele.GetOrderedParameters().ToList().Where(r => !r.IsReadOnly
-                        && !_removingList.Any(x => x == r.Definition.Name)))
-                        {
-                            if (!multiSelectList.Any(x => x.Name == parameter.Definition.Name))
-                            {
-                                MultiSelect multi = new MultiSelect
-                                {
-                                    Name = parameter.Definition.Name,
-                                    Id = parameter.Id
-                                };
-                                multiSelectList.Add(multi);
-                            }
-                        }
-                        lstAssignParamValue.ItemsSource = new List<MultiSelect>();
-                    }
-                    lstFetchParamValue.ItemsSource = multiSelectList.OrderBy(x => x.Name).ToList();
-                }
             }
             catch (Exception ex)
             {
@@ -221,6 +143,7 @@ namespace MultiDraw
         {
             List<CustomTab> customTabsList = new List<CustomTab>();
             CustomTab b = new CustomTab();
+
             /*  b.Id = 1;
               b.Name = "Support Settings";
 
@@ -229,19 +152,97 @@ namespace MultiDraw
               b.Id = 2;
               b.Name = "Profile Color Settings";
               customTabsList.Add(b);*/
+
             b = new CustomTab();
             b.Id = 3;
             b.Name = "Auto Sync";
             customTabsList.Add(b);
-           // tagControl.ItemsSource = customTabsList;
-          //  tagControl.SelectedIndex = 0;
+            // tagControl.ItemsSource = customTabsList;
+            //  tagControl.SelectedIndex = 0;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            ReadRackSettings();
-           // OnChangeSupportNeeded(IsSupportNeeded, null);
+            //ReadRackSettings();
+            // OnChangeSupportNeeded(IsSupportNeeded, null);
+
+            SyncDataConfig syncDataConfig = new SyncDataConfig();
+            List<BaseClass> syncDataParameters = new List<BaseClass>();
+            string json = Utility.GetGlobalParametersManager(_uiApp, "SyncDataParameters");
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                try
+                {
+                    syncDataConfig = JsonConvert.DeserializeObject<SyncDataConfig>(json);
+                    syncDataParameters = syncDataConfig.Parameters;
+                    chkWholeRun.IsChecked = syncDataConfig.IsWholeRunChecked;
+
+                    /*foreach (SYNCDataGlobalParam param in globalParam)
+                    {
+                        List<MultiSelect> multiSelect = new List<MultiSelect>();
+                        MultiSelect multiSelects = new MultiSelect();
+                        if (param != null)
+                        {
+                            multiSelects = multiSelectList.FirstOrDefault(r => r.Name.Contains(param.Name));
+                            multiSelects.IsChecked = true;
+                            multiSelect.Add(multiSelects);
+                            ucMultiSelect.SelectedItems = multiSelect;
+                        }
+                    }*/
+
+                    FilteredElementCollector conduitscollector = new FilteredElementCollector(_doc);
+                    List<Element> Conduits = new FilteredElementCollector(_doc).OfClass(typeof(Conduit)).ToList();
+                    if (Conduits.Any())
+                    {
+                        Element ele = Conduits.FirstOrDefault();
+                        multiSelectList.Clear();
+                        if (syncDataParameters != null && syncDataParameters.Any())
+                        {
+                            foreach (Parameter parameter in ele.GetOrderedParameters().ToList().Where(r => !r.IsReadOnly
+                            && !_removingList.Any(x => x == r.Definition.Name) && !syncDataParameters.Any(x => x.Name == r.Definition.Name)))
+                            {
+                                if (!multiSelectList.Any(x => x.Name == parameter.Definition.Name))
+                                {
+                                    MultiSelect multi = new MultiSelect
+                                    {
+                                        Name = parameter.Definition.Name,
+                                        Id = parameter.Id
+                                    };
+                                    multiSelectList.Add(multi);
+                                }
+                            }
+                            lstAssignParamValue.ItemsSource = syncDataParameters.Select(r => new MultiSelect { Name = r.Name }).ToList();
+                        }
+                        else
+                        {
+                            foreach (Parameter parameter in ele.GetOrderedParameters().ToList().Where(r => !r.IsReadOnly
+                            && !_removingList.Any(x => x == r.Definition.Name)))
+                            {
+                                if (!multiSelectList.Any(x => x.Name == parameter.Definition.Name))
+                                {
+                                    MultiSelect multi = new MultiSelect
+                                    {
+                                        Name = parameter.Definition.Name,
+                                        Id = parameter.Id
+                                    };
+                                    multiSelectList.Add(multi);
+                                }
+                            }
+                            lstAssignParamValue.ItemsSource = new List<MultiSelect>();
+                        }
+                        lstFetchParamValue.ItemsSource = multiSelectList.OrderBy(x => x.Name).ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    MessageBox.Show("Saved parameters cannot be read. Click okay to delete the saved parameters and reset the form");
+                    //externalEvents[1].Raise();
+                }
+            }
         }
+
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -319,10 +320,10 @@ namespace MultiDraw
             //}
         }
 
-        private void UcMultiSelect_DropDownClosed(object sender)
-        {
-            eventsync.Raise();
-        }
+        //private void UcMultiSelect_DropDownClosed(object sender)
+        //{
+        //    eventsync.Raise();
+        //}
 
         private void TextBoxControl_TextBox_Changed(object sender)
         {
@@ -335,8 +336,9 @@ namespace MultiDraw
             {
                 List<MultiSelect> multiSelectList = lstAssignParamValue.ItemsSource == null ? new List<MultiSelect>() : lstAssignParamValue.ItemsSource.Cast<MultiSelect>().ToList();
                 multiSelectList.AddRange(lstFetchParamValue.SelectedItems.Cast<MultiSelect>().ToList());
-                List<MultiSelect> fetchMultiSelectList = lstFetchParamValue.ItemsSource.Cast<MultiSelect>().ToList()
-                    .Where(x => !multiSelectList.Any(y => y.Name == x.Name)).ToList();
+
+                List<MultiSelect> fetchMultiSelectList = lstFetchParamValue.ItemsSource.Cast<MultiSelect>().ToList().
+                                                         Where(x => !multiSelectList.Any(y => y.Name == x.Name)).ToList();
                 lstAssignParamValue.ItemsSource = multiSelectList.OrderBy(x => x.Name);
                 lstFetchParamValue.ItemsSource = fetchMultiSelectList.OrderBy(x => x.Name);
             }
@@ -353,7 +355,7 @@ namespace MultiDraw
                 List<MultiSelect> multiSelectList = lstFetchParamValue.ItemsSource == null ? new List<MultiSelect>() : lstFetchParamValue.ItemsSource.Cast<MultiSelect>().ToList();
                 multiSelectList.AddRange(lstAssignParamValue.SelectedItems.Cast<MultiSelect>().ToList());
                 List<MultiSelect> fetchMultiSelectList = lstAssignParamValue.ItemsSource.Cast<MultiSelect>().ToList()
-                    .Where(x => !multiSelectList.Any(y => y.Name == x.Name)).ToList();
+                                                         .Where(x => !multiSelectList.Any(y => y.Name == x.Name)).ToList();
                 lstAssignParamValue.ItemsSource = fetchMultiSelectList.OrderBy(x => x.Name);
                 lstFetchParamValue.ItemsSource = multiSelectList.OrderBy(x => x.Name);
             }
@@ -370,5 +372,8 @@ namespace MultiDraw
 //ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
 //ParentUserControl.Instance.AlignConduits.IsChecked = false;
 //ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
+
+
+
 
 
