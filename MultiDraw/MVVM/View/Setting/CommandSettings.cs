@@ -42,38 +42,42 @@ namespace MultiDraw
         {
             try
             {
-                if(true)//(Utility.HasValidLicense(Util.ProductVersion))
+
+                if (App.MultiDrawButton != null && App.MultiDrawButton.Enabled)
                 {
-                    if(true) //(Utility.ReadPremiumLicense(Util.ProjectName))
+                    if (Utility.HasValidLicense(Util.ProductVersion))
                     {
-                        CustomUIApplication customUIApplication = new CustomUIApplication
+                        if (Utility.ReadPremiumLicense(Util.ProjectName))
                         {
-                            CommandData = commandData
-                        };
-                        if (Keyboard.Modifiers.ToString() != ModifierKeys.Shift.ToString())
-                        {
-                            System.Windows.Window window = new SettingsWindow(customUIApplication);
-                            window.Show();
-                            window.Closed += OnClosing;
-                            if (App.MultiDrawButton != null)
-                                App.MultiDrawButton.Enabled = false;
+                            CustomUIApplication customUIApplication = new CustomUIApplication
+                            {
+                                CommandData = commandData
+                            };
+                            if (Keyboard.Modifiers.ToString() != ModifierKeys.Shift.ToString())
+                            {
+                                System.Windows.Window window = new SettingsWindow(customUIApplication);
+                                window.Show();
+                                window.Closed += OnClosing;
+                                if (App.MultiDrawButton != null)
+                                    App.MultiDrawButton.Enabled = false;
+                            }
+                            else
+                            {
+                                MessageBox.Show("You dont have access to Premium Tool");
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("You dont have access to Premium Tool");
+                            Window SettingsWindow = new Window();
+                            SettingsUserControl settings = new SettingsUserControl(commandData.Application.ActiveUIDocument.Document, commandData.Application, SettingsWindow, ExternalEvent.Create(new SettingsHandler()));
+                            SettingsWindow.ResizeMode = ResizeMode.NoResize;
+                            SettingsWindow.WindowStyle = WindowStyle.None;
+                            SettingsWindow.Height = settings.Height;
+                            SettingsWindow.Width = settings.Width;
+                            SettingsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                            SettingsWindow.Content = settings;
+                            SettingsWindow.Show();
                         }
-                    }
-                    else
-                    {
-                        Window SettingsWindow = new Window();
-                        SettingsUserControl settings = new SettingsUserControl(commandData.Application.ActiveUIDocument.Document, commandData.Application, SettingsWindow, ExternalEvent.Create(new SettingsHandler()));
-                        SettingsWindow.ResizeMode = ResizeMode.NoResize;
-                        SettingsWindow.WindowStyle = WindowStyle.None;
-                        SettingsWindow.Height = settings.Height;
-                        SettingsWindow.Width = settings.Width;
-                        SettingsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                        SettingsWindow.Content = settings;
-                        SettingsWindow.Show();
                     }
                 }
                 return Result.Succeeded;
