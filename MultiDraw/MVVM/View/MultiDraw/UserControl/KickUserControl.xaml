@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="250"
-             Background="Transparent" Loaded="Control_Loaded">
+             Background="Transparent" Loaded="Control_Loaded" Unloaded="Control_Unloaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="190"></RowDefinition>
-            <RowDefinition Height="110"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="55"></RowDefinition>
         </Grid.RowDefinitions>
@@ -37,12 +37,9 @@
             <!--<TIG:SingleSelectDropDownControl  
                                        x:Name="ddlAngle" HorizontalAlignment="Left"
                                        DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>-->
-            <ListBox x:Name="ddlAngle" Margin="0 0 0 0"  BorderBrush="#ccc" BorderThickness="1" SelectionChanged="ddlAngle_SelectionChanged"
-      
-Foreground="#333333" 
-       Width="310"
-      HorizontalAlignment="Left"
-Style="{x:Null}">
+            <ListBox x:Name="ddlAngle" Margin="0 0 0 0"  BorderBrush="#ccc" BorderThickness="1" 
+                 Foreground="#333333"  Width="310"
+      HorizontalAlignment="Left" Style="{x:Null}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                         <Style.Triggers>
@@ -110,14 +107,16 @@ Style="{x:Null}">
                     </RadioButton>
                 </StackPanel>
             </Border>
+      
         </StackPanel>
+        
+        
         <StackPanel Grid.Row="3">
             <TIG:TextBoxControl x:Name="txtOffsetFeet" 
                                     Label="Offset"
-                                    UnitsLabel="Feet and inches"
-                                   Width="310"
-                                  HorizontalAlignment="Left"
-                                    LostFocus="TextBox_LostFocus"
+                                     UnitsLabel="Feet and inches"
+                                    Width="310"
+                                    HorizontalAlignment="Left"
                                     IsUnit="True"></TIG:TextBoxControl>
         </StackPanel>
     </Grid>

@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="250"
-             Background="Transparent" Loaded="Control_Loaded">
+             Background="Transparent" Loaded="Control_Loaded"  Unloaded="Control_Unloaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -31,8 +31,7 @@
                        Text="Horizontal Offset"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" >
-            <ListBox x:Name="ddlAngle" Margin="0 5 0 0"  BorderBrush="#ccc" BorderThickness="1" SelectionChanged="ddlAngle_SelectionChanged"
-      
+            <ListBox x:Name="ddlAngle" Margin="0 5 0 0"  BorderBrush="#ccc" BorderThickness="1"       
 Foreground="#333333" 
        Width="310"
       HorizontalAlignment="Left"
@@ -69,7 +68,7 @@ Style="{x:Null}">
                                     UnitsLabel="Feet and inches" 
                                  Width="310"
                                 HorizontalAlignment="Left"
-                                    IsUnit="True"  LostFocus="TextBox_LostFocus"                            
+                                    IsUnit="True"                          
                                     ></TIG:TextBoxControl>
         </StackPanel>
        

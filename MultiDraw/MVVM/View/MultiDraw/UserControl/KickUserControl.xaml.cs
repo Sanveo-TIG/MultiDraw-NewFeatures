@@ -25,6 +25,7 @@ namespace MultiDraw
     /// <summary>
     /// UI Events
     /// </summary>
+   
     public partial class KickUserControl : UserControl
     {
         public static KickUserControl Instance;
@@ -42,11 +43,6 @@ namespace MultiDraw
             _externalEvents = externalEvents;
             InitializeComponent();
             Instance = this;
-            //ddlAngle.Attributes = new MultiSelectAttributes()
-            //{
-            //    Label = "Angle",
-            //    Width = 310
-            //};
             try
             {
                 _window = window;
@@ -73,17 +69,6 @@ namespace MultiDraw
         {
             txtOffsetFeet.Click_load(txtOffsetFeet);
         }
-
-        //private void DdlAngle_Changed(object sender)
-        //{
-        //    SaveSettings();
-        //}
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            SaveSettings();
-        }
-
         private void SelectionMode_Changed(object sender, RoutedEventArgs e)
         {
             SaveSettings();
@@ -105,20 +90,20 @@ namespace MultiDraw
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
                 rbNinetyNear.IsChecked = globalParam.SelectionMode == "90° Near";
                 rbNinetyFar.IsChecked = string.IsNullOrEmpty(globalParam.SelectionMode) || globalParam.SelectionMode == "90° Far";
-                ddlAngle.SelectedItem = angleList.FindIndex(x => x.Name == globalParam.AngleValue);               
+                ddlAngle.SelectedIndex = angleList.IndexOf(angleList.FirstOrDefault(x => x.Name == globalParam.AngleValue));               
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
                 ddlAngle.SelectedItem = 4;                
             }
-          //  _externalEvents.Raise();
         }
 
-        private void ddlAngle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Control_Unloaded(object sender, RoutedEventArgs e)
         {
             SaveSettings();
         }
     }
 }
+
 

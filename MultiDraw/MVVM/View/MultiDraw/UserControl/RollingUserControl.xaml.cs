@@ -42,11 +42,6 @@ namespace MultiDraw
             _externalEvents= externalEvents;    
             InitializeComponent();
             Instance = this;
-            //ddlAngle.Attributes = new MultiSelectAttributes()
-            //{
-            //    Label= "Angle",
-            //    Width=310
-            //};
             try
             {
                 _window = window;
@@ -78,16 +73,6 @@ namespace MultiDraw
             txtRollFeet.Click_load(txtRollFeet);
         }
 
-        //private void DdlAngle_Changed(object sender)
-        //{
-        //    SaveSettings();
-        //}
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            SaveSettings();
-        }
-
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             txtOffsetFeet.UIApplication = _uiApp;
@@ -104,7 +89,7 @@ namespace MultiDraw
                 RollOffsetGP globalParam = JsonConvert.DeserializeObject<RollOffsetGP>(json);
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
                 txtRollFeet.Text = Convert.ToString(globalParam.RollOffsetValue);
-                ddlAngle.SelectedItem = angleList.FindIndex(x => x.Name == globalParam.AngleValue);               
+                ddlAngle.SelectedIndex = angleList.IndexOf(angleList.FirstOrDefault(x => x.Name == globalParam.AngleValue));               
             }
             else
             {
@@ -112,10 +97,9 @@ namespace MultiDraw
                 txtRollFeet.Text = "2\'";
                 ddlAngle.SelectedItem = 4;                
             }
-           // _externalEvents.Raise();
         }
 
-        private void ddlAngle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Control_Unloaded(object sender, RoutedEventArgs e)
         {
             SaveSettings();
         }

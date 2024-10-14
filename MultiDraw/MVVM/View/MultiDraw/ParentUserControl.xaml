@@ -9,21 +9,18 @@
              xmlns:TIG="clr-namespace:TIGUtility;assembly=TIGUtility"
              mc:Ignorable="d"
              d:DesignHeight="330"
-             d:DesignWidth="280"
+             d:DesignWidth="380"
              Background="Transparent" Loaded="OnControlLoaded">
-    <UserControl.Resources>
+       <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-
         </ResourceDictionary>
-
     </UserControl.Resources>
     <Grid MouseDown="Grid_MouseDown"
-          Background="Transparent" >
+          Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -31,7 +28,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal">
             <ListBox  Background="White" BorderBrush="#ccc" BorderThickness="1" 
-                     x:Name="cmbProfileType" Style="{x:Null}" Width="242" Height="35"
+                     x:Name="cmbProfileType" Style="{x:Null}" Width="310" Height="35"
                      SelectionChanged="CmbProfileType_SelectionChanged">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type ListBoxItem}">
@@ -62,7 +59,7 @@
                                             </MultiTrigger.Conditions>
                                             <Setter Property="Background"
                                                     TargetName="Bd"
-                                                    Value="#999" />
+                                                    Value="#999"/>
                                         </MultiTrigger>
                                         <MultiTrigger>
                                             <MultiTrigger.Conditions>
@@ -81,6 +78,7 @@
                         </Setter>
                     </Style>
                 </ListBox.Resources>
+                
                 <!--<ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="BorderThickness" Value="0,0,1,0" />
@@ -96,6 +94,7 @@
                         </Style.Triggers>
                     </Style>
                 </ListBox.ItemContainerStyle>-->
+                
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel IsItemsHost="True" />
@@ -138,10 +137,9 @@
                 </ListBoxItem>
                 <ListBoxItem>
                     <Image Height="25"
-                           HorizontalAlignment="Center "
+                           HorizontalAlignment="Center"
                            ToolTip="Kick 90"
-                           Cursor="Hand"
-                                   Source="/MultiDraw;component/Images/icons/90's Kick Draw 120x120.png"></Image>
+                           Cursor="Hand" Source="/MultiDraw;component/Images/icons/90's Kick Draw 120x120.png"></Image>
                 </ListBoxItem>
                 <ListBoxItem>
                     <Image Height="25"
@@ -149,17 +147,17 @@
                            Cursor="Hand"
                                    Source="/MultiDraw;component/Images/icons/90's Stub Draw 120x120.png"></Image>
                 </ListBoxItem>
-                <ListBoxItem Visibility="Collapsed">
+                <ListBoxItem Visibility="Visible">
                     <Image Height="25"
                            ToolTip="Three Point Saddle"
                            Cursor="Hand"
-                            Source="/MultiDraw;component/Images/icons/90's Stub Draw 120x120.png"></Image>
+                           Source="/MultiDraw;component/Images/icons/THREE SADDLE 120X120 1.png"></Image>
                 </ListBoxItem>
-                <ListBoxItem Visibility="Collapsed">
+                <ListBoxItem Visibility="Visible">
                     <Image Height="25"
                           ToolTip="Four Point Saddle"
                          Cursor="Hand"
-                         Source="/MultiDraw;component/Images/icons/90's Stub Draw 120x120.png"></Image>
+                         Source="/MultiDraw;component/Images/icons/FOUR SADDLE 120X120 1.png"></Image>
                 </ListBoxItem>
                 <ListBoxItem Visibility="Collapsed">
                     <Image Height="25"
@@ -168,21 +166,15 @@
                                    Source="/MultiDraw;component/Images/icons/Play Button.png"></Image>
                 </ListBoxItem>
                 <ListBoxItem Visibility="Collapsed">
-                    <Image Height="25" 
-                                   Source="/MultiDraw;component/Images/icons/Settings 120x120.png" Cursor="Hand" ToolTip="Settings"/>
-
+                    <Image Height="25" Source="/MultiDraw;component/Images/icons/Settings 120x120.png" Cursor="Hand" ToolTip="Settings"/>
                 </ListBoxItem>
             </ListBox>
-            <ToggleButton Margin="24,0,0,0" x:Name="btnPlay" Click="PlayButton_Click"
-  materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Pause}"
-  Content="{materialDesign:PackIcon Kind=Play}"
-  Style="{StaticResource MaterialDesignActionToggleButton}"
-   />
+            <ToggleButton Margin="15,0,0,0" x:Name="btnPlay" Click="PlayButton_Click" 
+                          materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Pause}"
+                          Content="{materialDesign:PackIcon Kind=Play}" Style="{StaticResource MaterialDesignActionToggleButton}"/>
         </StackPanel>
-
         <StackPanel Grid.Row="1"
                     x:Name="masterContainer">
-
         </StackPanel>
         <StackPanel Grid.Row="2" >
             <CheckBox x:Name="AlignConduits" Content="Align Conduits" IsChecked="False" Margin="10,0,10,0"></CheckBox>
@@ -192,3 +184,9 @@
         </TIG:ToolTipControl>
     </Grid>
 </UserControl>
+    
+    
+    
+    
+    
+        

@@ -31,10 +31,10 @@ namespace MultiDraw
             if (num == 0)
             {
                 bool isTrue = Mainfunction(uiapp);
-               /* if (!isTrue)
-                {
-                    num++;
-                }*/
+                /* if (!isTrue)
+                 {
+                     num++;
+                 }*/
             }
             else
             {
@@ -54,8 +54,10 @@ namespace MultiDraw
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
+           
             int.TryParse(uiapp.Application.VersionNumber, out int RevitVersion);
             string offsetVariable = RevitVersion < 2020 ? "Offset" : "Middle Elevation";
+           
             //Selection sel = uidoc.Selection;
             //ICollection<ElementId> ecol = sel.GetElementIds();
 
@@ -98,7 +100,7 @@ namespace MultiDraw
 
                     Autodesk.Revit.DB.Binding binding2 = uiapp.Application.Create.NewInstanceBinding(catSet2);
                     Autodesk.Revit.DB.Binding binding_ALL2 = uiapp.Application.Create.NewInstanceBinding(catSet2);
-                    if (defFile!= null)
+                    if (defFile != null)
                     {
                         foreach (DefinitionGroup dG in defFile.Groups.Where(r => r.Name == "TIG-MultiDraw Parameters"))
                         {
@@ -298,7 +300,6 @@ namespace MultiDraw
                                 PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).Id;
                             }
                         }
-
                     }
                     try
                     {
@@ -323,10 +324,8 @@ namespace MultiDraw
                                 {
                                     if (panel.Source.AutomationName == "MultiDraw")
                                     {
-                                        panel.CustomPanelTitleBarBackground
-                                = gB;
+                                        panel.CustomPanelTitleBarBackground = gB;
                                     }
-
                                 }
                             }
                             transRibbonColorChange.Commit();
@@ -342,11 +341,11 @@ namespace MultiDraw
                             }
                             transreset.Commit();
                         }
+
                         //if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 7)
                         //{
                         //    if (!APICommon.ConduitSync(doc, uiapp, ParentUserControl.Instance.Primaryelst))
                         //    {
-
                         //        break;
                         //    }
                         //    else
@@ -380,13 +379,13 @@ namespace MultiDraw
                         //        continue;
                         //    }
                         //}
+
                         else
                         {
                             if (!ParentUserControl.Instance._isStopedTransaction)
                             {
 
                             }
-
                             View activeview = doc.ActiveView;
                             //coloring the primary conduits
                             List<Element> conduitList = new FilteredElementCollector(doc, activeview.Id).OfClass(typeof(Conduit)).Where(x => (x as Conduit).RunId == (doc.GetElement(PrimaryConduitRunid) as Conduit).RunId).ToList();
@@ -430,20 +429,20 @@ namespace MultiDraw
                                         {
                                             SubConduitcoloroverride(conduit.Id, doc);
                                         }
-
                                     }
                                     nk++;
                                 }
                                 Primarycolorfillsub.Commit();
                             }
-
                             XYZ Pickpoint = Utility.PickPoint(uidoc);
+
                             //if (ParentUserControl.Instance._isStopedTransaction)
                             //{
                             //    tx.Commit();
                             //    num = 0;
                             //    return true;
                             //}
+
                             if (ParentUserControl.Instance.AlignConduits.IsChecked == true)
                             {
                                 XYZ Pickpoint_Two = Utility.PickPoint(uidoc);
@@ -455,12 +454,10 @@ namespace MultiDraw
                                 };
                                 Properties.Settings.Default.StraightsDraw = JsonConvert.SerializeObject(globalParam);
                                 Properties.Settings.Default.Save();
-
-                               if ( PrimaryConduitRunid == null)
+                                if (PrimaryConduitRunid == null)
                                 {
                                     PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).RunId;
                                 }
-
                                 foreach (Element item in ParentUserControl.Instance.Primaryelst)
                                 {
                                     Conduit conduit = item as Conduit;
@@ -516,14 +513,10 @@ namespace MultiDraw
                                     //        globalParam.Straightcolor = data.straightColor == null ? string.Empty : data.straightColor.Red.ToString() + "," + data.straightColor.Green.ToString() + "," + data.straightColor.Blue.ToString();
                                     //        globalParam.NinetyKickcolor = data.nkOffsetColor == null ? string.Empty : data.nkOffsetColor.Red.ToString() + "," + data.nkOffsetColor.Green.ToString() + "," + data.nkOffsetColor.Blue.ToString();
                                     //        globalParam.Ninetystubcolor = data.nsOffsetColor == null ? string.Empty : data.nsOffsetColor.Red.ToString() + "," + data.nsOffsetColor.Green.ToString() + "," + data.nsOffsetColor.Blue.ToString();
-
                                     //        Utility.SetGlobalParametersManager(doc, "MultiDrawProfileSettings", JsonConvert.SerializeObject(globalParam));
                                     //    }
                                     //    substrans2.Commit();
-
                                     //}
-
-
 
                                     ViewDrafting viewdrafting = null;
                                     FilteredElementCollector Viewscollections = new FilteredElementCollector(doc).OfClass(typeof(ViewDrafting));
@@ -1118,6 +1111,9 @@ namespace MultiDraw
                                 {
                                     mainTransName = "MultiDraw-Stub 90";
                                 }
+
+
+
                                 if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 1)
                                 {
                                     if (ParentUserControl.Instance.Anglefromprimary.IsChecked == true)
@@ -1186,8 +1182,6 @@ namespace MultiDraw
                                             ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
                                         }
                                     }
-
-
                                 }
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 2)
                                 {
@@ -1262,7 +1256,7 @@ namespace MultiDraw
                                             {
                                                 ParentUserControl.Instance.Primaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                                             }
-                                          
+
                                         }
                                     }
                                     else
@@ -1351,91 +1345,91 @@ namespace MultiDraw
                             ParentUserControl.Instance.MultiDrawSettings = settings;
                         }
 
-                        using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
-                        {
-                            sunstransforrunsync.Start();
-                            foreach (Element element in ParentUserControl.Instance.Primaryelst)
-                            {
-                                Conduit conduitone = element as Conduit;
-                                ElementId eid = conduitone.RunId;
-                                if (eid != null)
-                                {
-                                    Element conduitrun = doc.GetElement(eid);
-                                    Utility.AutoRetainParameters(element, conduitrun, doc, uiapp);
-                                }
-                            }
-                            sunstransforrunsync.Commit();
-                        }
-                        using (SubTransaction transRibbonColorChange = new SubTransaction(doc))
-                        {
-                            transRibbonColorChange.Start();
-                            adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
-                            LinearGradientBrush gB = new LinearGradientBrush
-                            {
-                                StartPoint = new System.Windows.Point(0, 0),
-                                EndPoint = new System.Windows.Point(0, 1)
-                            };
-                            gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 0.0));
-                            gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 1));
-                            foreach (adWin.RibbonTab tab in ribbon.Tabs)
-                            {
-                                foreach (adWin.RibbonPanel panel in tab.Panels)
-                                {
-                                    panel.CustomPanelTitleBarBackground = gB;
-                                }
-                            }
-                            transRibbonColorChange.Commit();
-                        }
+                        //using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
+                        //{
+                        //    sunstransforrunsync.Start();
+                        //    foreach (Element element in ParentUserControl.Instance.Primaryelst)
+                        //    {
+                        //        Conduit conduitone = element as Conduit;
+                        //        ElementId eid = conduitone.RunId;
+                        //        if (eid != null)
+                        //        {
+                        //            Element conduitrun = doc.GetElement(eid);
+                        //            Utility.AutoRetainParameters(element, conduitrun, doc, uiapp);
+                        //        }
+                        //    }
+                        //    sunstransforrunsync.Commit();
+                        //}
+                        //using (SubTransaction transRibbonColorChange = new SubTransaction(doc))
+                        //{
+                        //    transRibbonColorChange.Start();
+                        //    adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
+                        //    LinearGradientBrush gB = new LinearGradientBrush
+                        //    {
+                        //        StartPoint = new System.Windows.Point(0, 0),
+                        //        EndPoint = new System.Windows.Point(0, 1)
+                        //    };
+                        //    gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 0.0));
+                        //    gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 1));
+                        //    foreach (adWin.RibbonTab tab in ribbon.Tabs)
+                        //    {
+                        //        foreach (adWin.RibbonPanel panel in tab.Panels)
+                        //        {
+                        //            panel.CustomPanelTitleBarBackground = gB;
+                        //        }
+                        //    }
+                        //    transRibbonColorChange.Commit();
+                        //}
                         tx.Commit();
                     }
                     catch
                     {
-                        if (ParentUserControl.Instance.Primaryelst != null)
-                        {
-                            using Transaction transreset = new Transaction(doc);
-                            transreset.Start("PrimaryColorReset");
-                            OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
-                            foreach (Element element in ParentUserControl.Instance.Primaryelst)
-                            {
-                                doc.ActiveView.SetElementOverrides(element.Id, orGsty);
-                            }
-                            using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
-                            {
-                                sunstransforrunsync.Start();
-                                foreach (Element element in ParentUserControl.Instance.Primaryelst)
-                                {
-                                    Conduit conduitone = element as Conduit;
-                                    ElementId eid = conduitone.RunId;
-                                    if (eid != null)
-                                    {
-                                        Element conduitrun = doc.GetElement(eid);
-                                        Utility.AutoRetainParameters(element, conduitrun, doc, uiapp);
-                                    }
-                                }
-                                sunstransforrunsync.Commit();
-                            }
-                            using (SubTransaction transRibbonColorChange = new SubTransaction(doc))
-                            {
-                                transRibbonColorChange.Start();
-                                adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
-                                LinearGradientBrush gB = new LinearGradientBrush
-                                {
-                                    StartPoint = new System.Windows.Point(0, 0),
-                                    EndPoint = new System.Windows.Point(0, 1)
-                                };
-                                gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 0.0));
-                                gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 1));
-                                foreach (adWin.RibbonTab tab in ribbon.Tabs)
-                                {
-                                    foreach (adWin.RibbonPanel panel in tab.Panels)
-                                    {
-                                        panel.CustomPanelTitleBarBackground = gB;
-                                    }
-                                }
-                                transRibbonColorChange.Commit();
-                            }
-                            transreset.Commit();
-                        }
+                        //if (ParentUserControl.Instance.Primaryelst != null)
+                        //{
+                        //    using Transaction transreset = new Transaction(doc);
+                        //    transreset.Start("PrimaryColorReset");
+                        //    OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                        //    foreach (Element element in ParentUserControl.Instance.Primaryelst)
+                        //    {
+                        //        doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                        //    }
+                        //    using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
+                        //    {
+                        //        sunstransforrunsync.Start();
+                        //        foreach (Element element in ParentUserControl.Instance.Primaryelst)
+                        //        {
+                        //            Conduit conduitone = element as Conduit;
+                        //            ElementId eid = conduitone.RunId;
+                        //            if (eid != null)
+                        //            {
+                        //                Element conduitrun = doc.GetElement(eid);
+                        //                Utility.AutoRetainParameters(element, conduitrun, doc, uiapp);
+                        //            }
+                        //        }
+                        //        sunstransforrunsync.Commit();
+                        //    }
+                        //    using (SubTransaction transRibbonColorChange = new SubTransaction(doc))
+                        //    {
+                        //        transRibbonColorChange.Start();
+                        //        adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
+                        //        LinearGradientBrush gB = new LinearGradientBrush
+                        //        {
+                        //            StartPoint = new System.Windows.Point(0, 0),
+                        //            EndPoint = new System.Windows.Point(0, 1)
+                        //        };
+                        //        gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 0.0));
+                        //        gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 1));
+                        //        foreach (adWin.RibbonTab tab in ribbon.Tabs)
+                        //        {
+                        //            foreach (adWin.RibbonPanel panel in tab.Panels)
+                        //            {
+                        //                panel.CustomPanelTitleBarBackground = gB;
+                        //            }
+                        //        }
+                        //        transRibbonColorChange.Commit();
+                        //    }
+                        //    transreset.Commit();
+                        //}
                         if (!ParentUserControl.Instance._isStopedTransaction)
                         {
                             Mainfunction(uiapp);
@@ -1446,60 +1440,57 @@ namespace MultiDraw
                             //ParentUserControl.Instance._window.Close();
                             break;
                         }
-
                     }
-
-
                 }
             }
             catch
             {
-                if (ParentUserControl.Instance.Primaryelst != null)
-                {
-                    using Transaction transreset = new Transaction(doc);
-                    transreset.Start("PrimaryColorReset");
-                    OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
-                    foreach (Element element in ParentUserControl.Instance.Primaryelst)
-                    {
-                        doc.ActiveView.SetElementOverrides(element.Id, orGsty);
-                    }
-                    using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
-                    {
-                        sunstransforrunsync.Start();
-                        foreach (Element element in ParentUserControl.Instance.Primaryelst)
-                        {
-                            Conduit conduitone = element as Conduit;
-                            ElementId eid = conduitone.RunId;
-                            if (eid != null)
-                            {
-                                Element conduitrun = doc.GetElement(eid);
-                                Utility.AutoRetainParameters(element, conduitrun, doc, uiapp);
-                            }
-                        }
-                        sunstransforrunsync.Commit();
-                    }
-                    using (SubTransaction transRibbonColorChange = new SubTransaction(doc))
-                    {
-                        transRibbonColorChange.Start();
-                        adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
-                        LinearGradientBrush gB = new LinearGradientBrush
-                        {
-                            StartPoint = new System.Windows.Point(0, 0),
-                            EndPoint = new System.Windows.Point(0, 1)
-                        };
-                        gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 0.0));
-                        gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 1));
-                        foreach (adWin.RibbonTab tab in ribbon.Tabs)
-                        {
-                            foreach (adWin.RibbonPanel panel in tab.Panels)
-                            {
-                                panel.CustomPanelTitleBarBackground = gB;
-                            }
-                        }
-                        transRibbonColorChange.Commit();
-                    }
-                    transreset.Commit();
-                }
+                //if (ParentUserControl.Instance.Primaryelst != null)
+                //{
+                //    using Transaction transreset = new Transaction(doc);
+                //    transreset.Start("PrimaryColorReset");
+                //    OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                //    foreach (Element element in ParentUserControl.Instance.Primaryelst)
+                //    {
+                //        doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                //    }
+                //    using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
+                //    {
+                //        sunstransforrunsync.Start();
+                //        foreach (Element element in ParentUserControl.Instance.Primaryelst)
+                //        {
+                //            Conduit conduitone = element as Conduit;
+                //            ElementId eid = conduitone.RunId;
+                //            if (eid != null)
+                //            {
+                //                Element conduitrun = doc.GetElement(eid);
+                //                Utility.AutoRetainParameters(element, conduitrun, doc, uiapp);
+                //            }
+                //        }
+                //        sunstransforrunsync.Commit();
+                //    }
+                //    using (SubTransaction transRibbonColorChange = new SubTransaction(doc))
+                //    {
+                //        transRibbonColorChange.Start();
+                //        adWin.RibbonControl ribbon = adWin.ComponentManager.Ribbon;
+                //        LinearGradientBrush gB = new LinearGradientBrush
+                //        {
+                //            StartPoint = new System.Windows.Point(0, 0),
+                //            EndPoint = new System.Windows.Point(0, 1)
+                //        };
+                //        gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 0.0));
+                //        gB.GradientStops.Add(new GradientStop(Colors.WhiteSmoke, 1));
+                //        foreach (adWin.RibbonTab tab in ribbon.Tabs)
+                //        {
+                //            foreach (adWin.RibbonPanel panel in tab.Panels)
+                //            {
+                //                panel.CustomPanelTitleBarBackground = gB;
+                //            }
+                //        }
+                //        transRibbonColorChange.Commit();
+                //    }
+                //    transreset.Commit();
+                //}
 
                 ParentUserControl.Instance._window.Close();
                 return false;

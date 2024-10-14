@@ -49,45 +49,30 @@ namespace MultiDraw
                 ParentUserControl.Instance.Anglefromprimary.IsEnabled = false;
                 ParentUserControl.Instance.AlignConduits.IsChecked = false;
                 ParentUserControl.Instance.Anglefromprimary.IsChecked = false;
-                ddlAngle.Attributes = new MultiSelectAttributes()
-                {
-                    Label = "Angle",
-                    Width=310
-                };
-
             }
             catch (Exception exception)
             {
 
                 System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
+
         private void SaveSettings()
         {
-            VerticalOffsetGP globalParam = new VerticalOffsetGP
+            FourPointDrawGP globalParam = new FourPointDrawGP
             {
                 OffsetValue = txtOffsetFeet.AsDouble == 0 ? "1.5\'" : txtOffsetFeet.AsString,
                 BaseOffsetValue = txtBaseOffsetFeet.AsDouble == 0 ? "1.5\'" : txtBaseOffsetFeet.AsString,
-                AngleValue = ddlAngle.SelectedItem == null ? "30.00" : ddlAngle.SelectedItem.Name
+                AngleValue = ddlAngle.SelectedItem == null ? "30.00" : ddlAngle.SelectedItem.ToString(),
             };
-            Properties.Settings.Default.VerticalOffsetDraw = JsonConvert.SerializeObject(globalParam);
+            Properties.Settings.Default.FourPointSaddleDraw = JsonConvert.SerializeObject(globalParam);
             Properties.Settings.Default.Save();
         }
+        
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             txtOffsetFeet.Click_load(txtOffsetFeet);
             txtBaseOffsetFeet.Click_load(txtBaseOffsetFeet);
-        }
-
-        private void DdlAngle_Changed(object sender)
-        {
-            SaveSettings();
-        }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            SaveSettings();
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -97,24 +82,33 @@ namespace MultiDraw
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
                 angleList.Add(new MultiSelect() { Name = item });
-            ddlAngle.ItemsSource = angleList;
+            ddlAngle.ItemsSource = _angleList;
+            ddlAngle.SelectedIndex = 4;
             Grid_MouseDown(null, null);
-            string json = Properties.Settings.Default.VerticalOffsetDraw;
+            string json = Properties.Settings.Default.FourPointSaddleDraw;
             if (!string.IsNullOrEmpty(json))
             {
-                VerticalOffsetGP globalParam = JsonConvert.DeserializeObject<VerticalOffsetGP>(json);
+                FourPointDrawGP globalParam = JsonConvert.DeserializeObject<FourPointDrawGP>(json);
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
                 txtBaseOffsetFeet.Text = !string.IsNullOrEmpty(globalParam.BaseOffsetValue) ? globalParam.BaseOffsetValue : "1.5\'";
-                ddlAngle.SelectedItem = angleList[angleList.FindIndex(x => x.Name == globalParam.AngleValue)];
+                ddlAngle.SelectedIndex = angleList.IndexOf(angleList.FirstOrDefault(x => x.Name == globalParam.AngleValue));
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
                 txtBaseOffsetFeet.Text = "1.5\'";
-                ddlAngle.SelectedItem = angleList[4];
+                ddlAngle.SelectedItem = 4;
             }
-            // _externalEvents.Raise();
+        }
+
+        private void Control_Unloaded(object sender, RoutedEventArgs e)
+        {
+            SaveSettings();
         }
     }
 }
+
+
+
+
 

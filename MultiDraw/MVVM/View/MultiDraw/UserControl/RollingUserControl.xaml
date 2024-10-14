@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="250"
-             Background="Transparent" Loaded="Control_Loaded">
+             Background="Transparent" Loaded="Control_Loaded"  Unloaded="Control_Unloaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -33,12 +33,8 @@
                        Text="Rolling Offset"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <ListBox x:Name="ddlAngle" Margin="0 5 0 0"  BorderBrush="#ccc" BorderThickness="1" SelectionChanged="ddlAngle_SelectionChanged"
-      
-Foreground="#333333" 
-       Width="310"
-      HorizontalAlignment="Left"
-Style="{x:Null}">
+            <ListBox x:Name="ddlAngle" Margin="0 5 0 0"  BorderBrush="#ccc" BorderThickness="1" Foreground="#333333" 
+             Width="310" HorizontalAlignment="Left" Style="{x:Null}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                         <Style.Triggers>
@@ -51,21 +47,13 @@ Style="{x:Null}">
                         <Style.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue"/>
                         </Style.Resources>
-                        <Setter Property="Padding"
-           Value="7,1,3,5" />
-                        <Setter Property="Foreground"
-           Value="#333333"></Setter>
-                        <Setter Property="BorderBrush"
-           Value="#ccc"></Setter>
-                        <Setter Property="BorderThickness"
-           Value="0,0,0,1"></Setter>
-
+                        <Setter Property="Padding" Value="7,1,3,5" />
+                        <Setter Property="Foreground" Value="#333333"></Setter>
+                        <Setter Property="BorderBrush" Value="#ccc"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <!--<TIG:SingleSelectDropDownControl  
-                                       x:Name="ddlAngle" HorizontalAlignment="Left"
-                                       DropDownClosed="DdlAngle_Changed"></TIG:SingleSelectDropDownControl>-->
         </StackPanel>
         <Grid Grid.Row="2">
             <StackPanel Orientation="Vertical">
@@ -83,7 +71,6 @@ Style="{x:Null}">
             
             <TIG:TextBoxControl x:Name="txtOffsetFeet"
                                         Margin="0,3,0,0"
-                                        LostFocus="TextBox_LostFocus"
                                     UnitsLabel="Feet and inches"
                                   Width="310"
                                  HorizontalAlignment="Left"
@@ -108,7 +95,6 @@ Style="{x:Null}">
                                         UnitsLabel="Feet and inches"
                                      Width="310"
                                     HorizontalAlignment="Left"
-                                        LostFocus="TextBox_LostFocus"
                                     IsUnit="True"></TIG:TextBoxControl>
             </StackPanel>
         

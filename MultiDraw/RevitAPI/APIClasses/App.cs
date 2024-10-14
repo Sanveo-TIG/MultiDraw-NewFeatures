@@ -28,6 +28,7 @@ namespace MultiDraw
         public Result OnStartup(UIControlledApplication application)
         {
             OnButtonCreate(application);
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(DocumentFormatAssemblyLoad);
             application.ViewActivated += Application_ViewActivated;
             application.ApplicationClosing += Application_Closing;
 
@@ -218,6 +219,20 @@ namespace MultiDraw
             //        pushButton.LargeImage = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/32x32.png"));
             //    }
             //}
+        }
+        public static Assembly DocumentFormatAssemblyLoad(object sender, ResolveEventArgs args)
+        {
+            if (args.Name.Contains("resources"))
+            {
+                return null;
+            }
+            if (args.Name.Contains("TIGUtility"))
+            {
+                string assemblyPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\TIGUtility.dll";
+                var assembly = Assembly.Load(assemblyPath);
+                return assembly;
+            }
+            return null;
         }
     }
 }

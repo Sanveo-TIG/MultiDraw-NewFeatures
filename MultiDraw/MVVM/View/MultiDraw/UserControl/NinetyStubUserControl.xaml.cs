@@ -89,7 +89,6 @@ namespace MultiDraw
             {
                 txtOffsetFeet.Text = "5\'";
             }
-           // _externalEvents.Raise();
         }
     }
 }

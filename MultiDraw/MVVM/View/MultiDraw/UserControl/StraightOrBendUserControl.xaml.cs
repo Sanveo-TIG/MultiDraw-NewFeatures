@@ -60,7 +60,6 @@ namespace MultiDraw
         {
             angleList.ItemsSource = _angleList;
             angleList.SelectedIndex = 0;
-           // _externalEvents.Raise();
         }
     }
 }

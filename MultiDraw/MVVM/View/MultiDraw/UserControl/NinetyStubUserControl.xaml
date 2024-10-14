@@ -30,15 +30,16 @@
             <TextBlock x:Name="Ninetystub"
                        Text="Stub 90"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
-        <StackPanel Grid.Row="1" >
+        <StackPanel Grid.Row="1">
             <TIG:TextBoxControl x:Name="txtOffsetFeet"
                                     Label="Stub Length"  
                                     UnitsLabel="Feet and inches" 
                                     IsUnit="True"
                                    Width="310"
                                   HorizontalAlignment="Left"
-                                    LostFocus="TextBox_LostFocus"
-                                    ></TIG:TextBoxControl>
+                                    LostFocus="TextBox_LostFocus"></TIG:TextBoxControl>
         </StackPanel>
     </Grid>
 </UserControl>
+    
+    

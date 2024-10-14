@@ -42,12 +42,6 @@ namespace MultiDraw
             _externalEvents = externalEvents;
             InitializeComponent();
             Instance = this;
-            //ddlAngle.Attributes = new MultiSelectAttributes()
-            //{
-            //    Label = "Angle",
-            //    Width = 310
-            //};
-
             try
             {
                 _window = window;
@@ -80,16 +74,6 @@ namespace MultiDraw
             txtRise.Click_load(txtRise);
         }
 
-        //private void DdlAngle_Changed(object sender)
-        //{
-        //    SaveSettings();
-        //}
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            SaveSettings();
-        }
-
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             txtOffset.UIApplication = _uiApp;
@@ -106,7 +90,7 @@ namespace MultiDraw
                 NinetyKickGP globalParam = JsonConvert.DeserializeObject<NinetyKickGP>(json);
                 txtOffset.Text = Convert.ToString(globalParam.OffsetValue);
                 txtRise.Text = Convert.ToString(globalParam.RiseValue);
-                ddlAngle.SelectedItem = angleList.FindIndex(x => x.Name == globalParam.AngleValue);               
+                ddlAngle.SelectedIndex = angleList.IndexOf(angleList.FirstOrDefault(x => x.Name == globalParam.AngleValue));               
             }
             else
             {
@@ -114,10 +98,9 @@ namespace MultiDraw
                 txtRise.Text = "10.0\'";
                 ddlAngle.SelectedItem = 4;               
             }
-           // _externalEvents.Raise();
         }
 
-        private void ddlAngle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Control_Unloaded(object sender, RoutedEventArgs e)
         {
             SaveSettings();
         }

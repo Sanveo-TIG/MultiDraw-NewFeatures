@@ -69,8 +69,8 @@ namespace MultiDraw
         {
             //var card = new Card();
             var hue = new Hue("Dummy", Colors.Black, Colors.White);
-
         }
+
         private void InitializeWindowProperty()
         {
             BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/MultiDraw;component/Resources/16x16.png"));
@@ -92,6 +92,7 @@ namespace MultiDraw
         }
 
         System.Windows.Forms.Screen Screen;
+        
         private void GetMainWindowLocation()
         {
             Screen = System.Windows.Forms.Screen.FromRectangle(
@@ -103,6 +104,7 @@ namespace MultiDraw
                 Left = Screen.WorkingArea.Right - (Screen.WorkingArea.Width * 0.4);
                 Top = Screen.WorkingArea.Top + (Screen.WorkingArea.Height * 0.25);
             }
+
             // Load saved settings
             string locationDetails = Properties.Settings.Default.WindowLocation;
             if (!string.IsNullOrEmpty(locationDetails))

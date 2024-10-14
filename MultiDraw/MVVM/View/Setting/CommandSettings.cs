@@ -42,7 +42,6 @@ namespace MultiDraw
         {
             try
             {
-
                 if (App.MultiDrawButton != null && App.MultiDrawButton.Enabled)
                 {
                     if (Utility.HasValidLicense(Util.ProductVersion))

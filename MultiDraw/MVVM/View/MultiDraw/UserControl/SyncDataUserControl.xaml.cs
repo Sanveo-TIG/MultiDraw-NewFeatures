@@ -98,21 +98,7 @@ namespace MultiDraw
                 System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        //private void SaveSettings()
-        //{
-        //    List<SYNCDataGlobalParam> globalParam = new List<SYNCDataGlobalParam>();
-        //    globalParam = ucMultiSelect.ItemsSource.Where(r=> r.IsChecked).Select(r=> new SYNCDataGlobalParam { Name = r.Name}).ToList();
-        //    Properties.Settings.Default.SyncDataParameters = JsonConvert.SerializeObject(globalParam);
-        //    Properties.Settings.Default.Save();
-        //}
-        //private void UcMultiSelect_DropDownClosed(object sender)
-        //{
-        //    SaveSettings();           
-        //}
-
-        private void BtnCheck_Click(object sender)
-        {
-        }
     }
 }
+
 

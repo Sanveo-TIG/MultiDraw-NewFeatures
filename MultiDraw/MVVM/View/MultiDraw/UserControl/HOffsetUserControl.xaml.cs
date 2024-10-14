@@ -47,12 +47,6 @@ namespace MultiDraw
                 _window = window;
                 ParentUserControl.Instance.AlignConduits.IsEnabled = false;
                 ParentUserControl.Instance.Anglefromprimary.IsEnabled = true;
-                //ddlAngle.Attributes = new MultiSelectAttributes()
-                //{
-                //    Label = "Angle",
-                //    Width = 310
-
-                //};
             }
             catch (Exception exception)
             {
@@ -76,15 +70,6 @@ namespace MultiDraw
             txtOffsetFeet.Click_load(txtOffsetFeet);
         }
 
-        //private void DdlAngle_Changed(object sender)
-        //{
-        //    SaveSettings();
-        //}
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            SaveSettings();
-        }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
@@ -92,25 +77,26 @@ namespace MultiDraw
             List<MultiSelect> angleList = new List<MultiSelect>();
             foreach (string item in _angleList)
                 angleList.Add(new MultiSelect() { Name = item });
-            ddlAngle.ItemsSource = _angleList;
+
+            ddlAngle.ItemsSource = _angleList;              
             ddlAngle.SelectedIndex = 4;
+
             Grid_MouseDown(null, null);
             string json = Properties.Settings.Default.HorizontalOffsetDraw;
             if (!string.IsNullOrEmpty(json))
             {
                 HOffsetGP globalParam = JsonConvert.DeserializeObject<HOffsetGP>(json);
                 txtOffsetFeet.Text = Convert.ToString(globalParam.OffsetValue);
-                ddlAngle.SelectedItem = angleList.FindIndex(x => x.Name == globalParam.AngleValue);                
+                ddlAngle.SelectedIndex = angleList.IndexOf(angleList.FirstOrDefault(x => x.Name == globalParam.AngleValue));
             }
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
                 ddlAngle.SelectedItem = 4;                
             }
-           // _externalEvents.Raise();
         }
 
-        private void ddlAngle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Control_Unloaded(object sender, RoutedEventArgs e)
         {
             SaveSettings();
         }
