@@ -17,10 +17,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid >
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="200"></RowDefinition>
@@ -31,18 +30,15 @@
                        Text="Horizontal Offset"  Margin="0,5,0,0" FontSize="16"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" >
-            <ListBox x:Name="ddlAngle" Margin="0 5 0 0"  BorderBrush="#ccc" BorderThickness="1"       
-Foreground="#333333" 
-       Width="310"
-      HorizontalAlignment="Left"
-Style="{x:Null}">
+            <ListBox x:Name="ddlAngle" Margin="0 5 0 0"  BorderBrush="#ccc" BorderThickness="1" Foreground="#333333" 
+                    Width="310" HorizontalAlignment="Left" Style="{x:Null}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#005D9A"  >
+                                <Setter Property="Background" Value="#005D9A">
                                 </Setter>
-                                <Setter Property="Foreground" Value="White" ></Setter>
+                                <Setter Property="Foreground" Value="White"></Setter>
                             </Trigger>
                         </Style.Triggers>
                         <Style.Resources>
@@ -56,7 +52,6 @@ Style="{x:Null}">
            Value="#ccc"></Setter>
                         <Setter Property="BorderThickness"
            Value="0,0,0,1"></Setter>
-
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
@@ -66,11 +61,15 @@ Style="{x:Null}">
             <TIG:TextBoxControl x:Name="txtOffsetFeet" 
                                     Label="Offset"  
                                     UnitsLabel="Feet and inches" 
-                                 Width="310"
-                                HorizontalAlignment="Left"
-                                    IsUnit="True"                          
-                                    ></TIG:TextBoxControl>
+                                    Width="310"
+                                    HorizontalAlignment="Left"
+                                    IsUnit="True"></TIG:TextBoxControl>
         </StackPanel>
-       
     </Grid>
 </UserControl>
+    
+    
+    
+    
+    
+    

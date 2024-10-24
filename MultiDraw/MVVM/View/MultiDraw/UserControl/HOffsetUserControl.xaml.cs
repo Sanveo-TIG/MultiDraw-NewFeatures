@@ -39,7 +39,7 @@ namespace MultiDraw
             _uiApp = application.UIApplication;
             _uidoc = application.UIApplication.ActiveUIDocument;
             _doc = _uidoc.Document;
-            _externalEvents= externalEvents;
+            _externalEvents = externalEvents;
             InitializeComponent();
             Instance = this;
             try
@@ -47,6 +47,17 @@ namespace MultiDraw
                 _window = window;
                 ParentUserControl.Instance.AlignConduits.IsEnabled = false;
                 ParentUserControl.Instance.Anglefromprimary.IsEnabled = true;
+              
+                if (ParentUserControl.Instance.Anglefromprimary.IsChecked == true)
+                {
+                    txtOffsetFeet.Visibility = System.Windows.Visibility.Visible;
+                }
+                else
+                {
+                    txtOffsetFeet.Visibility = System.Windows.Visibility.Hidden;
+                }
+
+               // ParentUserControl.Instance.Anglefromprimary.IsChecked = true;
             }
             catch (Exception exception)
             {
@@ -70,7 +81,6 @@ namespace MultiDraw
             txtOffsetFeet.Click_load(txtOffsetFeet);
         }
 
-
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             txtOffsetFeet.UIApplication = _uiApp;
@@ -78,7 +88,7 @@ namespace MultiDraw
             foreach (string item in _angleList)
                 angleList.Add(new MultiSelect() { Name = item });
 
-            ddlAngle.ItemsSource = _angleList;              
+            ddlAngle.ItemsSource = _angleList;
             ddlAngle.SelectedIndex = 4;
 
             Grid_MouseDown(null, null);
@@ -92,7 +102,7 @@ namespace MultiDraw
             else
             {
                 txtOffsetFeet.Text = "1.5\'";
-                ddlAngle.SelectedItem = 4;                
+                ddlAngle.SelectedItem = 4;
             }
         }
 
@@ -102,4 +112,8 @@ namespace MultiDraw
         }
     }
 }
+
+
+
+
 

@@ -259,8 +259,6 @@ namespace MultiDraw
                                     maxDisPoint = Utility.SetZvalue(maxDisPoint, zLine.GetEndPoint(0));
                                     ipTrim = Utility.SetZvalue(ipTrim, zLine.GetEndPoint(0));
                                     (element.Location as LocationCurve).Curve = maxDisPoint.IsAlmostEqualTo(zLine.GetEndPoint(0)) ? Line.CreateBound(maxDisPoint, ipTrim) : Line.CreateBound(ipTrim, maxDisPoint);
-
-
                                 }
                             }
                         }
@@ -304,77 +302,77 @@ namespace MultiDraw
                     }
                     else
                     {
-                        foreach (Element element in pickedElements)
-                        {
-                            Line zLine = Utility.GetLineFromConduit(element);
-                            Line xyLine = Utility.GetLineFromConduit(element, true);
+                        //foreach (Element element in pickedElements)
+                        //{
+                        //    Line zLine = Utility.GetLineFromConduit(element);
+                        //    Line xyLine = Utility.GetLineFromConduit(element, true);
 
-                            Line trimLine = Utility.CrossProductLine(element, trimPoint, 50, true);
-                            XYZ interSecPoint = Utility.FindIntersectionPoint(xyLine, trimLine);
-                            if (interSecPoint != null)
-                            {
-                                ConnectorSet connectorSet = Utility.GetConnectors(element);
-                                foreach (Connector con in connectorSet)
-                                {
-                                    if (con.IsConnected)
-                                    {
-                                        if (con.Origin.IsAlmostEqualTo(zLine.GetEndPoint(0)))
-                                        {
-                                            if (zLine.GetEndPoint(0).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)) > zLine.GetEndPoint(1).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)))
-                                            {
-                                                (element.Location as LocationCurve).Curve = Line.CreateBound(con.Origin, Utility.SetZvalue(interSecPoint, con.Origin));
-                                                break;
-                                            }
-                                            else
-                                            {
-                                                Line l1 = Line.CreateBound(con.Origin, zLine.GetEndPoint(1));
-                                                Line l2 = Line.CreateBound(new XYZ(con.Origin.X, con.Origin.Y, 0), interSecPoint);
-                                                if (Math.Sign(Math.Round(l1.Direction.X, 5)) == Math.Sign(Math.Round(l2.Direction.X, 5)) && (Math.Sign(Math.Round(l1.Direction.Y, 5)) == Math.Sign(Math.Round(l2.Direction.Y, 5))))
-                                                {
+                        //    Line trimLine = Utility.CrossProductLine(element, trimPoint, 50, true);
+                        //    XYZ interSecPoint = Utility.FindIntersectionPoint(xyLine, trimLine);
+                        //    if (interSecPoint != null)
+                        //    {
+                        //        ConnectorSet connectorSet = Utility.GetConnectors(element);
+                        //        foreach (Connector con in connectorSet)
+                        //        {
+                        //            if (con.IsConnected)
+                        //            {
+                        //                if (con.Origin.IsAlmostEqualTo(zLine.GetEndPoint(0)))
+                        //                {
+                        //                    if (zLine.GetEndPoint(0).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)) > zLine.GetEndPoint(1).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)))
+                        //                    {
+                        //                        (element.Location as LocationCurve).Curve = Line.CreateBound(con.Origin, Utility.SetZvalue(interSecPoint, con.Origin));
+                        //                        break;
+                        //                    }
+                        //                    else
+                        //                    {
+                        //                        Line l1 = Line.CreateBound(con.Origin, zLine.GetEndPoint(1));
+                        //                        Line l2 = Line.CreateBound(new XYZ(con.Origin.X, con.Origin.Y, 0), interSecPoint);
+                        //                        if (Math.Sign(Math.Round(l1.Direction.X, 5)) == Math.Sign(Math.Round(l2.Direction.X, 5)) && (Math.Sign(Math.Round(l1.Direction.Y, 5)) == Math.Sign(Math.Round(l2.Direction.Y, 5))))
+                        //                        {
 
-                                                    (element.Location as LocationCurve).Curve = Line.CreateBound(con.Origin, Utility.SetZvalue(interSecPoint, con.Origin));
-                                                }
-                                                else
-                                                {
-                                                    System.Windows.MessageBox.Show("Warning. \n" + "Cannot extend the conduits in opposite direction. Please pick another point", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                                                    //return false;
-                                                }
-                                                break;
-                                            }
-                                        }
-                                        if (con.Origin.IsAlmostEqualTo(zLine.GetEndPoint(1)))
-                                        {
-                                            if (zLine.GetEndPoint(1).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)) > zLine.GetEndPoint(0).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)))
-                                            {
-                                                (element.Location as LocationCurve).Curve = Line.CreateBound(Utility.SetZvalue(interSecPoint, con.Origin), con.Origin);
-                                                break;
-                                            }
-                                            else
-                                            {
-                                                Line l1 = Line.CreateBound(con.Origin, zLine.GetEndPoint(0));
-                                                Line l2 = Line.CreateBound(new XYZ(con.Origin.X, con.Origin.Y, 0), interSecPoint);
-                                                if (Math.Sign(Math.Round(l1.Direction.X, 5)) == Math.Sign(Math.Round(l2.Direction.X, 5)) && (Math.Sign(Math.Round(l1.Direction.Y, 5)) == Math.Sign(Math.Round(l2.Direction.Y, 5))))
-                                                {
+                        //                            (element.Location as LocationCurve).Curve = Line.CreateBound(con.Origin, Utility.SetZvalue(interSecPoint, con.Origin));
+                        //                        }
+                        //                        else
+                        //                        {
+                        //                            System.Windows.MessageBox.Show("Warning. \n" + "Cannot extend the conduits in opposite direction. Please pick another point", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        //                            //return false;
+                        //                        }
+                        //                        break;
+                        //                    }
+                        //                }
+                        //                if (con.Origin.IsAlmostEqualTo(zLine.GetEndPoint(1)))
+                        //                {
+                        //                    if (zLine.GetEndPoint(1).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)) > zLine.GetEndPoint(0).DistanceTo(Utility.SetZvalue(interSecPoint, con.Origin)))
+                        //                    {
+                        //                        (element.Location as LocationCurve).Curve = Line.CreateBound(Utility.SetZvalue(interSecPoint, con.Origin), con.Origin);
+                        //                        break;
+                        //                    }
+                        //                    else
+                        //                    {
+                        //                        Line l1 = Line.CreateBound(con.Origin, zLine.GetEndPoint(0));
+                        //                        Line l2 = Line.CreateBound(new XYZ(con.Origin.X, con.Origin.Y, 0), interSecPoint);
+                        //                        if (Math.Sign(Math.Round(l1.Direction.X, 5)) == Math.Sign(Math.Round(l2.Direction.X, 5)) && (Math.Sign(Math.Round(l1.Direction.Y, 5)) == Math.Sign(Math.Round(l2.Direction.Y, 5))))
+                        //                        {
 
-                                                    (element.Location as LocationCurve).Curve = Line.CreateBound(Utility.SetZvalue(interSecPoint, con.Origin), con.Origin);
-                                                }
-                                                else
-                                                {
-                                                    System.Windows.MessageBox.Show("Warning. \n" + "Cannot extend the conduits in opposite direction. Please pick another point", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                                                    //return false;
-                                                }
-                                                break;
+                        //                            (element.Location as LocationCurve).Curve = Line.CreateBound(Utility.SetZvalue(interSecPoint, con.Origin), con.Origin);
+                        //                        }
+                        //                        else
+                        //                        {
+                        //                            System.Windows.MessageBox.Show("Warning. \n" + "Cannot extend the conduits in opposite direction. Please pick another point", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        //                            //return false;
+                        //                        }
+                        //                        break;
 
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
+                        //                    }
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //    else
+                        //    {
 
-                            }
-                        }
+                        //    }
+                        //}
                     }
 
                 }
@@ -446,7 +444,7 @@ namespace MultiDraw
                 List<Element> primaryElements = new List<Element>();
                 foreach (double val in distancecollection)
                 {
-                    foreach (Element ele in primaryElementsforOrder)
+                    foreach (Element ele in primaryElementsforOrder) ///
                     {
                         Conduit con = ele as Conduit;
                         XYZ Conpt1 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0);
@@ -485,10 +483,8 @@ namespace MultiDraw
                         ConduitStartpt = EndPoint;
                         ConduitEndpoint = StartPoint;
                     }
-
                     Line LineForspacing = Line.CreateBound(ConduitEndpoint, ConduitStartpt);
                     XYZ LineForspacingDir = LineForspacing.Direction;
-
                     if (i == 0)
                     {
                         Intersectionpoint_point = Utility.FindIntersectionPoint(StartPoint, EndPoint, pickpoint, PickPointTwo);
@@ -525,10 +521,9 @@ namespace MultiDraw
                         SetElevation(ele, elevation, offSet, offSetVar);
                         pickedElements.Add(primaryElements[i]);
                         secondaryElements.Add(ele);
-
                     }
                 }
-
+                
                 ParentUserControl.Instance.Secondaryelst.Clear();
                 ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                 ParentUserControl.Instance.Primaryelst.Clear();
@@ -547,9 +542,6 @@ namespace MultiDraw
                 return conduit.ConnectorManager.UnusedConnectors.Size == 2;
             }
             return false;
-
-
-
         }
         public static bool IsOneSideConnectors(Element e)
         {
@@ -580,3 +572,4 @@ namespace MultiDraw
         }
     }
 }
+

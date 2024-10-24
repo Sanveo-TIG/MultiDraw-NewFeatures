@@ -97,7 +97,7 @@
                 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel IsItemsHost="True" />
+                        <WrapPanel IsItemsHost="True"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 
@@ -153,10 +153,10 @@
                            Cursor="Hand"
                            Source="/MultiDraw;component/Images/icons/THREE SADDLE 120X120 1.png"></Image>
                 </ListBoxItem>
-                <ListBoxItem Visibility="Visible">
+                <ListBoxItem Visibility="Visible" BorderThickness="0">
                     <Image Height="25"
-                          ToolTip="Four Point Saddle"
-                         Cursor="Hand"
+                         ToolTip="Four Point Saddle"
+                         Cursor="Hand"  
                          Source="/MultiDraw;component/Images/icons/FOUR SADDLE 120X120 1.png"></Image>
                 </ListBoxItem>
                 <ListBoxItem Visibility="Collapsed">
@@ -169,6 +169,7 @@
                     <Image Height="25" Source="/MultiDraw;component/Images/icons/Settings 120x120.png" Cursor="Hand" ToolTip="Settings"/>
                 </ListBoxItem>
             </ListBox>
+            
             <ToggleButton Margin="15,0,0,0" x:Name="btnPlay" Click="PlayButton_Click" 
                           materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Pause}"
                           Content="{materialDesign:PackIcon Kind=Play}" Style="{StaticResource MaterialDesignActionToggleButton}"/>
@@ -176,17 +177,14 @@
         <StackPanel Grid.Row="1"
                     x:Name="masterContainer">
         </StackPanel>
-        <StackPanel Grid.Row="2" >
+        <StackPanel Grid.Row="2">
             <CheckBox x:Name="AlignConduits" Content="Align Conduits" IsChecked="False" Margin="10,0,10,0"></CheckBox>
-            <CheckBox x:Name="Anglefromprimary" Content="Add bend in-place" IsChecked="False" Margin="10,10,10,0"></CheckBox>
+            <CheckBox x:Name="Anglefromprimary" Content="Add bend in-place" IsChecked="False" Margin="10,10,10,0"  Unchecked="Anglefromprimary_Unchecked" Checked="Anglefromprimary_Checked"></CheckBox>
         </StackPanel>
         <TIG:ToolTipControl  x:Name="btnTooltip">
         </TIG:ToolTipControl>
     </Grid>
 </UserControl>
-    
-    
-    
-    
-    
+     
+             
         

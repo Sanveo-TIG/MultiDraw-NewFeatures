@@ -26,9 +26,11 @@ using System.Drawing.Printing;
 
 namespace MultiDraw
 {
+    
     /// <summary>
     /// UI Events
     /// </summary>
+
     public partial class ParentUserControl : UserControl
     {
         public List<Element> Primaryelst = new List<Element>();
@@ -51,6 +53,7 @@ namespace MultiDraw
             _application = application;
             _externalEvents = externalEvents;
             InitializeComponent();
+
             Instance = this;
             try
             {
@@ -227,14 +230,14 @@ namespace MultiDraw
             {
                 Settings settings = new Settings
                 {
-                //    IsSupportNeeded = (bool)settingsControl.IsSupportNeeded.IsChecked,
-                //    StrutType = settingsControl.ddlStrutType.SelectedItem.Name,
-                //    RodDiaAsDouble = settingsControl.txtRodDia.AsDouble,
-                //    RodDiaAsString = settingsControl.txtRodDia.Text,
-                //    RodExtensionAsDouble = settingsControl.txtRodExtension.AsDouble,
-                //    RodExtensionAsString = settingsControl.txtRodExtension.Text,
-                //    SupportSpacingAsString = settingsControl.txtSupportSpacing.Text,
-                //    SupportSpacingAsDouble = settingsControl.txtSupportSpacing.AsDouble
+                    //    IsSupportNeeded = (bool)settingsControl.IsSupportNeeded.IsChecked,
+                    //    StrutType = settingsControl.ddlStrutType.SelectedItem.Name,
+                    //    RodDiaAsDouble = settingsControl.txtRodDia.AsDouble,
+                    //    RodDiaAsString = settingsControl.txtRodDia.Text,
+                    //    RodExtensionAsDouble = settingsControl.txtRodExtension.AsDouble,
+                    //    RodExtensionAsString = settingsControl.txtRodExtension.Text,
+                    //    SupportSpacingAsString = settingsControl.txtSupportSpacing.Text,
+                    //    SupportSpacingAsDouble = settingsControl.txtSupportSpacing.AsDouble
                 };
                 MultiDrawSettings = settings;
                 return settings;
@@ -307,6 +310,23 @@ namespace MultiDraw
                     break;
             }
         }
+
+        private void Anglefromprimary_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (HOffsetUserControl.Instance?.txtOffsetFeet != null)
+            {
+                HOffsetUserControl.Instance.txtOffsetFeet.Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
+        private void Anglefromprimary_Checked(object sender, RoutedEventArgs e)
+        {
+            if (HOffsetUserControl.Instance?.txtOffsetFeet != null)
+            {
+                HOffsetUserControl.Instance.txtOffsetFeet.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
     }
 }
+
 
