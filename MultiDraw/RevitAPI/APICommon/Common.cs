@@ -45,6 +45,7 @@ namespace MultiDraw
                                  true,
                                  TimeSpan.FromSeconds(15));
         }
+
         //private static void BOTTOMAddTags(Document doc, List<FamilyInstance> elements)
         //{
         //    int j = 1;
@@ -110,7 +111,6 @@ namespace MultiDraw
         //    doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
         //}
 
-
         public static bool HOffsetDrawHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
             /* string jsonParam = Utility.GetGlobalParametersManager(uiapp, "SyncDataParameters");
@@ -135,7 +135,6 @@ namespace MultiDraw
                     }
                     substrans2.Commit();
                 }
-
                 if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
@@ -155,7 +154,7 @@ namespace MultiDraw
                     startDate = DateTime.UtcNow;
                     Properties.Settings.Default.HorizontalOffsetDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
-                    //
+
                     HorizontalOffset.GetSecondaryElements(doc, ref pickedElements, angle, offSet, offsetVariable, out secondaryElements, Pickpoint, Refpiuckpoint);
 
                     for (int i = 0; i < pickedElements.Count; i++)
@@ -276,7 +275,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Horizontal Offset", Util.ProductVersion, "Draw");
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Horizontal Offset", Util.ProductVersion, "Draw");
                 }
                 ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
                 ParentUserControl.Instance.masterContainer.Children.Clear();
@@ -293,7 +292,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Horizontal Offset", Util.ProductVersion, "Draw");
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Horizontal Offset", Util.ProductVersion, "Draw");
                 }
             }
             return true;
@@ -328,262 +327,6 @@ namespace MultiDraw
                 }
             }
         }*/
-        //backup old code
-        /*        public static bool HOffsetDrawPointHandlerOLD(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements, ref bool fittingsfailure)
-                {
-                    string json = Properties.Settings.Default.ProfileColorSettings;
-                    ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
-                    DateTime startDate = DateTime.UtcNow;
-                    fittingsfailure = false;
-                    try
-                    {
-                        List<Element> thirdElements = new List<Element>();
-                        if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
-                        {
-                            return false;
-                        }
-                        HOffsetGP globalParam = new HOffsetGP
-                        {
-                            OffsetValue = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : HOffsetUserControl.Instance.txtOffsetFeet.AsString,
-                            AngleValue = HOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
-                        };
-                        // bool isVerticalConduits = false;
-                        using (SubTransaction substrans2 = new SubTransaction(doc))
-                        {
-                            substrans2.Start();
-                            OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
-                            foreach (Element element in pickedElements)
-                            {
-                                doc.ActiveView.SetElementOverrides(element.Id, orGsty);
-                            }
-                            substrans2.Commit();
-                        }
-                        double angle = Convert.ToDouble(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
-                        using (SubTransaction tx = new SubTransaction(doc))
-                        {
-                            tx.Start();
-                            startDate = DateTime.UtcNow;
-                            List<Element> backupsele = new List<Element>();
-                            foreach (Element element in pickedElements)
-                            {
-                                backupsele.Add(element);
-                            }
-                            Properties.Settings.Default.HorizontalOffsetDraw = JsonConvert.SerializeObject(globalParam);
-                            Properties.Settings.Default.Save();
-
-                            HorizontalOffset.GetSecondaryElementsWithOffsetPoint(doc, ref pickedElements, angle, offsetVariable, out secondaryElements, Pickpoint, Refpiuckpoint);
-
-                            //check the angle direction
-                            LocationCurve curve = pickedElements[0].Location as LocationCurve;
-                            Line l_Line = curve.Curve as Line;
-                            XYZ StartPoint = l_Line.GetEndPoint(0);
-                            XYZ EndPoint = l_Line.GetEndPoint(1);
-                            XYZ PrimaryConduitDirection = l_Line.Direction;
-                            XYZ CrossProduct = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
-                            XYZ PickPointTwo = Pickpoint + CrossProduct.Multiply(1); //1
-
-                            XYZ Intersectionpoint = Utility.FindIntersectionPoint(StartPoint, EndPoint, Pickpoint, PickPointTwo);  ///IP
-
-                            double SubdistanceOne = Math.Sqrt(Math.Pow((StartPoint.X - Intersectionpoint.X), 2) + Math.Pow((StartPoint.Y - Intersectionpoint.Y), 2));
-                            double SubdistanceTwo = Math.Sqrt(Math.Pow((EndPoint.X - Intersectionpoint.X), 2) + Math.Pow((EndPoint.Y - Intersectionpoint.Y), 2));
-                            XYZ ConduitStartpt = null;
-                            XYZ ConduitEndpoint = null;
-
-                            if (SubdistanceOne < SubdistanceTwo)
-                            {
-                                ConduitStartpt = StartPoint;
-                                ConduitEndpoint = EndPoint;
-                            }
-                            else
-                            {
-                                ConduitStartpt = EndPoint;
-                                ConduitEndpoint = StartPoint;
-                            }
-                            Line baseline = Line.CreateBound(ConduitEndpoint, new XYZ(Intersectionpoint.X, Intersectionpoint.Y, ConduitEndpoint.Z)); ///
-                            for (int i = 0; i < pickedElements.Count; i++)
-                            {
-                                double offsetDistance = 0.0;
-                                Element firstElement = pickedElements[i];
-                                Element secondElement = secondaryElements[i];
-
-                                Line firstLine = (firstElement.Location as LocationCurve).Curve as Line;
-                                Line secondLine = (secondElement.Location as LocationCurve).Curve as Line;
-
-                                //XYZ sp = Pickpoint;//-
-                                //XYZ dir = Pickpoint + secondLine.Direction.Multiply(10);
-                                ///Line ipLine = Line.CreateBound(sp, dir);  //vLine 
-
-                                //Line 1
-                                XYZ perpendicularDir = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
-                                XYZ perpendicularStartPoint = Pickpoint;
-                                XYZ perpendicularEndPoint = Pickpoint + perpendicularDir.Multiply(15);
-                                Line PickPointPerpendicularLine = Line.CreateBound(perpendicularStartPoint, perpendicularEndPoint);
-                                //DetailCurve perpendicularDetailLine = doc.Create.NewDetailCurve(doc.ActiveView, PickPointPerpendicularLine);
-
-                                //Line 2
-                                XYZ extendedStartPoint = StartPoint - PrimaryConduitDirection.Multiply(15);
-                                XYZ extendedEndPoint = EndPoint + PrimaryConduitDirection.Multiply(15);
-                                Line parallelLine = Line.CreateBound(extendedStartPoint, extendedEndPoint);
-                                //DetailCurve horizontalDetailLine = doc.Create.NewDetailCurve(doc.ActiveView, parallelLine);
-
-                                XYZ IpforOffset = Utility.FindIntersectionPoint(PickPointPerpendicularLine, parallelLine);
-
-                                //conduitDirection 
-                                XYZ NewGetPoint = null;
-                                if (IpforOffset != null)
-                                {
-                                    XYZ SP = l_Line.GetEndPoint(0);
-                                    XYZ EP = l_Line.GetEndPoint(1);
-                                    if (IpforOffset.DistanceTo(SP) < IpforOffset.DistanceTo(EP))
-                                    {
-                                        NewGetPoint = SP;
-                                    }
-                                    else
-                                    {
-                                        NewGetPoint = EP;
-                                    }
-                                }
-
-                                if (IpforOffset != null)
-                                {
-                                    offsetDistance = Pickpoint.DistanceTo(IpforOffset);
-                                }
-
-                                ////direction
-
-                                Line IpforOffsetLine = Line.CreateBound(NewGetPoint, new XYZ(IpforOffset.X, IpforOffset.Y, NewGetPoint.Z));
-                                XYZ secondaryDirection = IpforOffsetLine.Direction;
-
-                                XYZ offsetDirection = secondaryDirection.Multiply(offsetDistance);
-                                XYZ secConduit = NewGetPoint;
-
-                                XYZ endPoint = secConduit + offsetDirection;
-                                XYZ conduitEndPoint = endPoint + secondaryDirection.Multiply(10);
-
-                                Line CrossLine = Line.CreateBound(IpforOffset, new XYZ(Pickpoint.X, Pickpoint.Y, 0));
-                                endPoint += CrossLine.Direction.Multiply(offsetDistance);
-                                conduitEndPoint += CrossLine.Direction.Multiply(offsetDistance);
-
-                                //
-                                XYZ perpendicularDirection = secondaryDirection.CrossProduct(XYZ.BasisZ).Normalize();
-
-
-                                Conduit thirdConduit = Utility.CreateConduit(doc, firstElement as Conduit, endPoint, conduitEndPoint);
-
-
-                                ///@
-                                //XYZ sCon = secondLine.GetEndPoint(1);
-                                //XYZ secondaryDirection = secondLine.Direction;
-                                //XYZ perpendicularDirection = secondaryDirection.CrossProduct(XYZ.BasisZ).Normalize();
-
-                                //XYZ horizontalDirection = new XYZ(perpendicularDirection.X, perpendicularDirection.Y, 0).Normalize();
-                                //XYZ directionToPickpoint = (Pickpoint - sCon).Normalize();
-                                //if (perpendicularDirection.DotProduct(directionToPickpoint) < 0)
-                                //{
-                                //    horizontalDirection = horizontalDirection.Negate();
-                                //}
-                                //XYZ offsetDirection = horizontalDirection.Multiply(offsetDistance);
-                                //XYZ endPoint = sCon + offsetDirection;
-                                //XYZ conduitEndPoint = endPoint + secondaryDirection.Multiply(10); 
-
-
-                                ///
-                                //Conduit thirdConduit = Utility.CreateConduit(doc, firstElement as Conduit, endPoint, conduitEndPoint);
-                                Element thirdElement = doc.GetElement(thirdConduit.Id);
-                                thirdElements.Add(thirdElement);
-                                Utility.RetainParameters(firstElement, secondElement, uiapp);
-                                Utility.RetainParameters(firstElement, thirdElement, uiapp);
-                                Parameter bendtype = secondElement.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle = secondElement.LookupParameter("TIG-Bend Angle");
-                                Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle2 = thirdConduit.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set("H Offset");
-                                bendangle.Set(angle);
-                                bendtype2.Set("H Offset");
-                                bendangle2.Set(angle);
-                            }
-
-                            //Rotate Elements at Once
-                            Element ElementOne = pickedElements[0];
-                            Element ElementTwo = thirdElements[0];
-                            Utility.GetClosestConnectors(ElementOne, ElementTwo, out Connector ConnectorOne, out Connector ConnectorTwo);
-                            XYZ axisStart = ConnectorOne.Origin;
-                            XYZ axisEnd = new XYZ(axisStart.X, axisStart.Y, axisStart.Z + 10);
-                            Line axisLine = Line.CreateBound(axisStart, axisEnd);
-                            ElementTransformUtils.RotateElements(doc, secondaryElements.Select(r => r.Id).ToList(), axisLine, angle);
-                            //Conduit rotate angle indentification
-                            Conduit SecondConduit = thirdElements[0] as Conduit;                 //secondaryElements
-                            Line SceondConduitLine = (SecondConduit.Location as LocationCurve).Curve as Line;
-                            XYZ pt1 = SceondConduitLine.GetEndPoint(0);
-                            XYZ pt2 = SceondConduitLine.GetEndPoint(1);
-                            XYZ SecondLineDirection = SceondConduitLine.Direction;
-                            pt1 -= SecondLineDirection.Multiply(SceondConduitLine.Length + 50);
-                            pt2 += SecondLineDirection.Multiply(SceondConduitLine.Length + 50);
-                            Line firstline = Line.CreateBound(pt1, pt2);
-
-                            Conduit ThirdConduit = secondaryElements[0] as Conduit;               //thirdElements
-                            Line ThirdConduitLine = (ThirdConduit.Location as LocationCurve).Curve as Line;
-                            XYZ pt3 = ThirdConduitLine.GetEndPoint(0);
-                            XYZ pt4 = ThirdConduitLine.GetEndPoint(1);
-                            XYZ ThirdLineDirection = ThirdConduitLine.Direction;
-                            pt4 += ThirdLineDirection.Multiply(100);
-                            Line secondline = Line.CreateBound(pt3, pt4);
-                            XYZ IntersectionforangleConduit = Utility.GetIntersection(firstline, secondline);
-                            if (IntersectionforangleConduit == null)
-                            {
-                                angle = 2 * angle;
-                                ElementTransformUtils.RotateElements(doc, secondaryElements.Select(r => r.Id).ToList(), axisLine, -angle);
-                            }
-
-                            /// Connected Fitting Element
-                            for (int i = 0; i < pickedElements.Count; i++)
-                            {
-                                Element firstElement = pickedElements[i];
-                                Element secondElement = secondaryElements[i];
-                                Element thirdElement = thirdElements[i];
-
-                                ConnectorSet thirdConnectors = Utility.GetConnectors(thirdElement);
-                                ConnectorSet SecondConnectors = Utility.GetConnectors(secondElement);
-                                ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
-
-                                FamilyInstance fittings1 = Utility.CreateElbowFittings(firstConnectors, SecondConnectors, doc, uiapp, pickedElements[i], true);
-                                FamilyInstance fittings2 = Utility.CreateElbowFittings(SecondConnectors, thirdConnectors, doc, uiapp, pickedElements[i], true);
-
-                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set("H Offset");
-                                bendangle.Set(angle);
-                                bendtype2.Set("H Offset");
-                                bendangle2.Set(angle);
-                            }
-                            tx.Commit();
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Horizontal Offset", Util.ProductVersion, "Draw");
-                        }
-                        ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
-                        ParentUserControl.Instance.masterContainer.Children.Clear();
-                        UserControl userControl = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
-                        ParentUserControl.Instance.masterContainer.Children.Add(userControl);
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message == "Pick operation aborted.")
-                        {
-                            ParentUserControl.Instance._window.Close();
-                            return false;
-                        }
-                        else
-                        {
-                            System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Horizontal Offset", Util.ProductVersion, "Draw");
-                        }
-                    }
-                    return true;
-                }
-        */
-
-        //new
 
         public static bool HOffsetDrawPointHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements, ref bool fittingsfailure)
         {
@@ -657,6 +400,7 @@ namespace MultiDraw
                         ConduitEndpoint = StartPoint;
                     }
                     Line baseline = Line.CreateBound(ConduitEndpoint, new XYZ(Intersectionpoint.X, Intersectionpoint.Y, ConduitEndpoint.Z));
+
                     for (int i = 0; i < pickedElements.Count; i++)
                     {
                         Element firstElement = pickedElements[i];
@@ -681,6 +425,7 @@ namespace MultiDraw
                         bendtype2.Set("H Offset");
                         bendangle2.Set(angle);
                     }
+
                     //Rotate Elements at Once
                     Element ElementOne = pickedElements[0];
                     Element ElementTwo = secondaryElements[0];
@@ -773,13 +518,11 @@ namespace MultiDraw
                         }
                         else
                         {
-
                             foreach (Element element in thirdElements)
                             {
                                 if (doc.GetElement(element.Id) != null)
                                     doc.Delete(element.Id);
                             }
-
                             foreach (Element element in secondaryElements)
                             {
                                 if (doc.GetElement(element.Id) != null)
@@ -788,16 +531,20 @@ namespace MultiDraw
                             fittingsfailure = true;
 
                             //
-                            HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
-                          
-                             // ParentUserControl.Instance.Secondaryelst.Clear();
-                             // ParentUserControl.Instance.Primaryelst.Clear();
+                            using (SubTransaction substrans2 = new SubTransaction(doc))
+                            {
+                                substrans2.Start();
+                                OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                                foreach (Element element in pickedElements)
+                                {
+                                    doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                                }
+                                substrans2.Commit();
+                            }
 
-                            //
-                            //ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
-                            //ParentUserControl.Instance.masterContainer.Children.Clear();
-                            //UserControl userControl1 = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
-                            //ParentUserControl.Instance.masterContainer.Children.Add(userControl1);
+                            HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
+                            // ParentUserControl.Instance.Secondaryelst.Clear();
+                            // ParentUserControl.Instance.Primaryelst.Clear();
 
                             foreach (Element element in backupsele)
                             {
@@ -821,29 +568,27 @@ namespace MultiDraw
                         }
                         fittingsfailure = true;
 
-                        //
+                        using (SubTransaction substrans2 = new SubTransaction(doc))
+                        {
+                            substrans2.Start();
+                            OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                            foreach (Element element in pickedElements)
+                            {
+                                doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                            }
+                            substrans2.Commit();
+                        }
                         HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
-
-                       // ParentUserControl.Instance.Secondaryelst.Clear();
-                       // ParentUserControl.Instance.Primaryelst.Clear();
-                       
-                        //TaskDialog.Show("Warning", "Couldn't add a fitting. Please change the bend angle or enable Add bend in-place");
-                        //ParentUserControl.Instance.Secondaryelst.Clear();
-                          ///ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);  ///
-                        //ParentUserControl.Instance.Primaryelst.Clear();
-
                         foreach (Element element in backupsele)
                         {
                             ParentUserControl.Instance.Primaryelst.Add(element);
-                            //TaskDialog.Show("id", element.Id.ToString());
                         }
                     }
 
                     tx.Commit();
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Horizontal Offset", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Horizontal Offset", Util.ProductVersion, "Draw");
                 }
 
-                ///
                 ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
                 ParentUserControl.Instance.masterContainer.Children.Clear();
                 UserControl userControl = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
@@ -859,13 +604,18 @@ namespace MultiDraw
                 else
                 {
                     //
+                    using (SubTransaction substrans2 = new SubTransaction(doc))
+                    {
+                        substrans2.Start();
+                        OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                        foreach (Element element in pickedElements)
+                        {
+                            doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                        }
+                        substrans2.Commit();
+                    }
                     HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
-                  
-                   // ParentUserControl.Instance.Secondaryelst.Clear();
-                     // ParentUserControl.Instance.Primaryelst.Clear();
-
                     //System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Horizontal Offset", Util.ProductVersion, "Draw");
                 }
             }
             return true;
@@ -979,7 +729,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Rolling Offset", Util.ProductVersion);
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Rolling Offset", Util.ProductVersion);
                 }
             }
             return true;
@@ -1125,7 +875,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
                 }
                 else
                 {
@@ -1262,7 +1012,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    // Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
+                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
                 }
             }
             return true;
@@ -1286,7 +1036,6 @@ namespace MultiDraw
                 };
 
                 //XYZ Pickpoint = null;
-
                 //ConduitElevation identification
                 XYZ e1pt1 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
                 XYZ e1pt2 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
@@ -1355,7 +1104,6 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-
                     }
                     //Rotate Elements at Once
                     Element ElementOne = PrimaryElements[0];
@@ -1367,7 +1115,6 @@ namespace MultiDraw
                     XYZ axisStart = ConnectorOne.Origin;
                     XYZ axisEnd = axisStart.Add(XYZ.BasisZ.CrossProduct(direction));
                     Line axisLine = Line.CreateBound(axisStart, axisEnd);
-
                     if (l_offSet < 0)
                     {
                         l_angle = -l_angle;
@@ -1394,24 +1141,12 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        //if (j == 0)
-                        //{
-                        //    PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        //}
-                        //else
-                        //{
-                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        //}
-
-                        //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
-                    // BOTTOMAddTags(_doc, bOTTOMForAddtags);
-                    // TOPAddTags(_doc, TOPForAddtags);
+
                     //  Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     subTransaction.Commit();
-
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
                     {
                         sunstransforrunsync.Start();
@@ -1427,9 +1162,8 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                    // Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
                 }
-
                 else
                 {
                     using Transaction trans1 = new Transaction(_doc);
@@ -1445,7 +1179,6 @@ namespace MultiDraw
                                 Pickpoint = conec.Origin;
                             }
                         }
-
                     }
                     Pickpoint ??= Utility.PickPoint(_uiDoc);
                     if (Pickpoint == null)
@@ -1457,6 +1190,7 @@ namespace MultiDraw
                     startDate = DateTime.UtcNow;
                     Properties.Settings.Default.VerticalOffsetDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
+
                     VerticalOffset.GetSecondaryElements(_doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, offsetVariable, Pickpoint);
 
                     ConnectorSet PrimaryConnectors = null;
@@ -1502,14 +1236,11 @@ namespace MultiDraw
                     Line axisLine = Line.CreateBound(axisStart, axisEnd);
                     double PrimaryOffset = RevitVersion < 2020 ? PrimaryElements[0].LookupParameter("Offset").AsDouble() : PrimaryElements[0].LookupParameter("Middle Elevation").AsDouble();
                     double SecondaryOffset = RevitVersion < 2020 ? SecondaryElements[0].LookupParameter("Offset").AsDouble() : SecondaryElements[0].LookupParameter("Middle Elevation").AsDouble();
-
                     l_angle = (Math.PI / 2) - l_angle;
-
                     if (PrimaryOffset > SecondaryOffset)
                     {
                         l_angle = -l_angle;
                     }
-
                     ElementTransformUtils.RotateElements(_doc, thirdElements.Select(r => r.Id).ToList(), axisLine, -l_angle);
                     DeleteSupports(_doc, PrimaryElements);
                     List<FamilyInstance> bOTTOMForAddtags = new List<FamilyInstance>();
@@ -1542,7 +1273,7 @@ namespace MultiDraw
                         //{
                         //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         //}
-                        // Conduitcoloroverride(SecondaryElements[j].Id, _doc);
+                        //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
@@ -1585,7 +1316,6 @@ namespace MultiDraw
                     VerticalOffset.VOffsetDrawPointWithPickOffset(_doc, _uiDoc, uiApp, PrimaryElements, offsetVariable, RevitVersion, Pickpoint, ref SecondaryElements);
 
                     // System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
                 }
             }
             return true;
@@ -1978,7 +1708,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                    // Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                     Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
                 }
                 ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
                 ParentUserControl.Instance.masterContainer.Children.Clear();
@@ -1994,7 +1724,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
+                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
                 }
             }
             return true;
@@ -2270,7 +2000,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    //Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
+                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
                 }
             }
             return true;
@@ -2462,7 +2192,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Rolling Offset", Util.ProductVersion);
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Rolling Offset", Util.ProductVersion);
                 }
             }
             return true;
@@ -2646,7 +2376,7 @@ namespace MultiDraw
                     ApplyBend(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref secondaryElements);
                     //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
                     subtrans.Commit();
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                 {
@@ -2680,7 +2410,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
             }
 
@@ -2714,7 +2444,6 @@ namespace MultiDraw
                 doc.Delete(SupportTobeDeleted.Select(r => r.Id).ToList());
             }
         }
-
         public static bool KWBDrawPointHandler(Document doc, UIApplication uiapp, List<Element> PrimaryElements, string offsetVariable, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
             DateTime startDate = DateTime.UtcNow;
@@ -2763,7 +2492,7 @@ namespace MultiDraw
                     PointApplyBend(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref secondaryElements);
                     ///Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
                     subtrans.Commit();
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
 
                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -2796,12 +2525,11 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
             }
             return true;
         }
-
         public static void ApplyBend(Document doc, ref List<Element> PrimaryElements, double l_angle, double l_offSet, string offSetVar, XYZ pickpoint, UIApplication _uiapp, ref List<Element> SecondaryElements)
         {
             FamilyInstance fittings1 = null;
@@ -2972,7 +2700,7 @@ namespace MultiDraw
                                 MessageBox.Show("Please increase offset Value", "Warning");
                             }
                         }
-                        //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                          _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                     }
                     catch
                     {
@@ -3104,12 +2832,12 @@ namespace MultiDraw
                                     MessageBox.Show("Please increase offset Value", "Warning");
                                 }
                             }
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                         catch (Exception exception)
                         {
                             System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                     }
                 }
@@ -3244,7 +2972,7 @@ namespace MultiDraw
                                 MessageBox.Show("Please increase offset Value", "Warning");
                             }
                         }
-                        // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                        _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                     }
                     catch
                     {
@@ -3369,12 +3097,12 @@ namespace MultiDraw
                                     //toptag.Add(fittings2);
                                 }
                             }
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                         catch (Exception exception)
                         {
                             System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                     }
                 }
@@ -3383,7 +3111,7 @@ namespace MultiDraw
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
 
             }
             // TOPAddTags(doc,toptag);
@@ -3538,7 +3266,7 @@ namespace MultiDraw
                                 MessageBox.Show("Please increase offset Value", "Warning");
                             }
                         }
-                        // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                        _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                     }
                     catch
                     {
@@ -3671,12 +3399,12 @@ namespace MultiDraw
                                     MessageBox.Show("Please increase offset Value", "Warning");
                                 }
                             }
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                         catch (Exception exception)
                         {
                             System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                     }
                 }
@@ -3811,7 +3539,7 @@ namespace MultiDraw
                                 MessageBox.Show("Please increase offset Value", "Warning");
                             }
                         }
-                        //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                         _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                     }
                     catch
                     {
@@ -3947,12 +3675,12 @@ namespace MultiDraw
                                     MessageBox.Show("Please increase offset Value", "Warning");
                                 }
                             }
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                         catch (Exception exception)
                         {
                             System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                     }
                 }
@@ -3960,13 +3688,11 @@ namespace MultiDraw
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
             }
             // TOPAddTags(doc, toptag);
             // BOTTOMAddTags(doc, toptag);
         }
-
-
         public static bool IsBothSideUnConnectors(Element e)
         {
 
@@ -4039,7 +3765,7 @@ namespace MultiDraw
                             subtrans.Start();
                             NinetyApplyBend(doc, PrimaryElements, offsetVariable, Pickpoint, uiApp);
                             subtrans.Commit();
-                            //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "90° Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "90° Bend", Util.ProductVersion, "Draw");
                         }
                         else if (Convert.ToDouble(StraightOrBendUserControl.Instance.angleList.SelectedItem) == 0)
                         {
@@ -4340,7 +4066,7 @@ namespace MultiDraw
                              // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });*/
 
                             transaction.Commit();
-                            // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
+                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
                         }
                         else if (Convert.ToDouble(StraightOrBendUserControl.Instance.angleList.SelectedItem) > 0 && Convert.ToDouble(StraightOrBendUserControl.Instance.angleList.SelectedItem) < 90)
                         {
@@ -4566,7 +4292,7 @@ namespace MultiDraw
 
                                     string angleuseractivity = Convert.ToString(StraightOrBendUserControl.Instance.angleList.SelectedItem);
                                     substran3.Commit();
-                                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", angleuseractivity + "° Bend", Util.ProductVersion, "Draw");
+                                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", angleuseractivity + "° Bend", Util.ProductVersion, "Draw");
                                 }
                                 catch
                                 {
@@ -4691,7 +4417,7 @@ namespace MultiDraw
                                     ParentUserControl.Instance.Primaryelst.AddRange(inclindconduits);
                                     string angleuseractivity = Convert.ToString(StraightOrBendUserControl.Instance.angleList.SelectedItem);
                                     substran3.Commit();
-                                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", angleuseractivity + "° Bend", Util.ProductVersion, "Draw");
+                                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", angleuseractivity + "° Bend", Util.ProductVersion, "Draw");
                                 }
                                 catch
                                 {
@@ -4908,7 +4634,7 @@ namespace MultiDraw
 
                     NinetyApplyBend(doc, PrimaryElements, offsetVariable, Pickpoint, uiApp);
                     subtrans.Commit();
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "90° Bend", Util.ProductVersion, "Draw");
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "90° Bend", Util.ProductVersion, "Draw");
                 }
                 StraightOrBendUserControl.Instance.angleList.SelectedIndex = 0;
             }
@@ -4921,7 +4647,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Bend", Util.ProductVersion, "Draw");
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Bend", Util.ProductVersion, "Draw");
                 }
             }
 
@@ -5095,7 +4821,7 @@ namespace MultiDraw
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Bend", Util.ProductVersion, "Draw");
+                _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Bend", Util.ProductVersion, "Draw");
 
             }
         }
@@ -5158,13 +4884,13 @@ namespace MultiDraw
                 ParentUserControl.Instance.masterContainer.Children.Clear();
                 UserControl userControl = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
                 ParentUserControl.Instance.masterContainer.Children.Add(userControl);
-                //Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "90° Kick", Util.ProductVersion);
+                Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "90° Kick", Util.ProductVersion);
 
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Kick", Util.ProductVersion);
+                Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Kick", Util.ProductVersion);
             }
             return true;
         }
@@ -5256,7 +4982,7 @@ namespace MultiDraw
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Kick", Util.ProductVersion);
+                _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Kick", Util.ProductVersion);
             }
 
 
@@ -5327,7 +5053,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    // _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Stub Bend", Util.ProductVersion);
+                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Stub Bend", Util.ProductVersion);
                 }
             }
             return true;
@@ -5392,7 +5118,7 @@ namespace MultiDraw
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //  _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Stub Bend", Util.ProductVersion, "Draw");
+                _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Stub Bend", Util.ProductVersion, "Draw");
 
             }
         }
@@ -5413,7 +5139,5 @@ namespace MultiDraw
         }
     }
 }
-
-
 
 

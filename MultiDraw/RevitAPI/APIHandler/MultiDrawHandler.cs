@@ -64,7 +64,7 @@ namespace MultiDraw
             //ICollection<ElementId> ecol = sel.GetElementIds();
 
             List<Element> failingelement = new List<Element>();
-            List<Element> pickedElements = new List<Element>();
+            //List<Element> pickedElements = new List<Element>();
             List<Element> secondaryElements = new List<Element>();
             List<Element> thirdElements = new List<Element>();
             bool Refpiuckpoint = false;
@@ -75,7 +75,7 @@ namespace MultiDraw
 
             try
             {
-                // List<Element> GetElements = new List<Element>(); ///
+                //List<Element> GetElements = new List<Element>(); 
 
                 using (Transaction trans2 = new Transaction(doc))
                 {
@@ -149,15 +149,12 @@ namespace MultiDraw
                     transRibbonColorChange_2.Commit();
                 }
 
-
                 ParentUserControl.Instance.Primaryelst = Utility.GetPickedElements(uidoc, "Select conduits to perform action", typeof(Conduit), true);
-
                 if (ParentUserControl.Instance.Primaryelst == null)
                 {
                     ParentUserControl.Instance.btnPlay.IsChecked = false;
                     return false;
                 }
-
                 if (PrimaryConduitRunid == null && ParentUserControl.Instance.Primaryelst != null)
                 {
                     PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).Id;
@@ -286,7 +283,7 @@ namespace MultiDraw
                     try
                     {
                         using Transaction tx = new Transaction(doc);
-                        tx.Start(mainTransName);
+                        tx.Start(mainTransName); ////
                         ParentUserControl.Instance._transaction = tx;
                         using (SubTransaction transRibbonColorChange = new SubTransaction(doc))
                         {
@@ -380,6 +377,8 @@ namespace MultiDraw
                                     lastconduit = item;
                                 }
                             }
+
+
                             using (SubTransaction Primarycolorfillsub = new SubTransaction(doc))
                             {
                                 Primarycolorfillsub.Start();
@@ -390,11 +389,14 @@ namespace MultiDraw
 
                                 foreach (Element conduit in ParentUserControl.Instance.Primaryelst)
                                 {
-                                    Utility.SetAlertColor(conduit.Id, uidoc, new Color(50, 205, 50));
-                                    //PrimryConduitcoloroverride(conduit.Id, doc);
+                                    if (conduit != null)
+                                    {
+                                        PrimryConduitcoloroverride(conduit.Id, doc);
+                                    }
                                 }
                                 Primarycolorfillsub.Commit();
                             }
+
                             XYZ Pickpoint = Utility.PickPoint(uidoc);
 
                             /*      //if (ParentUserControl.Instance._isStopedTransaction)
@@ -744,7 +746,6 @@ namespace MultiDraw
                                           //    }
                                           //}*/
                                 }
-
                                 /*
                                  //using (SubTransaction transfilter = new SubTransaction(doc))
                                  //{
@@ -1072,7 +1073,6 @@ namespace MultiDraw
                                 {
                                     mainTransName = "MultiDraw-Stub 90";
                                 }
-
                                 if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 1)
                                 {
                                     if (ParentUserControl.Instance.Anglefromprimary.IsChecked == true)
@@ -1105,10 +1105,8 @@ namespace MultiDraw
                                                 ParentUserControl.Instance.Primaryelst.Clear();
                                                 ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
                                             }
-
                                         }
                                     }
-
                                 }
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 0)
                                 {
@@ -1157,7 +1155,6 @@ namespace MultiDraw
                                         ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
                                     }
                                 }
-
                                 else if (ParentUserControl.Instance.cmbProfileType.SelectedIndex == 7)
                                 {
                                     //if (ParentUserControl.Instance.Anglefromprimary.IsChecked == true)
@@ -1283,7 +1280,7 @@ namespace MultiDraw
                                 }
                             }
                         }
-                        //@
+
                         /* //using (SubTransaction sub = new SubTransaction(doc))
                          //{
                          //    sub.Start();
@@ -1329,9 +1326,10 @@ namespace MultiDraw
                          //    }
                          //    transRibbonColorChange.Commit();
                          //}*/
+
                         tx.Commit();
                     }
-                    catch//@
+                    catch
                     {
                         /*//if (ParentUserControl.Instance.Primaryelst != null)
                         //{
@@ -1393,7 +1391,6 @@ namespace MultiDraw
                             }
                             catch
                             {
-
                             }
                             trans.Commit();
                         }
@@ -1503,6 +1500,7 @@ namespace MultiDraw
             Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Autodesk.Revit.DB.Color(50, 205, 50));
             doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
         }
+
         public static void PrimryConduitcoloroverride(ElementId eid, Document doc)
         {
             var patternCollector = new FilteredElementCollector(doc);
@@ -1511,6 +1509,7 @@ namespace MultiDraw
             Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(50, 205, 50));
             doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
         }
+
         private static ElementFilter CreateElementFilterFromFilterRules(IList<FilterRule> filterRules)
         {
             // We use a LogicalAndFilter containing one ElementParameterFilter
@@ -1528,12 +1527,10 @@ namespace MultiDraw
         public class SelectElementsFilter : ISelectionFilter
         {
             readonly string CategoryName = "";
-
             public SelectElementsFilter(string name)
             {
                 CategoryName = name;
             }
-
             public bool AllowElement(Element e)
             {
                 if (e.Category != null && e.Category.Name == CategoryName)
@@ -1555,7 +1552,5 @@ namespace MultiDraw
         }
     }
 }
-
-
 
 

@@ -18,30 +18,30 @@ namespace MultiDraw
         {
             try
             {
+                string json = Properties.Settings.Default.ProfileColorSettings;
+                ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
+                DateTime startDate = DateTime.UtcNow;
+
+                HOffsetGP globalParam = new HOffsetGP
+                {
+                    OffsetValue = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : HOffsetUserControl.Instance.txtOffsetFeet.AsString,
+                    AngleValue = HOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
+                };
+
+                using (SubTransaction substrans2 = new SubTransaction(doc))
+                {
+                    substrans2.Start();
+                    OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
+                    foreach (Element element in pickedElements)
+                    {
+                        doc.ActiveView.SetElementOverrides(element.Id, orGsty);
+                    }
+                    substrans2.Commit();
+                }
+
                 using (SubTransaction tx = new SubTransaction(doc))
                 {
                     tx.Start();
-
-                    string json = Properties.Settings.Default.ProfileColorSettings;
-                    ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
-                    DateTime startDate = DateTime.UtcNow;
-
-                    HOffsetGP globalParam = new HOffsetGP
-                    {
-                        OffsetValue = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : HOffsetUserControl.Instance.txtOffsetFeet.AsString,
-                        AngleValue = HOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
-                    };
-                    using (SubTransaction substrans2 = new SubTransaction(doc))
-                    {
-                        substrans2.Start();
-                        OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
-                        foreach (Element element in pickedElements)
-                        {
-                            doc.ActiveView.SetElementOverrides(element.Id, orGsty);
-                        }
-                        substrans2.Commit();
-                    }
-
                     List<Element> thirdElements = new List<Element>();
                     double angle = Convert.ToDouble(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     GetSecondaryElementsWithOffsetPoint(doc, ref pickedElements, angle, offsetVariable, out secondaryElements, Pickpoint, Refpiuckpoint);
@@ -53,10 +53,9 @@ namespace MultiDraw
                     XYZ EndPoint = l_Line.GetEndPoint(1);
                     XYZ PrimaryConduitDirection = l_Line.Direction;
                     XYZ CrossProduct = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
-                    XYZ PickPointTwo = Pickpoint + CrossProduct.Multiply(1); 
+                    XYZ PickPointTwo = Pickpoint + CrossProduct.Multiply(1);
 
                     XYZ Intersectionpoint = Utility.FindIntersectionPoint(StartPoint, EndPoint, Pickpoint, PickPointTwo);  ///IP
-
                     double SubdistanceOne = Math.Sqrt(Math.Pow((StartPoint.X - Intersectionpoint.X), 2) + Math.Pow((StartPoint.Y - Intersectionpoint.Y), 2));
                     double SubdistanceTwo = Math.Sqrt(Math.Pow((EndPoint.X - Intersectionpoint.X), 2) + Math.Pow((EndPoint.Y - Intersectionpoint.Y), 2));
                     XYZ ConduitStartpt = null;
@@ -74,7 +73,6 @@ namespace MultiDraw
                     }
                     Line baseline = Line.CreateBound(ConduitEndpoint, new XYZ(Intersectionpoint.X, Intersectionpoint.Y, ConduitEndpoint.Z)); ///
                     double offsetDistance = 0.0;
-
                     //Line CrossLine = null;
 
                     for (int i = 0; i < pickedElements.Count; i++)
@@ -100,7 +98,6 @@ namespace MultiDraw
                         XYZ extendedEndPoint = EndPoint1 + PrimaryConduitDirection.Multiply(15);
                         Line parallelLine = Line.CreateBound(extendedStartPoint, extendedEndPoint);
                         //DetailCurve horizontalDetailLine = doc.Create.NewDetailCurve(doc.ActiveView, parallelLine);
-
                         XYZ IpforOffset = Utility.FindIntersectionPoint(PickPointPerpendicularLine, parallelLine);
 
                         //conduitDirection 
@@ -125,10 +122,9 @@ namespace MultiDraw
                             offsetDistance = Pickpoint.DistanceTo(IpforOffset);
                         }
 
-                        ////direction
+                        ///direction
                         Line IpforOffsetLine = Line.CreateBound(NewGetPoint, new XYZ(IpforOffset.X, IpforOffset.Y, NewGetPoint.Z));
                         XYZ secondaryDirection = IpforOffsetLine.Direction;
-
                         XYZ offsetDirection = secondaryDirection.Multiply(offsetDistance);
                         XYZ secConduitStart = NewGetPoint;
                         XYZ endPoint = secConduitStart + offsetDirection;
@@ -154,7 +150,7 @@ namespace MultiDraw
                         bendangle2.Set(angle);
                     }
                     ParentUserControl.Instance.Secondaryelst.Clear();
-                    // ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+                    ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                     ParentUserControl.Instance.Primaryelst.Clear();
                     ParentUserControl.Instance.Primaryelst.AddRange(thirdElements); //3ele
 
@@ -169,7 +165,7 @@ namespace MultiDraw
                         Line axisLine = Line.CreateBound(axisStart, axisEnd);
                         ElementTransformUtils.RotateElements(doc, secondaryElements.Select(r => r.Id).ToList(), axisLine, angle);
                         //Conduit rotate angle indentification
-                        Conduit SecondConduit = thirdElements[0] as Conduit;                 //secondaryElements
+                        Conduit SecondConduit = thirdElements[0] as Conduit;
                         Line SceondConduitLine = (SecondConduit.Location as LocationCurve).Curve as Line;
                         XYZ pt1 = SceondConduitLine.GetEndPoint(0);
                         XYZ pt2 = SceondConduitLine.GetEndPoint(1);
@@ -178,7 +174,7 @@ namespace MultiDraw
                         pt2 += SecondLineDirection.Multiply(SceondConduitLine.Length + 50);
                         Line firstline = Line.CreateBound(pt1, pt2);
 
-                        Conduit ThirdConduit = secondaryElements[0] as Conduit;               //thirdElements
+                        Conduit ThirdConduit = secondaryElements[0] as Conduit;
                         Line ThirdConduitLine = (ThirdConduit.Location as LocationCurve).Curve as Line;
                         XYZ pt3 = ThirdConduitLine.GetEndPoint(0);
                         XYZ pt4 = ThirdConduitLine.GetEndPoint(1);
@@ -230,7 +226,6 @@ namespace MultiDraw
 
             }
         }
-
         private static void DeleteElementsWithFittings(Document doc, List<Element> elements)
         {
             foreach (Element element in elements)
@@ -252,7 +247,6 @@ namespace MultiDraw
                 doc.Delete(element.Id);
             }
         }
-
         public static void GetSecondaryElementsWithOffsetPoint(Document doc, ref List<Element> pickedElements, double angle, string offSetVar, out List<Element> secondaryElements, XYZ Pickpoint, bool refpickpoint)
         {
             secondaryElements = new List<Element>();
@@ -340,94 +334,8 @@ namespace MultiDraw
                         pickedElements.Add(primaryElements[i]);
                     }
                 }
-
             }
         }
-
-        /*        public static void GetSecondaryElementsWithOffset(Document doc, ref List<Element> pickedElements, double angle, string offSetVar, out List<Element> secondaryElements, XYZ Pickpoint, bool refpickpoint)
-                {
-                    secondaryElements = new List<Element>();
-                    Dictionary<double, List<Element>> groupedElements = new Dictionary<double, List<Element>>();
-                    Utility.GroupByElevation(pickedElements, offSetVar, ref groupedElements);
-                    pickedElements = new List<Element>();
-                    groupedElements = groupedElements.OrderByDescending(r => r.Key).ToDictionary(x => x.Key, x => x.Value);
-                    foreach (KeyValuePair<double, List<Element>> valuePair in groupedElements)
-                    {
-                        List<Element> primaryElements = valuePair.Value.OrderByDescending(r => ((r.Location as LocationCurve).Curve as Line).Origin.Y).ToList();
-                        double zSpace = (groupedElements.FirstOrDefault().Key - valuePair.Key) * Math.Tan(angle / 2);
-                        XYZ firstStartPoint = ((primaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                        XYZ firstEndPoint = ((primaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-
-                        Line lineOne = (primaryElements[0].Location as LocationCurve).Curve as Line;
-                        XYZ pt1 = lineOne.GetEndPoint(0);
-                        XYZ pt2 = lineOne.GetEndPoint(1);
-                        XYZ midpoint = (pt1 + pt2) / 2;
-                        XYZ PrimaryConduitDirection = lineOne.Direction;
-                        XYZ CrossProduct = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
-                        XYZ PickPointTwo = Pickpoint + CrossProduct.Multiply(1);
-                        // intersection point between primary and secondary conduits
-                        XYZ Intersectionpoint = FindIntersectionPoint(pt1, pt2, Pickpoint, PickPointTwo);
-                        double offsetdistance = Math.Sqrt(Math.Pow((Pickpoint.X - Intersectionpoint.X), 2) + Math.Pow((Pickpoint.Y - Intersectionpoint.Y), 2));
-                        Line referenceline = Line.CreateBound(pt1, new XYZ(Intersectionpoint.X, Intersectionpoint.Y, pt1.Z));
-                        XYZ directionopfreferenecline = referenceline.Direction;
-                        for (int i = 0; i < primaryElements.Count; i++)
-                        {
-                            if (i == 0)
-                            {
-                                XYZ strpt1 = new XYZ(Pickpoint.X, Pickpoint.Y, Pickpoint.Z);
-                                XYZ endpt1 = strpt1 - directionopfreferenecline.Multiply(5);
-
-                                ///
-                                //Line secondaryLine = Line.CreateBound(strpt1, endpt1);
-                                //XYZ extendedStartPoint = strpt1 - secondaryLine.Direction.Multiply(2);
-                                // XYZ extendedEndPoint = endpt1 + secondaryLine.Direction.Multiply(2);
-                                //Line extendedLine = Line.CreateBound(extendedStartPoint, extendedEndPoint);
-                                //DetailCurve extendedIPLine = doc.Create.NewDetailCurve(doc.ActiveView, extendedLine);
-
-                                XYZ movedStartPoint = strpt1 + directionopfreferenecline.Multiply(15 * 0.3048);
-                                XYZ movedEndPoint = endpt1 + directionopfreferenecline.Multiply(15 * 0.3048);
-                                Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, movedStartPoint, movedEndPoint);
-
-                                ///
-
-                                //Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, strpt1, endpt1);
-                                double elevation = primaryElements[i].LookupParameter(offSetVar).AsDouble();
-                                Parameter newElevation = newCon.LookupParameter(offSetVar);
-                                newElevation.Set(elevation);
-                                Element ele = doc.GetElement(newCon.Id);
-                                secondaryElements.Add(ele);
-                                pickedElements.Add(primaryElements[i]);
-                            }
-                            else
-                            {
-                                Line SublineOne = (primaryElements[i].Location as LocationCurve).Curve as Line;
-                                XYZ Subpt1 = SublineOne.GetEndPoint(0);
-                                XYZ Subpt2 = SublineOne.GetEndPoint(1);
-                                XYZ Secondintersections = FindIntersectionPoint(Subpt1, Subpt2, Pickpoint, PickPointTwo);
-                                XYZ perpendicularlinedir = Line.CreateBound(new XYZ(Intersectionpoint.X, Intersectionpoint.Y, 0), new XYZ(Secondintersections.X, Secondintersections.Y, 0)).Direction;
-                                double speacing = Math.Sqrt(Math.Pow((Intersectionpoint.X - Secondintersections.X), 2) + Math.Pow((Intersectionpoint.Y - Secondintersections.Y), 2));
-                                XYZ strpt1 = Pickpoint + perpendicularlinedir.Multiply(speacing);
-                                XYZ endpt1 = strpt1 - directionopfreferenecline.Multiply(5);
-
-                                ///
-                                Conduit newCon = Utility.CreateConduit(doc, primaryElements[i] as Conduit, strpt1, endpt1);
-                                double elevation = primaryElements[i].LookupParameter(offSetVar).AsDouble();
-                                Parameter newElevation = newCon.LookupParameter(offSetVar);
-                                newElevation.Set(elevation);
-                                Element ele = doc.GetElement(newCon.Id);
-                                secondaryElements.Add(ele);
-                                pickedElements.Add(primaryElements[i]);
-                            }
-                        }
-                        ParentUserControl.Instance.Secondaryelst.Clear();
-                        ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
-                        ParentUserControl.Instance.Primaryelst.Clear();
-                        ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
-                    }
-                    //create third conduit 
-                }
-        */
-
         public static void GetSecondaryElementsWithPoint(Document doc, ref List<Element> pickedElements, double angle, string offSetVar, out List<Element> secondaryElements, XYZ Pickpoint, bool refpickpoint)
         {
             secondaryElements = new List<Element>();
@@ -449,13 +357,8 @@ namespace MultiDraw
                 XYZ CrossProduct = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
                 XYZ PickPointTwo = Pickpoint + CrossProduct.Multiply(1);
                 XYZ Intersectionpoint = FindIntersectionPoint(pt1, pt2, Pickpoint, PickPointTwo);
-                //double offsetdistance = Math.Sqrt(Math.Pow((Pickpoint.X - Intersectionpoint.X), 2) + Math.Pow((Pickpoint.Y - Intersectionpoint.Y), 2));
-
                 Line referenceline = Line.CreateBound(pt1, new XYZ(Intersectionpoint.X, Intersectionpoint.Y, pt1.Z));
                 XYZ directionopfreferenecline = referenceline.Direction;
-                //double basedistance = (angle * (180 / Math.PI)) == 90 ? 1 : offsetdistance / Math.Tan(angle);  ///
-
-                //primaryElements = primaryElements.OrderByDescending(r => ((r.Location as LocationCurve).Curve as Line).Origin.Y).ToList();
                 for (int i = 0; i < primaryElements.Count; i++)
                 {
                     if (i == 0)
@@ -496,7 +399,6 @@ namespace MultiDraw
             }
         }
 
-        //original code
         public static void GetSecondaryElements(Document doc, ref List<Element> primaryElements, double angle, double offSet, string offSetVar, out List<Element> secondaryElements, XYZ Pickpoint, bool refpickpoint)
         {
             secondaryElements = new List<Element>();
@@ -587,16 +489,16 @@ namespace MultiDraw
                 Element ele = doc.GetElement(newCon.Id);
                 secondaryElements.Add(ele);
             }
-            // 
             ParentUserControl.Instance.Secondaryelst.Clear();
             ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
             ParentUserControl.Instance.Primaryelst.Clear();
             ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
         }
 
-        //
         public static void HOffsetDrawHandlerWithDefaultOffset(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
+            DateTime startDate = DateTime.UtcNow;
+
             try
             {
                 List<Element> thirdElements = new List<Element>();
@@ -606,8 +508,8 @@ namespace MultiDraw
 
                 string json = Properties.Settings.Default.ProfileColorSettings;
                 ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
-                DateTime startDate = DateTime.UtcNow;
 
+                startDate = DateTime.UtcNow;
                 HOffsetGP globalParam = new HOffsetGP
                 {
                     OffsetValue = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : HOffsetUserControl.Instance.txtOffsetFeet.AsString,
@@ -623,15 +525,12 @@ namespace MultiDraw
                     }
                     substrans2.Commit();
                 }
-
                 GetSecondaryElementsWithDefaultOffset(doc, ref pickedElements, offsetVariable, out secondaryElements, Pickpoint, Refpiuckpoint);
 
                 for (int i = 0; i < pickedElements.Count; i++)
                 {
                     Element firstElement = pickedElements[i];
                     Element secondElement = secondaryElements[i];
-                    ///List<Element> elements = new List<Element>() { firstElement, secondElement };
-
                     Line firstLine = (firstElement.Location as LocationCurve).Curve as Line;
                     Line secondLine = (secondElement.Location as LocationCurve).Curve as Line;
                     Line newLine = Utility.GetParallelLine(firstElement, secondElement, ref isVerticalConduits);
@@ -652,7 +551,6 @@ namespace MultiDraw
                     bendangle.Set(angle);
                     bendtype2.Set("H Offset");
                     bendangle2.Set(angle);
-                    /// ApplyParameters(doc, thirdConduit, elements);
                 }
                 //Rotate Elements at Once
                 Element ElementOne = pickedElements[0];
@@ -712,14 +610,10 @@ namespace MultiDraw
                     bOTTOMForAddtags.Add(fittings1);
                     TOPForAddtags.Add(fittings2);
                 }
-                //ParentUserControl.Instance.Secondaryelst.Clear();
-                //ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
-                //ParentUserControl.Instance.Primaryelst.Clear();
-                //ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
             }
             catch
             {
-
+                _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Horizontal Offset", Util.ProductVersion, "Draw");
             }
         }
         public static void GetSecondaryElementsWithDefaultOffset(Document doc, ref List<Element> primaryElements, string offSetVar, out List<Element> secondaryElements, XYZ Pickpoint, bool refpickpoint)
@@ -817,8 +711,6 @@ namespace MultiDraw
                 Element ele = doc.GetElement(newCon.Id);
                 secondaryElements.Add(ele);
             }
-
-            //
             ParentUserControl.Instance.Secondaryelst.Clear();
             ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
             ParentUserControl.Instance.Primaryelst.Clear();

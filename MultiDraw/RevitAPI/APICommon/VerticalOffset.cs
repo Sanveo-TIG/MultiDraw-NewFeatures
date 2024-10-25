@@ -16,6 +16,7 @@ namespace MultiDraw
     {
         public static void VOffsetDrawPointWithPickOffset(Document _doc, UIDocument _uiDoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, int RevitVersion, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
+            DateTime startDate = DateTime.UtcNow;
             try
             {
                 VerticalOffsetGP globalParam = new VerticalOffsetGP
@@ -34,7 +35,7 @@ namespace MultiDraw
 
                     substrans2.Commit();
                 }
-
+                startDate = DateTime.UtcNow;
                 List<Element> thirdElements = new List<Element>();
                 double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                 double l_offSet = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
@@ -107,7 +108,7 @@ namespace MultiDraw
             }
             catch
             {
-
+                Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "Vertical Offset", Util.ProductVersion);
             }
         }
         private static void DeleteSupports(Document doc, List<Element> Elements)
@@ -235,18 +236,13 @@ namespace MultiDraw
                 XYZ Ae1pt1 = ((primaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
                 XYZ Ae2pt1 = ((primaryElements[1].Location as LocationCurve).Curve as Line).GetEndPoint(0);
                 Line ImageLine = Line.CreateBound(new XYZ(Ae1pt1.X, Ae1pt1.Y, Ae1pt1.Z), new XYZ(Ae2pt1.X, Ae2pt1.Y, Ae1pt1.Z));
-
                 XYZ VerticalLineDirection = ImageLine.Direction;
                 XYZ CrossforVerticalLine = VerticalLineDirection.CrossProduct(XYZ.BasisZ);
 
-
-
                 for (int i = 0; i < primaryElements.Count; i++)
                 {
-
                     XYZ ConduitStartpt = null;
                     XYZ conduitEndpoint = null;
-
                     XYZ E1pt1 = ((primaryElements[i].Location as LocationCurve).Curve as Line).GetEndPoint(0);
                     XYZ E1pt2 = ((primaryElements[i].Location as LocationCurve).Curve as Line).GetEndPoint(1);
 
@@ -289,7 +285,6 @@ namespace MultiDraw
         public static void GetSecondaryPointElements(Document doc, ref List<Element> primaryElements, double angle, double offSet, out List<Element> secondaryElements, string offSetVar, XYZ pickpoint)
         {
             secondaryElements = new List<Element>();
-
             XYZ orgin = null;
             foreach (Conduit item in primaryElements)
             {
@@ -331,7 +326,6 @@ namespace MultiDraw
                 XYZ CrossProduct = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
                 XYZ PickPointTwo = pickpoint + CrossProduct.Multiply(1);
                 XYZ Intersectionpoint = Utility.FindIntersectionPoint(pt1, pt2, pickpoint, PickPointTwo);
-
                 Line ConduitDirectionLine = Line.CreateBound(midpoint, Intersectionpoint);
                 XYZ DirectionPfconduit = ConduitDirectionLine.Direction;
                 DirectionPfconduit = new XYZ(DirectionPfconduit.X, DirectionPfconduit.Y, PrimaryConduitDirection.Z);
