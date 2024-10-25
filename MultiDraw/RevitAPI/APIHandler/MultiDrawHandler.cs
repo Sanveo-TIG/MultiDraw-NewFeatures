@@ -112,12 +112,12 @@ namespace MultiDraw
                                 if (def.Name != "TIG-Bend Angle")
                                 {
                                     BindingMap map = (new UIApplication(uiapp.Application)).ActiveUIDocument.Document.ParameterBindings;
-                                    map.Insert(def, binding, def.GetGroupTypeId()); //update code
+                                    map.Insert(def, binding, def.ParameterGroup); //update code
                                 }
                                 else
                                 {
                                     BindingMap map = (new UIApplication(uiapp.Application)).ActiveUIDocument.Document.ParameterBindings;
-                                    map.Insert(def, binding_ALL, def.GetGroupTypeId());
+                                    map.Insert(def, binding_ALL, def.ParameterGroup);
                                 }
                             }
                         }
@@ -378,7 +378,6 @@ namespace MultiDraw
                                 }
                             }
 
-
                             using (SubTransaction Primarycolorfillsub = new SubTransaction(doc))
                             {
                                 Primarycolorfillsub.Start();
@@ -386,7 +385,6 @@ namespace MultiDraw
                                 {
                                     PrimaryConduitRunid = (ParentUserControl.Instance.Primaryelst[0] as Conduit).RunId;
                                 }
-
                                 foreach (Element conduit in ParentUserControl.Instance.Primaryelst)
                                 {
                                     if (conduit != null)
@@ -396,7 +394,6 @@ namespace MultiDraw
                                 }
                                 Primarycolorfillsub.Commit();
                             }
-
                             XYZ Pickpoint = Utility.PickPoint(uidoc);
 
                             /*      //if (ParentUserControl.Instance._isStopedTransaction)
@@ -449,11 +446,9 @@ namespace MultiDraw
                             {
                                 if (k > 0)
                                 {
-
                                 }
                                 FilteredElementCollector parameterelement = new FilteredElementCollector(doc).OfClass(typeof(ParameterFilterElement));
                                 ParameterFilterElement refparameterelement = parameterelement.Where(x => x.Name == "H Offset Bends").FirstOrDefault() as ParameterFilterElement;
-
                                 if (refparameterelement == null)
                                 {
                                     //using (SubTransaction substrans2 = new SubTransaction(doc))
@@ -1552,5 +1547,8 @@ namespace MultiDraw
         }
     }
 }
+
+
+
 
 
