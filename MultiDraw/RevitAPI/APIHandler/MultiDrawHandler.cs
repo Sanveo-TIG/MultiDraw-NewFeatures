@@ -1094,12 +1094,8 @@ namespace MultiDraw
                                         {
                                             ParentUserControl.Instance.Secondaryelst.Clear();
                                             ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
-
-                                            if (fittingsfailure == false)
-                                            {
-                                                ParentUserControl.Instance.Primaryelst.Clear();
-                                                ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
-                                            }
+                                            ParentUserControl.Instance.Primaryelst.Clear();
+                                            ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
                                         }
                                     }
                                 }

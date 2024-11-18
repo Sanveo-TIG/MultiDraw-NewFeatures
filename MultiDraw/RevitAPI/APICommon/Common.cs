@@ -275,7 +275,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Horizontal Offset", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Horizontal Offset", Util.ProductVersion, "Draw");
                 }
                 ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
                 ParentUserControl.Instance.masterContainer.Children.Clear();
@@ -292,12 +292,11 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Horizontal Offset", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Horizontal Offset", Util.ProductVersion, "Draw");
                 }
             }
             return true;
         }
-
         /*private static void ApplyParameters(Document doc, Conduit eleConduit, List<Element> elements)
         {
             foreach (SYNCDataGlobalParam param in globalParamSync)
@@ -327,16 +326,16 @@ namespace MultiDraw
                 }
             }
         }*/
-
         public static bool HOffsetDrawPointHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements, ref bool fittingsfailure)
         {
+            List<Element> thirdElements = new List<Element>();
             string json = Properties.Settings.Default.ProfileColorSettings;
             ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
             fittingsfailure = false;
             try
             {
-                List<Element> thirdElements = new List<Element>();
+                
                 if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
@@ -542,10 +541,8 @@ namespace MultiDraw
                                 substrans2.Commit();
                             }
 
+                            //Its create to default Hoffset
                             HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
-                            // ParentUserControl.Instance.Secondaryelst.Clear();
-                            // ParentUserControl.Instance.Primaryelst.Clear();
-
                             foreach (Element element in backupsele)
                             {
                                 ParentUserControl.Instance.Primaryelst.Add(element);
@@ -579,6 +576,11 @@ namespace MultiDraw
                             substrans2.Commit();
                         }
                         HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
+
+                        //ParentUserControl.Instance.Primaryelst = new List<Element>();
+                        //secondaryElements = new List<Element>();
+                        //secondaryElements.AddRange(thirdElements);
+
                         foreach (Element element in backupsele)
                         {
                             ParentUserControl.Instance.Primaryelst.Add(element);
@@ -615,6 +617,7 @@ namespace MultiDraw
                         substrans2.Commit();
                     }
                     HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
+
                     //System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
@@ -1105,6 +1108,7 @@ namespace MultiDraw
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
                     }
+
                     //Rotate Elements at Once
                     Element ElementOne = PrimaryElements[0];
                     Element ElementTwo = SecondaryElements[0];
@@ -1312,20 +1316,21 @@ namespace MultiDraw
                 }
                 else
                 {
-
+                    //Its Create based on pickpoint
                     VerticalOffset.VOffsetDrawPointWithPickOffset(_doc, _uiDoc, uiApp, PrimaryElements, offsetVariable, RevitVersion, Pickpoint, ref SecondaryElements);
-
-                    // System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             return true;
         }
+
         public static bool FourpointsaddleDrawPointHandler(Document _doc, UIDocument _uiDoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, int RevitVersion, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
             PrimaryElements = PrimaryElements.Distinct().ToList();
             List<Element> forthelements = new List<Element>();
             List<Element> thirdElements = new List<Element>();
             List<Element> Fifthyelements = new List<Element>();
+            List<Element> FifthConduit = new List<Element>();
             thirdElements.Clear();
             forthelements.Clear();
             Fifthyelements.Clear();
@@ -1390,27 +1395,17 @@ namespace MultiDraw
                     startDate = DateTime.UtcNow;
                     ConnectorSet PrimaryConnectors = null;
                     ConnectorSet SecondaryConnectors = null;
+                    ConnectorSet fourthConnectors = null;
 
+                    List<Element> fourthElements = new List<Element>();
                     if (FourPointSaddleUserControl.Instance.chkFourPointSaddle.IsChecked == true)
                     {
-                        Threepointsaddle.GetSecondaryPointElements(_doc, ref PrimaryElements, baseoffset, out SecondaryElements, offsetVariable, Pickpoint);
+                        Fourpointsaddle.GetSecondaryPointElements(_doc, ref PrimaryElements, out SecondaryElements, out thirdElements, offsetVariable, Pickpoint);
 
                         for (int j = 0; j < PrimaryElements.Count; j++)
                         {
-                            PrimaryConnectors = Utility.GetConnectors(PrimaryElements[j]);
-                            SecondaryConnectors = Utility.GetConnectors(SecondaryElements[j]);
-                            Utility.GetClosestConnectors(PrimaryConnectors, SecondaryConnectors, out Connector COne, out Connector CTwo);
-                            XYZ newenpt = new XYZ(CTwo.Origin.X, CTwo.Origin.Y, COne.Origin.Z);
-
-                            Line parallelLine = Line.CreateBound(COne.Origin, CTwo.Origin);
-
-                            XYZ st = COne.Origin + parallelLine.Direction.Multiply(2);
-                            XYZ ed = new XYZ(CTwo.Origin.X, CTwo.Origin.Y, COne.Origin.Z) - parallelLine.Direction.Multiply(2);
-
                             //3rd Conduit
-                            Conduit thirdConduit = Utility.CreateConduit(_doc, PrimaryElements[j], st, ed);
-                            Element e = _doc.GetElement(thirdConduit.Id);
-                            thirdElements.Add(e);
+                            Conduit thirdConduit = SecondaryElements[j] as Conduit;
 
                             //Move 3rd conduit 
                             XYZ pickDirection = Pickpoint;
@@ -1431,7 +1426,7 @@ namespace MultiDraw
                             (thirdConduit.Location as LocationCurve).Curve = newConduitLine;
 
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
-                            Utility.RetainParameters(PrimaryElements[j], e, uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], thirdConduit, uiApp);
                             Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
                             Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                             Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
@@ -1441,13 +1436,16 @@ namespace MultiDraw
                             bendtype2.Set("Four Point Saddle");
                             bendangle2.Set(l_angle);
                         }
-                        Threepointsaddle.HorizontalOffsetPrimary(_doc, uiApp, PrimaryElements, thirdElements, l_angle);
-                        Threepointsaddle.HorizontalOffsetPrimary(_doc, uiApp, SecondaryElements, thirdElements, l_angle);
+                        Fourpointsaddle.HorizontalOffsetPrimary(_doc, uiApp, PrimaryElements, SecondaryElements, l_angle);
+                        Fourpointsaddle.HorizontalOffsetPrimary(_doc, uiApp, SecondaryElements, thirdElements, l_angle);
+
+                        SecondaryElements = new List<Element>();
+                        SecondaryElements.AddRange(thirdElements);
                     }
                     else
                     {
-                        //CREATE SECONDARY CONDUIT Z AIXS
-                        Threepointsaddle.GetSecondaryFourPointElementZAxiz(_doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, offsetVariable, Pickpoint);
+                        Fourpointsaddle.GetSecondaryZPointElements(_doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, out fourthElements, offsetVariable, Pickpoint);
+
                         for (int j = 0; j < PrimaryElements.Count; j++)
                         {
                             PrimaryConnectors = Utility.GetConnectors(PrimaryElements[j]);
@@ -1457,21 +1455,43 @@ namespace MultiDraw
                             Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[j], COne.Origin, newenpt);
                             Element e = _doc.GetElement(newCon.Id);
                             thirdElements.Add(e);
+
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
                             Utility.RetainParameters(PrimaryElements[j], e, uiApp);
-
                             Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
                             Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                             Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                             Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-
-                            bendtype.Set("Four Point Saddle");
+                            bendtype.Set("fourPoint Offset");
                             bendangle.Set(l_angle);
-                            bendtype2.Set("Four Point Saddle");
+                            bendtype2.Set("fourPoint Offset");
                             bendangle2.Set(l_angle);
-                        }
 
-                        //Rotate Elements at Once
+                            // fIVTH CONDUIT (ELEVATION TO DOWN DIRECTION CONDUIT) 
+                            SecondaryConnectors = Utility.GetConnectors(SecondaryElements[j]);
+                            fourthConnectors = Utility.GetConnectors(fourthElements[j]);
+                            Utility.GetClosestConnectors(SecondaryConnectors, fourthConnectors, out Connector ConTwo, out Connector Confour);
+                            XYZ newPoint = new XYZ(Confour.Origin.X, Confour.Origin.Y, ConTwo.Origin.Z);
+
+                            Conduit fivthCon = Utility.CreateConduit(_doc, PrimaryElements[j], ConTwo.Origin, newPoint);
+                            double elevation = PrimaryElements[j].LookupParameter(offsetVariable).AsDouble();
+                            Parameter newElevation = fivthCon.LookupParameter(offsetVariable);
+                            newElevation.Set(elevation + l_offSet);
+                            Element ele = _doc.GetElement(fivthCon.Id);
+                            FifthConduit.Add(ele);
+
+                            Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], ele, uiApp);
+                            Parameter bendtypes = SecondaryElements[j].LookupParameter("TIG-Bend Type");
+                            Parameter bendangles = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
+                            Parameter bendtypes2 = fivthCon.LookupParameter("TIG-Bend Type");
+                            Parameter bendangles2 = fivthCon.LookupParameter("TIG-Bend Angle");
+                            bendtypes.Set("fourPoint Offset");
+                            bendangles.Set(l_angle);
+                            bendtypes2.Set("fourPoint Offset");
+                            bendangles2.Set(l_angle);
+                        }
+                        //Rotate 2n conduit Elements at Once 
                         Element ElementOne = PrimaryElements[0];
                         Element ElementTwo = SecondaryElements[0];
                         Utility.GetClosestConnectors(ElementOne, ElementTwo, out Connector ConnectorOne, out Connector ConnectorTwo);
@@ -1486,211 +1506,56 @@ namespace MultiDraw
                             l_angle = -l_angle;
                         }
                         ElementTransformUtils.RotateElements(_doc, thirdElements.Select(r => r.Id).ToList(), axisLine, -l_angle);
-
-                        //second set of conduits creation 
-                        for (int j = 0; j < SecondaryElements.Count(); j++)
-                        {
-                            double elevation = PrimaryElements[j].LookupParameter(offsetVariable).AsDouble();
-                            Conduit con = SecondaryElements[j] as Conduit;
-                            XYZ condir = ((con.Location as LocationCurve).Curve as Line).Direction;
-                            XYZ conpt1 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                            XYZ conpt2 = ((con.Location as LocationCurve).Curve as Line).GetEndPoint(0) + condir.Multiply(ncl1.Length);
-                            Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[j], new XYZ(conpt1.X, conpt1.Y, elevation + l_offSet), new XYZ(conpt2.X, conpt2.Y, elevation + l_offSet));
-
-                            Element e = _doc.GetElement(newCon.Id);
-                            forthelements.Add(e);
-
-                            Parameter bendtype = newCon.LookupParameter("TIG-Bend Type");
-                            Parameter bendangle = newCon.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("Four Point Saddle");
-                            bendangle.Set(l_angle);
-                        }
-                        Element Elementthree = thirdElements[0];
-                        Utility.GetClosestConnectors(ElementTwo, Elementthree, out Connector ConnectorTwo4, out Connector ConnectorThree);
-                        LocationCurve newconcurve4 = forthelements[0].Location as LocationCurve;
-                        Line ncl4 = newconcurve4.Curve as Line;
-                        XYZ direction4 = ncl4.Direction;
-                        XYZ axisStart4 = ConnectorTwo4.Origin;
-                        XYZ axisEnd4 = axisStart4.Add(XYZ.BasisZ.CrossProduct(direction4));
-                        Line axisLine4 = Line.CreateBound(axisStart4, axisEnd4);
-
-                        ElementTransformUtils.RotateElements(_doc, forthelements.Select(r => r.Id).ToList(), axisLine4, l_angle);
-                        //DeleteSupports(_doc, PrimaryElements);
+                        DeleteSupports(_doc, PrimaryElements);
                         List<FamilyInstance> bOTTOMForAddtags = new List<FamilyInstance>();
                         List<FamilyInstance> TOPForAddtags = new List<FamilyInstance>();
 
 
-                        // create the saddle distance 
-                        foreach (Element ele in forthelements)
+                        //Rotate 5n conduit Elements at Once 
+                        Element fifthElementOne = SecondaryElements[0];
+                        Element fifthElementTwo = fourthElements[0];
+                        Utility.GetClosestConnectors(fifthElementOne, fifthElementTwo, out Connector ConnectorsTwo, out Connector Connectorfour);
+                        LocationCurve fifthnewconcurve = FifthConduit[0].Location as LocationCurve;
+                        Line fifthncl1 = fifthnewconcurve.Curve as Line;
+                        XYZ fifthdirection = fifthncl1.Direction;
+                        XYZ fifthaxisStart = ConnectorsTwo.Origin;
+                        XYZ fifthaxisEnd = fifthaxisStart.Add(XYZ.BasisZ.CrossProduct(fifthdirection));//
+                        Line fifthaxisLine = Line.CreateBound(fifthaxisStart, fifthaxisEnd);
+                        ElementTransformUtils.RotateElements(_doc, FifthConduit.Select(r => r.Id).ToList(), fifthaxisLine, l_angle);
+
+
+                        for (int j = 0; j < PrimaryElements.Count; j++)
                         {
-                            LocationCurve curve = ele.Location as LocationCurve;
-                            XYZ pt1 = ((ele.Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                            XYZ pt2 = ((ele.Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                            XYZ newdirection = ((ele.Location as LocationCurve).Curve as Line).Direction;
-                            XYZ newpt1 = pt1 + newdirection.Multiply(5);
-                            XYZ newpt2 = pt2 + newdirection.Multiply(5);
-                            curve.Curve = Line.CreateBound(new XYZ(newpt1.X, newpt1.Y, pt1.Z), new XYZ(newpt2.X, newpt2.Y, pt2.Z));
+                            Element firstElement = PrimaryElements[j];
+                            Element secondElement = SecondaryElements[j];
+                            Element thirdElement = thirdElements[j];
+                            Element fourthElement = fourthElements[j];
+                            Element fivthElement = FifthConduit[j];
+
+                            ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
+                            ConnectorSet SecondConnectors = Utility.GetConnectors(secondElement);
+                            ConnectorSet thirdConnectors = Utility.GetConnectors(thirdElement);
+                            ConnectorSet fourConnectors = Utility.GetConnectors(fourthElement);
+                            ConnectorSet fivthConnectors = Utility.GetConnectors(fivthElement);
+
+                            FamilyInstance fittings1 = Utility.CreateElbowFittings(firstConnectors, thirdConnectors, _doc, uiApp, PrimaryElements[j], true);
+                            FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, SecondConnectors, _doc, uiApp, PrimaryElements[j], true);
+                            FamilyInstance fittings3 = Utility.CreateElbowFittings(SecondConnectors, fivthConnectors, _doc, uiApp, PrimaryElements[j], true);
+                            FamilyInstance fittings4 = Utility.CreateElbowFittings(fivthConnectors, fourConnectors, _doc, uiApp, PrimaryElements[j], true);
+
+                            Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
+                            bendtype.Set("fourPoint Offset");
+                            bendangle.Set(l_angle);
+                            bendtype2.Set("fourPoint Offset");
+                            bendangle2.Set(l_angle);
+                            bOTTOMForAddtags.Add(fittings1);
+                            TOPForAddtags.Add(fittings2);
                         }
-
-                        for (int j = 0; j < forthelements.Count(); j++)
-                        {
-                            XYZ pt1 = ((forthelements[j].Location as LocationCurve).Curve).GetEndPoint(1);
-                            XYZ pt2 = ((SecondaryElements[j].Location as LocationCurve).Curve).GetEndPoint(0);
-                            XYZ pt3 = ((SecondaryElements[j].Location as LocationCurve).Curve).GetEndPoint(1);
-                            LocationCurve curve = (SecondaryElements[j].Location as LocationCurve);
-                            curve.Curve = Line.CreateBound(new XYZ(pt1.X, pt1.Y, pt3.Z), pt3);
-                        }
-                        //check the minimum basedistance 
-                        XYZ threept1 = ((thirdElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                        XYZ threept2 = ((thirdElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                        XYZ fourpt1 = ((forthelements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                        XYZ fourpt2 = ((forthelements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                        double distanceone = Math.Sqrt(Math.Pow((threept1.X - threept2.X), 2) + Math.Pow((threept1.Y - threept2.Y), 2));
-                        double ditancetwo = Math.Sqrt(Math.Pow((fourpt1.X - fourpt2.X), 2) + Math.Pow((fourpt1.Y - fourpt2.Y), 2));
-                        double minimumbasedistance = distanceone + ditancetwo + 2;
-                        double autualbasetance = FourPointSaddleUserControl.Instance.txtBaseOffsetFeet.AsDouble;
-                        if (minimumbasedistance < autualbasetance)
-                        {
-                            //set the basedistance 
-                            for (int k = 0; k < forthelements.Count; k++)
-                            {
-                                Line prilineOne = (PrimaryElements[k].Location as LocationCurve).Curve as Line;
-                                XYZ pript1 = prilineOne.GetEndPoint(0);
-                                XYZ pript2 = prilineOne.GetEndPoint(1);
-
-                                Line seclineOne = (SecondaryElements[k].Location as LocationCurve).Curve as Line;
-                                XYZ secpt1 = seclineOne.GetEndPoint(0);
-
-                                double SubdistanceOne = Math.Sqrt(Math.Pow((pript1.X - secpt1.X), 2) + Math.Pow((pript1.Y - secpt1.Y), 2));
-                                double SubdistanceTwo = Math.Sqrt(Math.Pow((pript2.X - secpt1.X), 2) + Math.Pow((pript2.Y - secpt1.Y), 2));
-                                XYZ ConduitStartpt = null;
-                                XYZ conduitEndpoint = null;
-                                if (SubdistanceOne < SubdistanceTwo)
-                                {
-                                    ConduitStartpt = pript1;
-                                    conduitEndpoint = pript2;
-                                }
-                                else
-                                {
-                                    ConduitStartpt = pript2;
-                                    conduitEndpoint = pript1;
-                                }
-                                double basedistanceOne = Math.Sqrt(Math.Pow((ConduitStartpt.X - secpt1.X), 2) + Math.Pow((ConduitStartpt.Y - secpt1.Y), 2));
-                                if (basedistanceOne > baseoffset)
-                                {
-                                    double distancetomove = basedistanceOne - baseoffset;
-                                    XYZ ditrectiontomove = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).Direction;
-
-                                    //move the secondary conduits 
-                                    XYZ secondpt1 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                                    XYZ secondpt2 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                                    XYZ secobdpt1move = secondpt1 - ditrectiontomove.Multiply(distancetomove);
-
-                                    //move the fourth conduits 
-                                    XYZ fourthpt1 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                                    XYZ fourthpt2 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                                    XYZ forthpt1move = fourthpt1 - ditrectiontomove.Multiply(distancetomove);
-                                    XYZ forthpt2move = fourthpt2 - ditrectiontomove.Multiply(distancetomove);
-
-                                    LocationCurve secondcurve = (SecondaryElements[k].Location as LocationCurve);
-                                    LocationCurve forthcurve = (forthelements[k].Location as LocationCurve);
-
-                                    secondcurve.Curve = Line.CreateBound(new XYZ(secobdpt1move.X, secobdpt1move.Y, secondpt1.Z), new XYZ(secondpt2.X, secondpt2.Y, secondpt2.Z));
-                                    forthcurve.Curve = Line.CreateBound(new XYZ(forthpt1move.X, forthpt1move.Y, fourthpt1.Z), new XYZ(forthpt2move.X, forthpt2move.Y, fourthpt2.Z));
-                                }
-                                else
-                                {
-                                    double distancetomove = baseoffset - basedistanceOne;
-                                    XYZ ditrectiontomove = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).Direction;
-
-                                    //move the secondary conduits 
-                                    XYZ secondpt1 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                                    XYZ secondpt2 = ((SecondaryElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                                    XYZ secobdpt1move = secondpt1 + ditrectiontomove.Multiply(distancetomove);
-
-                                    //move the fourth conduits 
-                                    XYZ fourthpt1 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                                    XYZ fourthpt2 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                                    XYZ forthpt1move = fourthpt1 + ditrectiontomove.Multiply(distancetomove);
-                                    XYZ forthpt2move = fourthpt2 + ditrectiontomove.Multiply(distancetomove);
-
-                                    LocationCurve secondcurve = (SecondaryElements[k].Location as LocationCurve);
-                                    LocationCurve forthcurve = (forthelements[k].Location as LocationCurve);
-
-                                    secondcurve.Curve = Line.CreateBound(new XYZ(secobdpt1move.X, secobdpt1move.Y, secondpt1.Z), new XYZ(secondpt2.X, secondpt2.Y, secondpt2.Z));
-                                    forthcurve.Curve = Line.CreateBound(new XYZ(forthpt1move.X, forthpt1move.Y, fourthpt1.Z), new XYZ(forthpt2move.X, forthpt2move.Y, fourthpt2.Z));
-                                }
-                            }
-
-                            //fith set conduit creation
-                            for (int k = 0; k < forthelements.Count; k++)
-                            {
-                                XYZ startpt1 = ((thirdElements[k].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-                                XYZ startpt2 = ((forthelements[k].Location as LocationCurve).Curve as Line).GetEndPoint(0);
-                                Conduit newCon = Utility.CreateConduit(_doc, PrimaryElements[k], startpt1, startpt2);
-                                Element e = _doc.GetElement(newCon.Id);
-                                Fifthyelements.Add(e);
-
-                                Parameter bendtype = newCon.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle = newCon.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set("Four Point Saddle");
-                                bendangle.Set(l_angle);
-                            }
-
-                            for (int j = 0; j < PrimaryElements.Count; j++)
-                            {
-                                Element firstElement = PrimaryElements[j];
-                                Element secondElement = SecondaryElements[j];
-                                Element thirdElement = thirdElements[j];
-                                Element fourthElement = forthelements[j];
-                                Element fifthElement = Fifthyelements[j];
-                                ConnectorSet thirdConnectors = Utility.GetConnectors(thirdElement);
-                                ConnectorSet SecondConnectors = Utility.GetConnectors(secondElement);
-                                ConnectorSet firstConnectors = Utility.GetConnectors(firstElement);
-                                ConnectorSet fourthConnectors = Utility.GetConnectors(fourthElement);
-                                ConnectorSet fifthConnectors = Utility.GetConnectors(fifthElement);
-                                FamilyInstance fittings1 = Utility.CreateElbowFittings(thirdConnectors, fifthConnectors, _doc, uiApp, PrimaryElements[j], true);
-                                FamilyInstance fittings2 = Utility.CreateElbowFittings(thirdConnectors, firstConnectors, _doc, uiApp, PrimaryElements[j], true);
-                                FamilyInstance fittings3 = Utility.CreateElbowFittings(SecondConnectors, fourthConnectors, _doc, uiApp, PrimaryElements[j], true);
-                                FamilyInstance fittings4 = Utility.CreateElbowFittings(fifthConnectors, fourthConnectors, _doc, uiApp, PrimaryElements[j], true);
-                                Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
-                                Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                                Parameter bendtype3 = fittings3.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle3 = fittings3.LookupParameter("TIG-Bend Angle");
-                                Parameter bendtype4 = fittings4.LookupParameter("TIG-Bend Type");
-                                Parameter bendangle4 = fittings4.LookupParameter("TIG-Bend Angle");
-                                bendtype.Set("Four Point Saddle");
-                                bendangle.Set(l_angle);
-                                bendtype2.Set("Four Point Saddle");
-                                bendangle2.Set(l_angle);
-                                bendtype3.Set("Four Point Saddle");
-                                bendangle3.Set(l_angle);
-                                bendtype4.Set("Four Point Saddle");
-                                bendangle4.Set(l_angle);
-                                bOTTOMForAddtags.Add(fittings1);
-                                TOPForAddtags.Add(fittings2);
-                            }
-
-                            thirdElements.Clear();
-                            forthelements.Clear();
-                            Fifthyelements.Clear();
-                        }
-                        else
-                        {
-                            for (int i = 0; i < SecondaryElements.Count(); i++)
-                            {
-                                if (SecondaryElements.Count() != 0) _doc.Delete(SecondaryElements[i].Id);
-                                if (thirdElements.Count() != 0) _doc.Delete(thirdElements[i].Id);
-                                if (forthelements.Count() != 0) _doc.Delete(forthelements[i].Id);
-                                if (Fifthyelements.Count() != 0) _doc.Delete(Fifthyelements[i].Id);
-                            }
-                            ParentUserControl.Instance.Primaryelst.Clear();
-                            SecondaryElements.Clear();
-                            ParentUserControl.Instance.Primaryelst.AddRange(PrimaryElements);
-                            TaskDialog.Show("Warning", "Kindly set the minimum Base Offset is " + minimumbasedistance.ToString());
-                        }
+                        SecondaryElements = new List<Element>();
+                        SecondaryElements.AddRange(fourthElements);
                     }
                     subTransaction.Commit();
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -1708,7 +1573,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-                     Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
+                    Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "Vertical Offset", Util.ProductVersion);
                 }
                 ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
                 ParentUserControl.Instance.masterContainer.Children.Clear();
@@ -1729,6 +1594,7 @@ namespace MultiDraw
             }
             return true;
         }
+
         public static bool ThreepointsaddleDrawPointHandler(Document _doc, UIDocument _uiDoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, int RevitVersion, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
             string json = Properties.Settings.Default.ProfileColorSettings;
@@ -1800,7 +1666,6 @@ namespace MultiDraw
                             SecondaryConnectors = Utility.GetConnectors(SecondaryElements[j]);
                             Utility.GetClosestConnectors(PrimaryConnectors, SecondaryConnectors, out Connector COne, out Connector CTwo);
                             XYZ newenpt = new XYZ(CTwo.Origin.X, CTwo.Origin.Y, COne.Origin.Z);
-
                             Line parallelLine = Line.CreateBound(COne.Origin, CTwo.Origin);
 
                             XYZ st = COne.Origin + parallelLine.Direction.Multiply(2);
@@ -1860,6 +1725,7 @@ namespace MultiDraw
                             Utility.CreateElbowFittings(secondElement, fifthElement, _doc, uiApp);
                             Utility.CreateElbowFittings(fourthElement, fifthElement, _doc, uiApp);
                         }
+
                     }
                     else
                     {
@@ -2005,7 +1871,6 @@ namespace MultiDraw
             }
             return true;
         }
-
         //public static bool ConduitSync(Document doc, UIApplication uiapp, List<Element> elements)
         //{
         //    DateTime startDate = DateTime.UtcNow;
@@ -2065,7 +1930,6 @@ namespace MultiDraw
         //    SyncDataUserControl.Instance.btnsync.IsEnabled = true;
         //    return true;
         //}
-
         /* private static void ApplyParameters(Document doc, Conduit eleConduit, List<Element> elements)
          {
 
@@ -2097,7 +1961,6 @@ namespace MultiDraw
                  }
              }
          }*/
-
         public static bool RollingOffsetDrawHandler(Document doc, UIDocument uidoc, UIApplication uiapp, List<Element> PrimaryElements, string offsetVariable, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
             DateTime startDate = DateTime.UtcNow;
@@ -2192,7 +2055,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Rolling Offset", Util.ProductVersion);
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Rolling Offset", Util.ProductVersion);
                 }
             }
             return true;
@@ -2376,7 +2239,7 @@ namespace MultiDraw
                     ApplyBend(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref secondaryElements);
                     //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
                     subtrans.Commit();
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                 {
@@ -2525,7 +2388,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
             }
             return true;
@@ -2700,7 +2563,7 @@ namespace MultiDraw
                                 MessageBox.Show("Please increase offset Value", "Warning");
                             }
                         }
-                          _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                        _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                     }
                     catch
                     {
@@ -3097,12 +2960,12 @@ namespace MultiDraw
                                     //toptag.Add(fittings2);
                                 }
                             }
-                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                         catch (Exception exception)
                         {
                             System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                     }
                 }
@@ -3399,12 +3262,12 @@ namespace MultiDraw
                                     MessageBox.Show("Please increase offset Value", "Warning");
                                 }
                             }
-                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                         catch (Exception exception)
                         {
                             System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                     }
                 }
@@ -3539,7 +3402,7 @@ namespace MultiDraw
                                 MessageBox.Show("Please increase offset Value", "Warning");
                             }
                         }
-                         _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                        _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                     }
                     catch
                     {
@@ -3675,12 +3538,12 @@ namespace MultiDraw
                                     MessageBox.Show("Please increase offset Value", "Warning");
                                 }
                             }
-                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                         catch (Exception exception)
                         {
                             System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
                         }
                     }
                 }
@@ -3727,7 +3590,6 @@ namespace MultiDraw
             try
             {
                 startDate = DateTime.UtcNow;
-
                 XYZ e1pt1 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
                 XYZ e1pt2 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
 
@@ -4066,7 +3928,7 @@ namespace MultiDraw
                              // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });*/
 
                             transaction.Commit();
-                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
+                            _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
                         }
                         else if (Convert.ToDouble(StraightOrBendUserControl.Instance.angleList.SelectedItem) > 0 && Convert.ToDouble(StraightOrBendUserControl.Instance.angleList.SelectedItem) < 90)
                         {
@@ -4225,7 +4087,6 @@ namespace MultiDraw
                                                 Parameter C_bendangle_bd = halfbend.LookupParameter("TIG-Bend Angle");
                                                 C_bendtype_bd.Set("Half Offset");
                                                 C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
-
 
 
                                                 //Conduitcoloroverride(secondElement.Id, doc);
@@ -4634,7 +4495,7 @@ namespace MultiDraw
 
                     NinetyApplyBend(doc, PrimaryElements, offsetVariable, Pickpoint, uiApp);
                     subtrans.Commit();
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "90° Bend", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "90° Bend", Util.ProductVersion, "Draw");
                 }
                 StraightOrBendUserControl.Instance.angleList.SelectedIndex = 0;
             }
@@ -4647,7 +4508,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Bend", Util.ProductVersion, "Draw");
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Bend", Util.ProductVersion, "Draw");
                 }
             }
 
@@ -5053,7 +4914,7 @@ namespace MultiDraw
                 else
                 {
                     System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Stub Bend", Util.ProductVersion);
+                    _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "90° Stub Bend", Util.ProductVersion);
                 }
             }
             return true;
@@ -5139,5 +5000,4 @@ namespace MultiDraw
         }
     }
 }
-
 

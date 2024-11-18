@@ -282,6 +282,8 @@ namespace MultiDraw
                 ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
             }
         }
+
+        //
         public static void GetSecondaryPointElements(Document doc, ref List<Element> primaryElements, double angle, double offSet, out List<Element> secondaryElements, string offSetVar, XYZ pickpoint)
         {
             secondaryElements = new List<Element>();
@@ -435,7 +437,6 @@ namespace MultiDraw
                 ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
             }
         }
-
         public static void GetSecondaryPointElementsWithPickOffset(Document doc, ref List<Element> primaryElements, double angle, double offSet, out List<Element> secondaryElements, string offSetVar, XYZ pickpoint)
         {
             secondaryElements = new List<Element>();
@@ -519,11 +520,6 @@ namespace MultiDraw
                         conduitlength = Math.Sqrt(Math.Pow((refStartPoint.X - intersectionpointforvertical.X), 2) + Math.Pow((refStartPoint.Y - intersectionpointforvertical.Y), 2));
                     }
                     XYZ refEndPoint = refStartPoint + ConduitlineDir.Multiply(conduitlength);
-
-                    ////Based on pickedpoint location
-                    ////XYZ crossforvertical = ConduitlineDir.CrossProduct(pickpoint);
-                    ////XYZ Pickedpointreftwo = pickpoint + crossforvertical.Multiply(2);
-                    //XYZ intersectionpointforvertical = Utility.FindIntersectionPoint(refStartPoint, refEndPoint, pickpoint, Pickedpointreftwo);
 
                     //per pickppoint  Line1
                     XYZ perpendicularDir = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
@@ -648,7 +644,6 @@ namespace MultiDraw
         }
     }
 }
-
 
 
 

@@ -35,10 +35,7 @@ namespace MultiDraw
         /// <summary>
         /// External command mainline
         /// </summary>
-        public Result Execute(
-            ExternalCommandData commandData,
-            ref string message,
-            ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
@@ -116,11 +113,9 @@ namespace MultiDraw
                                             {
                                                 item.IsEnabled = true;
                                             }
-
                                         }
                                     }
                                 }
-
                             }
                         }
                     }
@@ -128,6 +123,7 @@ namespace MultiDraw
             }
         }
     }
-
-
 }
+
+
+

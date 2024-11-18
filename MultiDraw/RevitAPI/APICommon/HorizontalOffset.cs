@@ -150,8 +150,8 @@ namespace MultiDraw
                         bendangle2.Set(angle);
                     }
                     ParentUserControl.Instance.Secondaryelst.Clear();
-                    ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
-                    ParentUserControl.Instance.Primaryelst.Clear();
+                    ParentUserControl.Instance.Secondaryelst.AddRange(thirdElements); //
+                    ParentUserControl.Instance.Primaryelst = new List<Element>();
                     ParentUserControl.Instance.Primaryelst.AddRange(thirdElements); //3ele
 
                     try
@@ -210,22 +210,27 @@ namespace MultiDraw
                             bendtype2.Set("H Offset");
                             bendangle2.Set(angle);
                         }
+                        secondaryElements = new List<Element>();
+                        secondaryElements.AddRange(thirdElements);
                     }
                     catch
                     {
                         DeleteElementsWithFittings(doc, thirdElements);
                         DeleteElementsWithFittings(doc, secondaryElements);
+
                         HOffsetDrawHandlerWithDefaultOffset(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements);
+
                         MessageBox.Show("Selected point is too close. XYZ Offset has been placed with a default offset of 1'");
                     }
                     tx.Commit();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
 
             }
         }
+
         private static void DeleteElementsWithFittings(Document doc, List<Element> elements)
         {
             foreach (Element element in elements)
@@ -393,12 +398,11 @@ namespace MultiDraw
                     }
                 }
                 ParentUserControl.Instance.Secondaryelst.Clear();
-                ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+                ParentUserControl.Instance.Secondaryelst.AddRange(secondaryElements);
                 ParentUserControl.Instance.Primaryelst.Clear();
                 ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
             }
         }
-
         public static void GetSecondaryElements(Document doc, ref List<Element> primaryElements, double angle, double offSet, string offSetVar, out List<Element> secondaryElements, XYZ Pickpoint, bool refpickpoint)
         {
             secondaryElements = new List<Element>();
@@ -494,7 +498,6 @@ namespace MultiDraw
             ParentUserControl.Instance.Primaryelst.Clear();
             ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
         }
-
         public static void HOffsetDrawHandlerWithDefaultOffset(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
             DateTime startDate = DateTime.UtcNow;
@@ -504,7 +507,6 @@ namespace MultiDraw
                 List<Element> thirdElements = new List<Element>();
                 bool isVerticalConduits = false;
                 double angle = 11.25 * (Math.PI / 180);
-                double offSet = 1.0;
 
                 string json = Properties.Settings.Default.ProfileColorSettings;
                 ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
@@ -712,7 +714,7 @@ namespace MultiDraw
                 secondaryElements.Add(ele);
             }
             ParentUserControl.Instance.Secondaryelst.Clear();
-            ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
+            ParentUserControl.Instance.Secondaryelst.AddRange(secondaryElements);
             ParentUserControl.Instance.Primaryelst.Clear();
             ParentUserControl.Instance.Primaryelst.AddRange(secondaryElements);
         }
@@ -737,5 +739,6 @@ namespace MultiDraw
         }
     }
 }
+
 
 

@@ -22,8 +22,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="190"></RowDefinition>
-            <RowDefinition Height="65"></RowDefinition>
+            <RowDefinition Height="210"></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -74,7 +74,7 @@
             </TIG:TextBoxControl>
         </StackPanel>
         <StackPanel Grid.Row="3">
-            <TextBlock x:Name="baseOffset" Foreground="#005D9A"  Text="Base offset"
+            <TextBlock x:Name="baseOffset" Foreground="#005D9A"  Text="Base offset"  Visibility="Collapsed"
                        FontSize="12" FontFamily="/MultiDraw;component/Resources/Font/#Poppins SemiBold" Margin="0,0,0,4">
                 <TextBlock.ToolTip>
                     <StackPanel Orientation="Horizontal">
@@ -87,7 +87,7 @@
                              UnitsLabel="Feet and inches"
                              IsUnit="True"
                              Width="310"
-                             HorizontalAlignment="Left"></TIG:TextBoxControl>
+                             HorizontalAlignment="Left" Visibility="Collapsed"></TIG:TextBoxControl>
         </StackPanel>
         <StackPanel Grid.Row="4" Margin="0 10 0 0">
             <CheckBox x:Name="chkFourPointSaddle" Content="Saddle on X,Y Plane"></CheckBox>
