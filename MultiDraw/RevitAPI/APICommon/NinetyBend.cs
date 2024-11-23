@@ -204,13 +204,8 @@ namespace MultiDraw
                     }
 
                 }
-
-                //Utility.SetGlobalParametersManager(uiApp, "ConduitAlign", globalParam);
                 transaction.Commit();
-                //Task task = Utility.UserActivityLog(uiApp, Util.ApplicationWindowTitle, startDate, "Completed", "SampleHandler");
             }
-
-
             //ConduitElevation identification
             XYZ e1pt1 = ((pickedElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
             XYZ e1pt2 = ((pickedElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);

@@ -46,79 +46,8 @@ namespace MultiDraw
                                  TimeSpan.FromSeconds(15));
         }
 
-        //private static void BOTTOMAddTags(Document doc, List<FamilyInstance> elements)
-        //{
-        //    int j = 1;
-        //    for (int i = 0; i < elements.Count; i++)
-        //    {
-        //        Element ele = elements[i];
-        //        TagMode tagmode = TagMode.TM_ADDBY_CATEGORY;
-        //        TagOrientation tagorg = TagOrientation.Horizontal;
-        //        Reference conref = new Reference(ele);
-        //        XYZ locationpoint = (ele.Location as LocationPoint).Point;
-        //        IndependentTag newtag = IndependentTag.Create(doc, doc.ActiveView.Id, conref, true, tagmode, tagorg, locationpoint);
-        //        newtag.LeaderEndCondition = LeaderEndCondition.Free;
-
-        //        newtag.LeaderEnd = locationpoint;
-        //        XYZ elbowpnt = locationpoint + new XYZ(2, -j/2, 0);
-        //        newtag.LeaderElbow = elbowpnt;
-
-
-        //        XYZ headerpnt = elbowpnt + new XYZ(4, 0, 0);
-
-        //        newtag.TagHeadPosition = headerpnt;
-        //        j++;
-        //    }
-        //}
-        //private static void TOPAddTags(Document doc, List<FamilyInstance> elements)
-        //{
-        //    int j = 1;
-        //    for (int i = 0; i < elements.Count; i++)
-        //    {
-        //        Element ele = elements[i];
-        //        TagMode tagmode = TagMode.TM_ADDBY_CATEGORY;
-        //        TagOrientation tagorg = TagOrientation.Horizontal;
-        //        Reference conref = new Reference(ele);
-        //        XYZ locationpoint = (ele.Location as LocationPoint).Point;
-        //        IndependentTag newtag = IndependentTag.Create(doc, doc.ActiveView.Id, conref, true, tagmode, tagorg, locationpoint);
-        //        newtag.LeaderEndCondition = LeaderEndCondition.Free;
-
-        //        newtag.LeaderEnd = locationpoint;
-        //        XYZ elbowpnt = locationpoint + new XYZ(2,-j / 2, 0);
-        //        newtag.LeaderElbow = elbowpnt;
-
-
-        //        XYZ headerpnt = elbowpnt + new XYZ(4, 0, 0);
-
-        //        newtag.TagHeadPosition = headerpnt;
-        //        j++;
-        //    }
-        //}
-        //public static void Conduitcoloroverride(ElementId eid, Document doc)
-        //{
-        //    var patternCollector = new FilteredElementCollector(doc);
-        //    patternCollector.OfClass(typeof(FillPatternElement));
-        //    FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
-        //    Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(50, 205, 50));
-        //    doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
-        //}
-        //public static void PrimryConduitcoloroverride(ElementId eid, Document doc)
-        //{
-        //    var patternCollector = new FilteredElementCollector(doc);
-        //    patternCollector.OfClass(typeof(FillPatternElement));
-        //    FillPatternElement fpe = patternCollector.ToElements().Cast<FillPatternElement>().First(x => x.GetFillPattern().Name == "<Solid fill>");
-        //    Autodesk.Revit.DB.OverrideGraphicSettings ogs_Hoffset = SetOverrideGraphicSettings(fpe, new Color(1, 50, 32));
-        //    doc.ActiveView.SetElementOverrides(eid, ogs_Hoffset);
-        //}
-
         public static bool HOffsetDrawHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements)
         {
-            /* string jsonParam = Utility.GetGlobalParametersManager(uiapp, "SyncDataParameters");
-             if (!string.IsNullOrEmpty(jsonParam))
-             {
-                 globalParamSync = JsonConvert.DeserializeObject<List<SYNCDataGlobalParam>>(jsonParam);
-             }*/
-
             DateTime startDate = DateTime.UtcNow;
             string json = Properties.Settings.Default.ProfileColorSettings;
             ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
@@ -161,7 +90,6 @@ namespace MultiDraw
                     {
                         Element firstElement = pickedElements[i];
                         Element secondElement = secondaryElements[i];
-                        ///List<Element> elements = new List<Element>() { firstElement, secondElement };
 
                         Line firstLine = (firstElement.Location as LocationCurve).Curve as Line;
                         Line secondLine = (secondElement.Location as LocationCurve).Curve as Line;
@@ -183,7 +111,6 @@ namespace MultiDraw
                         bendangle.Set(angle);
                         bendtype2.Set("H Offset");
                         bendangle2.Set(angle);
-                        /// ApplyParameters(doc, thirdConduit, elements);
                     }
 
                     //Rotate Elements at Once
@@ -219,8 +146,6 @@ namespace MultiDraw
                         ElementTransformUtils.RotateElements(doc, thirdElements.Select(r => r.Id).ToList(), axisLine, -angle);
                     }
 
-                    //DeleteSupports(doc, pickedElements);
-
                     List<FamilyInstance> bOTTOMForAddtags = new List<FamilyInstance>();
                     List<FamilyInstance> TOPForAddtags = new List<FamilyInstance>();
                     for (int i = 0; i < pickedElements.Count; i++)
@@ -238,27 +163,17 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                         Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
+                        Parameter bendtype3 = fittings2.LookupParameter("TIG-Bend Type");
+                        Parameter bendangle3 = fittings2.LookupParameter("TIG-Bend Angle");
                         bendtype.Set("H Offset");
                         bendangle.Set(angle);
                         bendtype2.Set("H Offset");
                         bendangle2.Set(angle);
-
-                        //if (i == 0)
-                        //{
-                        //    PrimryConduitcoloroverride(secondaryElements[i].Id, doc);
-                        //}
-                        //else
-                        //{
-                        //    Conduitcoloroverride(secondaryElements[i].Id, doc);
-                        //}
-
+                        bendtype3.Set("H Offset");
+                        bendangle3.Set(angle);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
-
-                    // BOTTOMAddTags(doc, bOTTOMForAddtags);
-                    // TOPAddTags(doc, TOPForAddtags);
-                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
                     tx.Commit();
                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                     {
@@ -297,35 +212,6 @@ namespace MultiDraw
             }
             return true;
         }
-        /*private static void ApplyParameters(Document doc, Conduit eleConduit, List<Element> elements)
-        {
-            foreach (SYNCDataGlobalParam param in globalParamSync)
-            {
-
-                Parameter ConduitParam = eleConduit.LookupParameter(param.Name);
-                string paramValue = Utility.GetParameterValue(ConduitParam);
-                if (eleConduit.RunId != ElementId.InvalidElementId)
-                {
-                    Element eleRun = doc.GetElement(eleConduit.RunId);
-                    if (eleRun != null)
-                    {
-                        Parameter RunParam = eleRun.LookupParameter(param.Name);
-                        if (RunParam != null && !RunParam.IsReadOnly)
-                            Utility.SetParameterValue(RunParam, ConduitParam);
-                    }
-
-                    foreach (Element e in elements.Distinct())
-                    {
-                        if (e.GetType() == typeof(Conduit) || (e.GetType() == typeof(FamilyInstance)))
-                        {
-                            Parameter lookUpParam = e.LookupParameter(param.Name);
-                            if (lookUpParam != null && ConduitParam != null)
-                                Utility.SetParameterValue(lookUpParam, ConduitParam);
-                        }
-                    }
-                }
-            }
-        }*/
         public static bool HOffsetDrawPointHandler(Document doc, UIApplication uiapp, List<Element> pickedElements, string offsetVariable, bool Refpiuckpoint, XYZ Pickpoint, ref List<Element> secondaryElements, ref bool fittingsfailure)
         {
             List<Element> thirdElements = new List<Element>();
@@ -335,7 +221,6 @@ namespace MultiDraw
             fittingsfailure = false;
             try
             {
-                
                 if (HOffsetUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
@@ -356,10 +241,7 @@ namespace MultiDraw
                     }
                     substrans2.Commit();
                 }
-
                 double angle = Convert.ToDouble(HOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
-                //double offSet = HOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
-
                 using (SubTransaction tx = new SubTransaction(doc))
                 {
                     tx.Start();
@@ -399,7 +281,6 @@ namespace MultiDraw
                         ConduitEndpoint = StartPoint;
                     }
                     Line baseline = Line.CreateBound(ConduitEndpoint, new XYZ(Intersectionpoint.X, Intersectionpoint.Y, ConduitEndpoint.Z));
-
                     for (int i = 0; i < pickedElements.Count; i++)
                     {
                         Element firstElement = pickedElements[i];
@@ -408,7 +289,6 @@ namespace MultiDraw
                         Line secondLine = (secondElement.Location as LocationCurve).Curve as Line;
                         Line newLine = Utility.GetParallelLine(firstElement, secondElement, ref isVerticalConduits);
                         double elevation = firstElement.LookupParameter(offsetVariable).AsDouble();
-
                         XYZ secondlinept2 = secondLine.GetEndPoint(1) + secondLine.Direction.Multiply(3);
                         Conduit thirdConduit = Utility.CreateConduit(doc, firstElement as Conduit, secondLine.GetEndPoint(1), secondlinept2);
                         Element thirdElement = doc.GetElement(thirdConduit.Id);
@@ -451,7 +331,6 @@ namespace MultiDraw
                     XYZ ThirdLineDirection = ThirdConduitLine.Direction;
                     pt4 += ThirdLineDirection.Multiply(100);
                     Line secondline = Line.CreateBound(pt3, pt4);
-
                     XYZ IntersectionforangleConduit = Utility.GetIntersection(firstline, secondline);
                     if (IntersectionforangleConduit == null)
                     {
@@ -513,7 +392,6 @@ namespace MultiDraw
                                 }
                                 sunstransforrunsync.Commit();
                             }
-                            // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(pickedElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(thirdElements) });
                         }
                         else
                         {
@@ -528,8 +406,6 @@ namespace MultiDraw
                                     doc.Delete(element.Id);
                             }
                             fittingsfailure = true;
-
-                            //
                             using (SubTransaction substrans2 = new SubTransaction(doc))
                             {
                                 substrans2.Start();
@@ -540,7 +416,6 @@ namespace MultiDraw
                                 }
                                 substrans2.Commit();
                             }
-
                             //Its create to default Hoffset
                             HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
                             foreach (Element element in backupsele)
@@ -575,12 +450,8 @@ namespace MultiDraw
                             }
                             substrans2.Commit();
                         }
+                        ///HOffset another condition 
                         HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
-
-                        //ParentUserControl.Instance.Primaryelst = new List<Element>();
-                        //secondaryElements = new List<Element>();
-                        //secondaryElements.AddRange(thirdElements);
-
                         foreach (Element element in backupsele)
                         {
                             ParentUserControl.Instance.Primaryelst.Add(element);
@@ -605,7 +476,6 @@ namespace MultiDraw
                 }
                 else
                 {
-                    //
                     using (SubTransaction substrans2 = new SubTransaction(doc))
                     {
                         substrans2.Start();
@@ -616,14 +486,12 @@ namespace MultiDraw
                         }
                         substrans2.Commit();
                     }
+                    ///HOffset another condition 
                     HorizontalOffset.HOffsetDrawWithPickPoint(doc, uiapp, pickedElements, offsetVariable, Refpiuckpoint, Pickpoint, ref secondaryElements, ref fittingsfailure);
-
-                    //System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             return true;
         }
-
         public static bool ROffsetdrawPointhandler(Document doc, UIDocument uidoc, UIApplication uiapp, List<Element> PrimaryElements, string offsetVariable, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
             DateTime startDate = DateTime.UtcNow;
@@ -682,8 +550,6 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     PointRollUp(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-
-                    //   Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
                 else
@@ -713,10 +579,8 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     PointRollUp(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
-
                 ParentUserControl.Instance.cmbProfileType.SelectedIndex = 4;
                 ParentUserControl.Instance.masterContainer.Children.Clear();
                 UserControl userControl = new StraightOrBendUserControl(ParentUserControl.Instance._externalEvents[0], ParentUserControl.Instance._window, StraightOrBendUserControl.Instance._application);
@@ -844,25 +708,10 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-
-                        //if (j == 0)
-                        //{
-                        //    PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        //}
-                        //else
-                        //{
-                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        //}
-                        //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
-                    // BOTTOMAddTags(_doc, bOTTOMForAddtags);
-                    // BOTTOMAddTags(_doc, TOPForAddtags);
-                    // Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     subTransaction.Commit();
-
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
                     {
                         sunstransforrunsync.Start();
@@ -951,14 +800,11 @@ namespace MultiDraw
                     Line axisLine = Line.CreateBound(axisStart, axisEnd);
                     double PrimaryOffset = RevitVersion < 2020 ? PrimaryElements[0].LookupParameter("Offset").AsDouble() : PrimaryElements[0].LookupParameter("Middle Elevation").AsDouble();
                     double SecondaryOffset = RevitVersion < 2020 ? SecondaryElements[0].LookupParameter("Offset").AsDouble() : SecondaryElements[0].LookupParameter("Middle Elevation").AsDouble();
-
                     l_angle = (Math.PI / 2) - l_angle;
-
                     if (PrimaryOffset > SecondaryOffset)
                     {
                         l_angle = -l_angle;
                     }
-
                     ElementTransformUtils.RotateElements(_doc, thirdElements.Select(r => r.Id).ToList(), axisLine, -l_angle);
                     DeleteSupports(_doc, PrimaryElements);
                     List<FamilyInstance> bOTTOMForAddtags = new List<FamilyInstance>();
@@ -1037,15 +883,10 @@ namespace MultiDraw
                     OffsetValue = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble == 0 ? "1.5" : VOffsetUserControl.Instance.txtOffsetFeet.AsString,
                     AngleValue = VOffsetUserControl.Instance.ddlAngle.SelectedItem == null ? "30.00" : VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()
                 };
-
-                //XYZ Pickpoint = null;
-                //ConduitElevation identification
                 XYZ e1pt1 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
                 XYZ e1pt2 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-
                 double Z1 = Math.Round(e1pt1.Z, 2);
                 double Z2 = Math.Round(e1pt2.Z, 2);
-
                 using (SubTransaction substrans2 = new SubTransaction(_doc))
                 {
                     substrans2.Start();
@@ -1057,14 +898,10 @@ namespace MultiDraw
 
                     substrans2.Commit();
                 }
-
                 if (Z1 == Z2)
                 {
-
-                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem
-                    .ToString()) * (Math.PI / 180);
+                    double l_angle = Convert.ToDouble(VOffsetUserControl.Instance.ddlAngle.SelectedItem.ToString()) * (Math.PI / 180);
                     double l_offSet = VOffsetUserControl.Instance.txtOffsetFeet.AsDouble;
-
 
                     //finding the direction
                     using SubTransaction subTransaction = new SubTransaction(_doc);
@@ -1148,8 +985,6 @@ namespace MultiDraw
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
-
-                    //  Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     subTransaction.Commit();
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
                     {
@@ -1269,23 +1104,10 @@ namespace MultiDraw
                         bendangle.Set(l_angle);
                         bendtype2.Set("V Offset");
                         bendangle2.Set(l_angle);
-                        //if (j == 0)
-                        //{
-                        //    //PrimryConduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        //}
-                        //else
-                        //{
-                        //    Conduitcoloroverride(SecondaryElements[j].Id, _doc);
-                        //}
-                        //Conduitcoloroverride(SecondaryElements[j].Id, _doc);
                         bOTTOMForAddtags.Add(fittings1);
                         TOPForAddtags.Add(fittings2);
                     }
-                    //BOTTOMAddTags(_doc, bOTTOMForAddtags);
-                    // TOPAddTags(_doc, TOPForAddtags);
-                    // Support.AddSupport(uiApp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     trans1.Commit();
-
                     using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
                     {
                         sunstransforrunsync.Start();
@@ -1318,7 +1140,6 @@ namespace MultiDraw
                 {
                     //Its Create based on pickpoint
                     VerticalOffset.VOffsetDrawPointWithPickOffset(_doc, _uiDoc, uiApp, PrimaryElements, offsetVariable, RevitVersion, Pickpoint, ref SecondaryElements);
-                    //System.Windows.MessageBox.Show("Some error has occured. \n" + exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             return true;
@@ -1427,13 +1248,14 @@ namespace MultiDraw
 
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
                             Utility.RetainParameters(PrimaryElements[j], thirdConduit, uiApp);
+
                             Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
                             Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                             Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
                             Parameter bendangle2 = thirdConduit.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("Four Point Saddle");
+                            bendtype.Set("FourPoint Offset");
                             bendangle.Set(l_angle);
-                            bendtype2.Set("Four Point Saddle");
+                            bendtype2.Set("FourPoint Offset");
                             bendangle2.Set(l_angle);
                         }
                         Fourpointsaddle.HorizontalOffsetPrimary(_doc, uiApp, PrimaryElements, SecondaryElements, l_angle);
@@ -1445,7 +1267,6 @@ namespace MultiDraw
                     else
                     {
                         Fourpointsaddle.GetSecondaryZPointElements(_doc, ref PrimaryElements, l_angle, l_offSet, out SecondaryElements, out fourthElements, offsetVariable, Pickpoint);
-
                         for (int j = 0; j < PrimaryElements.Count; j++)
                         {
                             PrimaryConnectors = Utility.GetConnectors(PrimaryElements[j]);
@@ -1462,9 +1283,9 @@ namespace MultiDraw
                             Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                             Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                             Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("fourPoint Offset");
+                            bendtype.Set("FourPoint Offset");
                             bendangle.Set(l_angle);
-                            bendtype2.Set("fourPoint Offset");
+                            bendtype2.Set("FourPoint Offset");
                             bendangle2.Set(l_angle);
 
                             // fIVTH CONDUIT (ELEVATION TO DOWN DIRECTION CONDUIT) 
@@ -1481,14 +1302,17 @@ namespace MultiDraw
                             FifthConduit.Add(ele);
 
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
-                            Utility.RetainParameters(PrimaryElements[j], ele, uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], thirdElements[j], uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], fourthElements[j], uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], FifthConduit[j], uiApp);
+
                             Parameter bendtypes = SecondaryElements[j].LookupParameter("TIG-Bend Type");
                             Parameter bendangles = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                             Parameter bendtypes2 = fivthCon.LookupParameter("TIG-Bend Type");
                             Parameter bendangles2 = fivthCon.LookupParameter("TIG-Bend Angle");
-                            bendtypes.Set("fourPoint Offset");
+                            bendtypes.Set("FourPoint Offset");
                             bendangles.Set(l_angle);
-                            bendtypes2.Set("fourPoint Offset");
+                            bendtypes2.Set("FourPoint Offset");
                             bendangles2.Set(l_angle);
                         }
                         //Rotate 2n conduit Elements at Once 
@@ -1547,10 +1371,20 @@ namespace MultiDraw
                             Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                             Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
                             Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("fourPoint Offset");
+                            Parameter bendtype3 = fittings3.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle3 = fittings3.LookupParameter("TIG-Bend Angle");
+                            Parameter bendtype4 = fittings4.LookupParameter("TIG-Bend Type");
+                            Parameter bendangle4 = fittings4.LookupParameter("TIG-Bend Angle");
+
+                            bendtype.Set("FourPoint Offset");
                             bendangle.Set(l_angle);
-                            bendtype2.Set("fourPoint Offset");
+                            bendtype2.Set("FourPoint Offset");
                             bendangle2.Set(l_angle);
+                            bendtype3.Set("FourPoint Offset");
+                            bendangle3.Set(l_angle);
+                            bendtype4.Set("FourPoint Offset");
+                            bendangle4.Set(l_angle);
+
                             bOTTOMForAddtags.Add(fittings1);
                             TOPForAddtags.Add(fittings2);
                         }
@@ -1604,6 +1438,7 @@ namespace MultiDraw
             {
                 List<Element> thirdElements = new List<Element>();
                 List<Element> forthelements = new List<Element>();
+
                 if (ThreePointSaddleUserControl.Instance.ddlAngle.SelectedItem == null || string.IsNullOrEmpty(ThreePointSaddleUserControl.Instance.ddlAngle.SelectedItem.ToString()))
                 {
                     return false;
@@ -1658,6 +1493,8 @@ namespace MultiDraw
                     ConnectorSet SecondaryConnectors = null;
 
                     //CREATE XY DIRECTION IN ACTIVE VIEW
+                    List<Element> fourthElements = new List<Element>();
+                    List<Element> fivthElements = new List<Element>();
                     if (ThreePointSaddleUserControl.Instance.ChkThreePointSaddle.IsChecked == true)
                     {
                         for (int j = 0; j < PrimaryElements.Count; j++)
@@ -1684,7 +1521,6 @@ namespace MultiDraw
                             XYZ thirdConduitDirection = thirdConduitLine.Direction;
                             XYZ CrossProduct = thirdConduitDirection.CrossProduct(XYZ.BasisZ);
                             XYZ pickPointTwo = pickDirection + CrossProduct.Multiply(10);
-
                             Line line1 = Line.CreateBound(pickDirection, pickPointTwo);
                             //DetailLine curve = _doc.Create.NewDetailCurve(_doc.ActiveView, line1) as DetailLine;
                             XYZ ip = Utility.FindIntersectionPoint(line1, thirdConduitLine);
@@ -1695,19 +1531,17 @@ namespace MultiDraw
                             (thirdConduit.Location as LocationCurve).Curve = newConduitLine;
 
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
-                            Utility.RetainParameters(PrimaryElements[j], e, uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], thirdElements[j], uiApp);
+
                             Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
                             Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                             Parameter bendtype2 = thirdConduit.LookupParameter("TIG-Bend Type");
                             Parameter bendangle2 = thirdConduit.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("Four Point Saddle");
+                            bendtype.Set("ThreePoint Offset");
                             bendangle.Set(l_angle);
-                            bendtype2.Set("Four Point Saddle");
+                            bendtype2.Set("ThreePoint Offset");
                             bendangle2.Set(l_angle);
                         }
-
-                        List<Element> fourthElements = new List<Element>();
-                        List<Element> fivthElements = new List<Element>();
 
                         Threepointsaddle.ThreePointSaddleConnect(_doc, uiApp, PrimaryElements, thirdElements, l_angle, out fourthElements); //4th
                         Threepointsaddle.ThreePointSaddleConnect(_doc, uiApp, SecondaryElements, thirdElements, l_angle, out fivthElements); //5th
@@ -1716,16 +1550,31 @@ namespace MultiDraw
 
                         for (int i = 0; i < PrimaryElements.Count; i++)
                         {
+                            Utility.RetainParameters(PrimaryElements[i], fourthElements[i], uiApp);
+                            Utility.RetainParameters(PrimaryElements[i], fivthElements[i], uiApp);
+
                             Element firstElement = PrimaryElements[i];
                             Element secondElement = SecondaryElements[i];
                             Element fourthElement = fourthElements[i];
                             Element fifthElement = fivthElements[i];
 
-                            Utility.CreateElbowFittings(firstElement, fourthElement, _doc, uiApp);
-                            Utility.CreateElbowFittings(secondElement, fifthElement, _doc, uiApp);
-                            Utility.CreateElbowFittings(fourthElement, fifthElement, _doc, uiApp);
-                        }
+                            FamilyInstance fittings1 = Utility.CreateElbowFittings(firstElement, fourthElement, _doc, uiApp);
+                            FamilyInstance fittings2 = Utility.CreateElbowFittings(secondElement, fifthElement, _doc, uiApp);
+                            FamilyInstance fittings3 = Utility.CreateElbowFittings(fourthElement, fifthElement, _doc, uiApp);
 
+                            Parameter bendType = fittings1.LookupParameter("TIG-Bend Type");
+                            Parameter bendAngle = fittings1.LookupParameter("TIG-Bend Angle");
+                            Parameter bendType2 = fittings2.LookupParameter("TIG-Bend Type");
+                            Parameter bendAngle2 = fittings2.LookupParameter("TIG-Bend Angle");
+                            Parameter bendType3 = fittings3.LookupParameter("TIG-Bend Type");
+                            Parameter bendAngle3 = fittings3.LookupParameter("TIG-Bend Angle");
+                            bendType.Set("ThreePoint Offset");
+                            bendAngle.Set(l_angle);
+                            bendType2.Set("ThreePoint Offset");
+                            bendAngle2.Set(l_angle);
+                            bendType3.Set("ThreePoint Offset");
+                            bendAngle3.Set(l_angle);
+                        }
                     }
                     else
                     {
@@ -1740,14 +1589,14 @@ namespace MultiDraw
                             Element e = _doc.GetElement(newCon.Id);
                             thirdElements.Add(e);
                             Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
-                            Utility.RetainParameters(PrimaryElements[j], e, uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], thirdElements[j], uiApp);
                             Parameter bendtype = SecondaryElements[j].LookupParameter("TIG-Bend Type");
                             Parameter bendangle = SecondaryElements[j].LookupParameter("TIG-Bend Angle");
                             Parameter bendtype2 = newCon.LookupParameter("TIG-Bend Type");
                             Parameter bendangle2 = newCon.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("Three Point Saddle");
+                            bendtype.Set("ThreePoint Offset");
                             bendangle.Set(l_angle);
-                            bendtype2.Set("Three Point Saddle");
+                            bendtype2.Set("ThreePoint Offset");
                             bendangle2.Set(l_angle);
                         }
 
@@ -1779,9 +1628,11 @@ namespace MultiDraw
                                                                                              new XYZ(conpt2.X, conpt2.Y, elevation + l_offSet));
                             Element e = _doc.GetElement(newCon.Id);
                             forthelements.Add(e);
+                            Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
+                            Utility.RetainParameters(PrimaryElements[j], forthelements[j], uiApp);
                             Parameter bendtype = newCon.LookupParameter("TIG-Bend Type");
                             Parameter bendangle = newCon.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("Three Point Saddle");
+                            bendtype.Set("ThreePoint Offset");
                             bendangle.Set(l_angle);
                         }
                         Element Elementthree = thirdElements[0];
@@ -1826,11 +1677,11 @@ namespace MultiDraw
                             Parameter bendangle2 = fittings2.LookupParameter("TIG-Bend Angle");
                             Parameter bendtype3 = fittings3.LookupParameter("TIG-Bend Type");
                             Parameter bendangle3 = fittings3.LookupParameter("TIG-Bend Angle");
-                            bendtype.Set("Three Point Saddle");
+                            bendtype.Set("ThreePoint Offset");
                             bendangle.Set(l_angle);
-                            bendtype2.Set("Three Point Saddle");
+                            bendtype2.Set("ThreePoint Offset");
                             bendangle2.Set(l_angle);
-                            bendtype3.Set("Three Point Saddle");
+                            bendtype3.Set("ThreePoint Offset");
                             bendangle3.Set(l_angle);
                         }
                     }
@@ -1871,96 +1722,6 @@ namespace MultiDraw
             }
             return true;
         }
-        //public static bool ConduitSync(Document doc, UIApplication uiapp, List<Element> elements)
-        //{
-        //    DateTime startDate = DateTime.UtcNow;
-        //    try
-        //    {
-        //        if (elements == null)
-        //        {
-        //            SyncDataUserControl.Instance.btnsync.IsEnabled = true;
-        //            return false;
-        //        }
-        //        List<MultiSelect> SelectedParameters = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems;
-        //        MultiSelect multiselect = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems[0];
-        //        if (SelectedParameters != null)
-        //            _selectedSyncDataList = SyncDataUserControl.Instance.ucMultiSelect.SelectedItems.ToList().Where(x => x.Name != "All" && x.IsChecked).ToList();
-        //        if (SyncDataUserControl.Instance.ucMultiSelect.ItemsSource is List<MultiSelect> selectitem)
-        //        {
-        //            List<SYNCDataGlobalParam> syncdata = new List<SYNCDataGlobalParam>();
-        //            syncdata = selectitem.Where(r => r.IsChecked).Select(x => new SYNCDataGlobalParam { Name = x.Name }).ToList();
-        //            string json = JsonConvert.SerializeObject(syncdata);
-        //            GlobalParameter gp = null;
-        //            string ParamName = "SyncDataParameters_" + uiapp.Application.LoginUserId;
-        //            ElementId gpNWC = GlobalParametersManager.FindByName(doc, ParamName);
-        //            if (gpNWC != ElementId.InvalidElementId)
-        //            {
-        //                gp = doc.GetElement(gpNWC) as GlobalParameter;
-        //            }
-        //            else
-        //            {
-        //                gp = GlobalParameter.Create(doc, ParamName, ParameterType.Text);
-        //            }
-        //            if (gp != null)
-        //            {
-        //                ParameterValue value = gp.GetValue();
-        //                if (value.GetType() == typeof(StringParameterValue))
-        //                {
-        //                    StringParameterValue stpv = value as StringParameterValue;
-        //                    stpv.Value = json;
-        //                    gp.SetValue(stpv);
-        //                }
-        //            }
-        //        }
-        //        List<ElementId> elementIds = new List<ElementId>();
-        //        foreach (Element item in elements)
-        //        {
-        //            List<Element> lstElements = new List<Element>();
-        //            Utility.ConduitSelection(doc, item as Conduit, null, ref lstElements, true);
-        //            ApplyParameters(doc, item as Conduit, lstElements);
-        //        }
-        //        Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Sync Data", Util.ProductVersion, "Sync Data");
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        System.Windows.MessageBox.Show("Warning. \n" + exception.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //        Task task = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Sync Data", Util.ProductVersion, "Sync Data");
-
-        //    }
-        //    SyncDataUserControl.Instance.btnsync.IsEnabled = true;
-        //    return true;
-        //}
-        /* private static void ApplyParameters(Document doc, Conduit eleConduit, List<Element> elements)
-         {
-
-             foreach (MultiSelect param in _selectedSyncDataList)
-             {
-                 if (param.IsChecked)
-                 {
-                     Parameter ConduitParam = eleConduit.LookupParameter(param.Name);
-                     string paramValue = Utility.GetParameterValue(ConduitParam);
-                     if (eleConduit.RunId != ElementId.InvalidElementId)
-                     {
-                         Element eleRun = doc.GetElement(eleConduit.RunId);
-                         if (eleRun != null)
-                         {
-                             Parameter RunParam = eleRun.LookupParameter(param.Name);
-                             if (RunParam != null && !RunParam.IsReadOnly)
-                                 Utility.SetParameterValue(RunParam, ConduitParam);
-                         }
-                     }
-                     foreach (Element e in elements.Distinct())
-                     {
-                         if (e.GetType() == typeof(Conduit) || (e.GetType() == typeof(FamilyInstance)))
-                         {
-                             Parameter lookUpParam = e.LookupParameter(param.Name);
-                             if (lookUpParam != null && ConduitParam != null)
-                                 Utility.SetParameterValue(lookUpParam, ConduitParam);
-                         }
-                     }
-                 }
-             }
-         }*/
         public static bool RollingOffsetDrawHandler(Document doc, UIDocument uidoc, UIApplication uiapp, List<Element> PrimaryElements, string offsetVariable, XYZ Pickpoint, ref List<Element> SecondaryElements)
         {
             DateTime startDate = DateTime.UtcNow;
@@ -2005,7 +1766,6 @@ namespace MultiDraw
                     Properties.Settings.Default.RollingOffsetDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
                     RollUp(doc, ref PrimaryElements, l_angle, l_rollOffset, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
                 else
@@ -2036,7 +1796,6 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     RollUp(doc, ref PrimaryElements, l_angle, l_rollOffset, l_offSet, offsetVariable, Pickpoint, uiapp, ref SecondaryElements);
-                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                     tx.Commit();
                 }
 
@@ -2105,21 +1864,9 @@ namespace MultiDraw
                 bendangle.Set(l_angle);
                 bendtype2.Set("R Offset");
                 bendangle2.Set(l_angle);
-                //if (i == 0)
-                //{
-                //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                //}
-                //else
-                //{
-                //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                //}
-                //Conduitcoloroverride(SecondaryElements[i].Id, doc);
-
                 bOTTOMForAddtags.Add(fittings1);
                 TOPForAddtags.Add(fittings2);
             }
-            //  BOTTOMAddTags(doc, bOTTOMForAddtags);
-            // TOPAddTags(doc, TOPForAddtags);
             using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
             {
                 sunstransforrunsync.Start();
@@ -2177,8 +1924,6 @@ namespace MultiDraw
                 bendangle.Set(l_angle);
                 bendtype2.Set("R Offset");
                 bendangle2.Set(l_angle);
-
-                //Conduitcoloroverride(secondaryElements[i].Id, doc);
             }
             using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
             {
@@ -2237,7 +1982,6 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     ApplyBend(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref secondaryElements);
-                    //Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
                     subtrans.Commit();
                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
@@ -2353,7 +2097,6 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(doc, PrimaryElements);
                     PointApplyBend(doc, ref PrimaryElements, l_angle, l_offSet, offsetVariable, Pickpoint, uiapp, ref secondaryElements);
-                    ///Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(secondaryElements) });
                     subtrans.Commit();
                     _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiapp, Util.ApplicationWindowTitle, startDate, "Complted", "Kick with Bend", Util.ProductVersion, "Draw");
                 }
@@ -2397,8 +2140,6 @@ namespace MultiDraw
         {
             FamilyInstance fittings1 = null;
             FamilyInstance fittings2 = null;
-            //List<FamilyInstance> bottomTag = null;
-            //List<FamilyInstance> toptag = null;
             string json = Properties.Settings.Default.ProfileColorSettings;
             ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
@@ -2825,9 +2566,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    //bottomTag.Add(fittings1);
-                                    //toptag.Add(fittings2);
                                 }
                             }
                             catch
@@ -2893,9 +2631,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    // bottomTag.Add(fittings1);
-                                    // toptag.Add(fittings2);
                                 }
                             }
                             else
@@ -2955,9 +2690,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    // bottomTag.Add(fittings1);
-                                    //toptag.Add(fittings2);
                                 }
                             }
                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Completed", "Kick with Bend", Util.ProductVersion, "Draw");
@@ -2977,15 +2709,11 @@ namespace MultiDraw
                 _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
 
             }
-            // TOPAddTags(doc,toptag);
-            // BOTTOMAddTags(doc,toptag);
         }
         public static void PointApplyBend(Document doc, ref List<Element> PrimaryElements, double l_angle, double l_offSet, string offSetVar, XYZ pickpoint, UIApplication _uiapp, ref List<Element> SecondaryElements)
         {
             FamilyInstance fittings1 = null;
             FamilyInstance fittings2 = null;
-            // List<FamilyInstance> bottomTag = null;
-            //List<FamilyInstance> toptag = null;
             string json = Properties.Settings.Default.ProfileColorSettings;
             ProfileColorSettingsData profileSetting = JsonConvert.DeserializeObject<ProfileColorSettingsData>(json);
             DateTime startDate = DateTime.UtcNow;
@@ -3042,10 +2770,6 @@ namespace MultiDraw
                                 C_bendangle.Set(l_angle);
                                 C_bendtype2.Set("Kick Offset");
                                 C_bendangle2.Set(NinetyAngle);
-
-                                // fittings1 = Utility.CreateElbowFittings(SecondaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-                                // fittings2 = Utility.CreateElbowFittings(PrimaryConnectors, ThirdConnectors, doc, _uiapp, PrimaryElements[i], true);
-
                                 Parameter bendtype = fittings1.LookupParameter("TIG-Bend Type");
                                 Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                                 Parameter bendtype2 = fittings2.LookupParameter("TIG-Bend Type");
@@ -3054,9 +2778,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                //bottomTag.Add(fittings1);
-                                // toptag.Add(fittings2);
                             }
                         }
                         else
@@ -3119,9 +2840,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    //Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    // bottomTag.Add(fittings1);
-                                    //toptag.Add(fittings2);
                                 }
                             }
                             catch
@@ -3187,9 +2905,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-                                    //  Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    // bottomTag.Add(fittings1);
-                                    // toptag.Add(fittings2);
                                 }
                             }
                             else
@@ -3251,10 +2966,6 @@ namespace MultiDraw
                                         bendangle.Set(l_angle);
                                         bendtype2.Set("Kick Offset");
                                         bendangle2.Set(NinetyAngle);
-                                        // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                        // bottomTag.Add(fittings1);
-                                        //toptag.Add(fittings2);
-
                                     }
                                 }
                                 catch
@@ -3328,9 +3039,6 @@ namespace MultiDraw
                                 bendangle.Set(l_angle);
                                 bendtype2.Set("Kick Offset");
                                 bendangle2.Set(NinetyAngle);
-                                //Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                //bottomTag.Add(fittings1);
-                                //toptag.Add(fittings2);
                             }
                         }
                         else //create
@@ -3391,10 +3099,6 @@ namespace MultiDraw
                                     bendangle.Set(l_angle);
                                     bendtype2.Set("Kick Offset");
                                     bendangle2.Set(NinetyAngle);
-
-                                    //    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                                    //    //bottomTag.Add(fittings1);
-                                    //    //toptag.Add(fittings2);
                                 }
                             }
                             catch
@@ -3553,33 +3257,22 @@ namespace MultiDraw
                 System.Windows.MessageBox.Show("Warning. \n" + ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
                 _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), _uiapp, Util.ApplicationWindowTitle, startDate, "Failed", "Kick with Bend", Util.ProductVersion, "Draw");
             }
-            // TOPAddTags(doc, toptag);
-            // BOTTOMAddTags(doc, toptag);
         }
         public static bool IsBothSideUnConnectors(Element e)
         {
-
             if (e is Conduit conduit)
             {
                 return conduit.ConnectorManager.UnusedConnectors.Size == 2;
             }
             return false;
-
-
-
         }
         public static bool IsOneSideConnectors(Element e)
         {
-
             if (e is Conduit conduit)
             {
-
                 return conduit.ConnectorManager.UnusedConnectors.Size == 1;
-
             }
             return false;
-
-
         }
         public static bool StrightorBend(Document doc, UIDocument uidoc, UIApplication uiApp, List<Element> PrimaryElements, string offsetVariable, XYZ Pickpoint)
         {
@@ -3592,21 +3285,8 @@ namespace MultiDraw
                 startDate = DateTime.UtcNow;
                 XYZ e1pt1 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(0);
                 XYZ e1pt2 = ((PrimaryElements[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
-
                 double Z1 = Math.Round(e1pt1.Z, 2);
                 double Z2 = Math.Round(e1pt2.Z, 2);
-
-                /*  //using (SubTransaction substrans2 = new SubTransaction(doc))
-                  //{
-                  //    substrans2.Start();
-                  //    OverrideGraphicSettings orGsty = new OverrideGraphicSettings();
-                  //    foreach (Element element in PrimaryElements)
-                  //    {
-                  //        doc.ActiveView.SetElementOverrides(element.Id, orGsty);
-                  //    }
-                  //    substrans2.Commit();
-                  //}*/
-
                 if (Z1 == Z2)
                 {
                     if (StraightOrBendUserControl.Instance.angleList.SelectedItem.ToString() != "Auto")
@@ -3676,7 +3356,6 @@ namespace MultiDraw
                                     }
                                     if (!isAllNull)
                                     {
-                                        // removingPoint = Utility.PickPoint(uidoc, "Select the connor to trim");
                                         int i = 0;
                                         foreach (Element element in PrimaryElements)
                                         {
@@ -3713,10 +3392,7 @@ namespace MultiDraw
                                                 }
                                                 catch
                                                 {
-
                                                 }
-
-                                                ///Conduitcoloroverride(element.Id, doc);
                                             }
                                             else
                                             {
@@ -3734,9 +3410,7 @@ namespace MultiDraw
                                                 }
                                                 catch
                                                 {
-
                                                 }
-                                                //  Conduitcoloroverride(element.Id, doc);
                                             }
                                             i++;
                                         }
@@ -3776,16 +3450,13 @@ namespace MultiDraw
                                                     }
                                                     catch
                                                     {
-
                                                     }
                                                 }
-                                                // Conduitcoloroverride(element.Id, doc);
                                                 i++;
                                             }
                                         }
                                         catch
                                         {
-
                                         }
                                     }
                                 }
@@ -3815,10 +3486,8 @@ namespace MultiDraw
                                     bool breakloop = false;
                                     foreach (Element element in PrimaryElements)
                                     {
-                                        // Conduitcoloroverride(element.Id, doc);
                                         Line zLine = Utility.GetLineFromConduit(element);
                                         Line xyLine = Utility.GetLineFromConduit(element, true);
-
                                         Line trimLine = Utility.CrossProductLine(element, trimPoint, 50, true);
                                         XYZ interSecPoint = Utility.FindIntersectionPoint(xyLine, trimLine);
                                         if (interSecPoint != null)
@@ -3848,15 +3517,12 @@ namespace MultiDraw
                                                                 Parameter C_bendangle = element.LookupParameter("TIG-Bend Angle");
                                                                 C_bendtype.Set("Straight");
                                                                 C_bendangle.Set(StraightAngle);
-
-                                                                //Conduitcoloroverride(element.Id, doc);
                                                             }
                                                             else
                                                             {
                                                                 breakloop = true;
                                                                 System.Windows.MessageBox.Show("Warning. \n" + "Cannot extend the conduits in opposite direction. Please pick another point", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
                                                                 break;
-
                                                             }
                                                             break;
                                                         }
@@ -3905,28 +3571,6 @@ namespace MultiDraw
                                     }
                                 }
                             }
-
-                            /* //int nk = 0;
-                             //using (SubTransaction sunstransforcolorapply = new SubTransaction(doc))
-                             //{
-                             //    sunstransforcolorapply.Start();
-                             //    foreach (Element element in PrimaryElements)
-                             //    {
-                             //        if (nk == 0)
-                             //        {
-                             //            PrimryConduitcoloroverride(element.Id, doc);
-                             //        }
-                             //        else
-                             //        {
-                             //            Conduitcoloroverride(element.Id, doc);
-                             //        }
-
-                             //        nk++;
-                             //    }
-                             //    sunstransforcolorapply.Commit();
-                             //}
-                             // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });*/
-
                             transaction.Commit();
                             _ = Utility.UserActivityLog(System.Reflection.Assembly.GetExecutingAssembly(), uiApp, Util.ApplicationWindowTitle, startDate, "Complted", "0° Bend", Util.ProductVersion, "Draw");
                         }
@@ -3967,12 +3611,8 @@ namespace MultiDraw
                                         XYZ pt1 = Pickpoint;
                                         XYZ pt2 = Pickpoint + conduitRefcross.Multiply(5);
                                         Line crossline = Line.CreateBound(pt1, pt2);
-
-                                        //find the specing between the conduits 
                                         XYZ intersectionone = Utility.FindIntersectionPoint(pt1, pt2, basepoint, bsepointtwo);
                                         conduitRefdfirf = Line.CreateBound(new XYZ(intersectionone.X, intersectionone.Y, basepoint.Z), basepoint).Direction;
-
-                                        //check the angle direction
                                         LocationCurve curve = pickedelemets[0].Location as LocationCurve;
                                         Line l_Line = curve.Curve as Line;
                                         XYZ StartPoint = l_Line.GetEndPoint(0);
@@ -3980,7 +3620,6 @@ namespace MultiDraw
                                         XYZ PrimaryConduitDirection = l_Line.Direction;
                                         XYZ CrossProduct = PrimaryConduitDirection.CrossProduct(XYZ.BasisZ);
                                         XYZ PickPointTwo = Pickpoint + CrossProduct.Multiply(1);
-
                                         XYZ Intersectionpoint = Utility.FindIntersectionPoint(StartPoint, EndPoint, Pickpoint, PickPointTwo);
                                         double SubdistanceOne = Math.Sqrt(Math.Pow((StartPoint.X - Intersectionpoint.X), 2) + Math.Pow((StartPoint.Y - Intersectionpoint.Y), 2));
                                         double SubdistanceTwo = Math.Sqrt(Math.Pow((EndPoint.X - Intersectionpoint.X), 2) + Math.Pow((EndPoint.Y - Intersectionpoint.Y), 2));
@@ -4087,31 +3726,7 @@ namespace MultiDraw
                                                 Parameter C_bendangle_bd = halfbend.LookupParameter("TIG-Bend Angle");
                                                 C_bendtype_bd.Set("Half Offset");
                                                 C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
-
-
-                                                //Conduitcoloroverride(secondElement.Id, doc);
                                             }
-                                            //fill the colors
-                                            //using (SubTransaction sunstransforcolorapply = new SubTransaction(doc))
-                                            //{
-                                            //    ElementId conduitrunid = (PrimaryElements[PrimaryElements.Count() -1] as Conduit).RunId;
-                                            //    sunstransforcolorapply.Start();
-                                            //    foreach (Element element in inclindconduits)
-                                            //    {
-                                            //        ElementId inclindconduitrunid = (element as Conduit).RunId;
-
-                                            //        if (inclindconduitrunid == conduitrunid)
-                                            //        {
-                                            //            PrimryConduitcoloroverride(element.Id, doc);
-                                            //        }
-                                            //        else
-                                            //        {
-                                            //            Conduitcoloroverride(element.Id, doc);
-                                            //        }
-                                            //    }
-                                            //    sunstransforcolorapply.Commit();
-                                            //}
-
                                             using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                                             {
                                                 sunstransforrunsync.Start();
@@ -4140,7 +3755,6 @@ namespace MultiDraw
                                             }
                                             TaskDialog.Show("Warning", "Couldn't add a fitting. Please change the bend angle or enable Add bend in-place");
                                         }
-
                                     }
                                     else
                                     {
@@ -4232,30 +3846,7 @@ namespace MultiDraw
                                         Parameter C_bendangle_bd = halfbend.LookupParameter("TIG-Bend Angle");
                                         C_bendtype_bd.Set("Half Offset");
                                         C_bendangle_bd.Set(halfbend.LookupParameter("Angle").AsDouble());
-                                        //Conduitcoloroverride(secondElement.Id, doc);
                                     }
-
-                                    /* //fill the colors
-                                     //using (SubTransaction sunstransforcolorapply = new SubTransaction(doc))
-                                     //{
-                                     //    ElementId conduitrunid = (PrimaryElements[PrimaryElements.Count() - 1] as Conduit).RunId;
-                                     //    sunstransforcolorapply.Start();
-                                     //    foreach (Element element in inclindconduits)
-                                     //    {
-                                     //        ElementId inclindconduitrunid = (element as Conduit).RunId;
-
-                                     //        if (conduitrunid == inclindconduitrunid)
-                                     //        {
-                                     //            PrimryConduitcoloroverride(element.Id, doc);
-                                     //        }
-                                     //        else
-                                     //        {
-                                     //            Conduitcoloroverride(element.Id, doc);
-                                     //        }
-                                     //    }
-                                     //    sunstransforcolorapply.Commit();
-                                     //}*/
-
                                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                                     {
                                         sunstransforrunsync.Start();
@@ -4271,7 +3862,6 @@ namespace MultiDraw
                                         }
                                         sunstransforrunsync.Commit();
                                     }
-                                    // Support.AddSupport(uiApp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(inclindconduits) });
                                     ParentUserControl.Instance.Secondaryelst.Clear();
                                     ParentUserControl.Instance.Secondaryelst.AddRange(ParentUserControl.Instance.Primaryelst);
                                     ParentUserControl.Instance.Primaryelst.Clear();
@@ -4387,7 +3977,6 @@ namespace MultiDraw
                                 XYZ conduitsecondpoint = NewConduitStartpt + conduitlinedirection.Multiply(8);
                                 Conduit newCon = Utility.CreateConduit(doc, ele as Conduit, NewConduitStartpt, new XYZ(conduitsecondpoint.X, conduitsecondpoint.Y, NewConduitStartpt.Z));
                                 inclindconduits.Add(newCon);
-
                             }
 
                             XYZ startpt1 = ((inclindconduits[0].Location as LocationCurve).Curve as Line).GetEndPoint(1);
@@ -4585,16 +4174,6 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         bendtype.Set("90° Bend");
                         bendangle.Set(90 * (Math.PI / 180));
-                        //if (i == 0)
-                        //{
-                        //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                        //}
-                        //else
-                        //{
-                        //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                        //}
-
-                        // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                     }
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -4612,8 +4191,6 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-
-                    // Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                 }
                 else
                 {
@@ -4644,17 +4221,6 @@ namespace MultiDraw
                         Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                         bendtype.Set("90° Bend");
                         bendangle.Set(90 * (Math.PI / 180));
-
-                        //if (i == 0)
-                        //{
-                        //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                        //}
-                        //else
-                        //{
-                        //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                        //}
-
-                        //Conduitcoloroverride(SecondaryElements[i].Id, doc);
                     }
 
                     using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
@@ -4672,12 +4238,7 @@ namespace MultiDraw
                         }
                         sunstransforrunsync.Commit();
                     }
-
-                    // Support.AddSupport(_uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) }, new List<ConduitsCollection> { new ConduitsCollection(SecondaryElements) });
                 }
-
-
-
             }
             catch (Exception ex)
             {
@@ -4718,11 +4279,9 @@ namespace MultiDraw
                     transKick.Start();
                     Properties.Settings.Default.NinetyKickDraw = JsonConvert.SerializeObject(globalParam);
                     Properties.Settings.Default.Save();
-                    //MultiSelect angleSelected = NinetyKickUserControl.Instance.ddlAngle.SelectedItem.ToString();
                     l_angle = Convert.ToDouble(NinetyKickUserControl.Instance.ddlAngle.SelectedItem.ToString());
                     DeleteSupports(doc, PrimaryElements);
                     ApplyKick(doc, ref PrimaryElements, l_angle, l_offSet, l_Rise, offsetVariable, uiapp, pickpoint);
-                    // Support.AddSupport(uiapp, doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                     transKick.Commit();
                 }
 
@@ -4755,11 +4314,7 @@ namespace MultiDraw
             }
             return true;
         }
-        public static void BendAngleTagcreation(Document doc, XYZ locationpoint)
-        {
-            //FamilySymbol famsymid = 
-            //IndependentTag newTag = IndependentTag.Create(doc,);
-        }
+        
         public static void ApplyKick(Document doc, ref List<Element> PrimaryElements, double l_angle, double l_offSet, double l_Rise, string offSetVar, UIApplication _uiapp, XYZ pickpoint)
         {
             string json = Properties.Settings.Default.ProfileColorSettings;
@@ -4811,19 +4366,7 @@ namespace MultiDraw
                     bendangle.Set(l_angle * (Math.PI / 180));
                     bendtype2.Set("90° Kick Offset");
                     bendangle2.Set(90 * (Math.PI / 180));
-
-                    //if (i == 0)
-                    //{
-                    //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                    //}
-                    //else
-                    //{
-                    //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                    //}
-
-                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 }
-
                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                 {
                     sunstransforrunsync.Start();
@@ -4881,7 +4424,6 @@ namespace MultiDraw
                     Properties.Settings.Default.Save();
                     DeleteSupports(_doc, PrimaryElements);
                     StubApplyBend(_doc, ref PrimaryElements, l_offSet, offsetVariable, Pickpoint, _uiapp);
-                    //  Support.AddSupport(_uiapp, _doc, new List<ConduitsCollection> { new ConduitsCollection(PrimaryElements) });
                     tx.Commit();
                 }
                 using (SubTransaction sunstransforrunsync = new SubTransaction(_doc))
@@ -4947,19 +4489,7 @@ namespace MultiDraw
                     Parameter bendangle = fittings1.LookupParameter("TIG-Bend Angle");
                     bendtype.Set("90° Stub");
                     bendangle.Set(90 * (Math.PI / 180));
-
-                    //if (i == 0)
-                    //{
-                    //    PrimryConduitcoloroverride(SecondaryElements[i].Id, doc);
-                    //}
-                    //else
-                    //{
-                    //    Conduitcoloroverride(SecondaryElements[i].Id, doc);
-                    //}
-
-                    // Conduitcoloroverride(SecondaryElements[i].Id, doc);
                 }
-
                 using (SubTransaction sunstransforrunsync = new SubTransaction(doc))
                 {
                     sunstransforrunsync.Start();
@@ -4983,21 +4513,7 @@ namespace MultiDraw
 
             }
         }
-        public static Autodesk.Revit.DB.OverrideGraphicSettings SetOverrideGraphicSettings(FillPatternElement fpe, Autodesk.Revit.DB.Color color)
-        {
-            Autodesk.Revit.DB.OverrideGraphicSettings ogs = new Autodesk.Revit.DB.OverrideGraphicSettings();
-            ogs.SetProjectionLineColor(color);
-            ogs.SetCutBackgroundPatternColor(color);
-            ogs.SetCutForegroundPatternColor(color);
-            ogs.SetCutLineColor(color);
-            ogs.SetSurfaceBackgroundPatternColor(color);
-            ogs.SetSurfaceForegroundPatternColor(color);
-            ogs.SetSurfaceBackgroundPatternId(fpe.Id);
-            ogs.SetSurfaceBackgroundPatternVisible(true);
-            ogs.SetSurfaceForegroundPatternId(fpe.Id);
-            ogs.SetSurfaceForegroundPatternVisible(true);
-            return ogs;
-        }
     }
 }
+
 

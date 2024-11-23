@@ -674,9 +674,7 @@ namespace MultiDraw
             XYZ Directionforoffset = Linefoeoffset.Direction;
 
             secondaryElements = new List<Element>();
-
             double basedistance = (angle * (180 / Math.PI)) == 90 ? 1 : offSet / Math.Tan(angle);
-
             primaryElements = primaryElements.OrderByDescending(r => ((r.Location as LocationCurve).Curve as Line).Origin.Y).ToList();
 
             for (int i = 0; i < primaryElements.Count; i++)
@@ -739,6 +737,8 @@ namespace MultiDraw
         }
     }
 }
+
+
 
 
 

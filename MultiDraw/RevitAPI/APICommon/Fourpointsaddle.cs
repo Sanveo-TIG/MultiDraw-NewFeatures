@@ -207,9 +207,10 @@ namespace MultiDraw
                 XYZ direction = (newLine.GetEndPoint(1) - start).Normalize();
                 XYZ end = start + direction * 2;
                 Conduit thirdConduit = Utility.CreateConduit(_doc, PrimaryElements[j] as Conduit, start, end);
-
-                //Conduit thirdConduit = Utility.CreateConduit(_doc, PrimaryElements[j] as Conduit, newLine.GetEndPoint(0), newLine.GetEndPoint(1));
                 thirdElements.Add(thirdConduit);
+
+                Utility.RetainParameters(PrimaryElements[j], SecondaryElements[j], uiApp);
+                Utility.RetainParameters(PrimaryElements[j], thirdElements[j], uiApp);
             }
 
             Element firstConduitElement = PrimaryElements[0];
